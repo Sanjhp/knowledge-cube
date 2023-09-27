@@ -9,6 +9,8 @@ const sendMail = async mailOptions => {
         user: process.env.SMTP_EMAIL,
         pass: process.env.SMTP_PASS,
       },
+
+      //
     })
 
     console.log('Sending mail to user ....')
