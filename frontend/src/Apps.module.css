@@ -1,0 +1,61 @@
+
+.container {
+  width: 100%;
+
+}
+.cover{
+  
+background-image: url(./assets/hero-banner3.png);
+background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 560px;
+  
+}
+
+.coverOverlay {
+  background-color: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 0;
+  bottom: 21%;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+
+.grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
+  background-color: #ffffff;
+ position: relative;
+ top: -40px;
+ font-size: 12px;
+ margin-left: 260px;
+ max-width: 1000px;
+  box-shadow: 0 0 30px -15px rgba(223, 10, 10, 0.4);
+}
+
+.gridItem {
+  padding: 1rem ;
+  padding-left: 3rem;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.gridItem img{
+  padding:6px;
+  border-radius: 40px;
+  background-color: black;
+  border-width: 15px;   
+}
+
+.item2 img{
+   padding:6px;
+  border-radius: 40px;
+  background-color: rgb(136, 214, 222);
+  border-width: 15px;  
+}
