@@ -40,14 +40,3 @@ function App() {
 }
 
 export default App;
-// {/* <Main />
-//           <Routes>
-//           <Route path="/" element={<Home />} />
-//           <Route path="/courses" element={<Courses />} />
-//           <Route path="/features" element={<Features />} />
-//           <Route path="/about" element={<About />} />
-//           <Route path="/contact" element={<Contact />} />
-//           <Route path="/login" element={<Login />} />
-//           <Route path="/register" element={<Register />} />
-//         </Routes>
-//           <Footer /> */}
