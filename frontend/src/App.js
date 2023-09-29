@@ -2,6 +2,7 @@ import { Link, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Apps from './Apps.module.css';
 import HeroSection from './components/HeroSection/HeroSection';
+import Categories from './components/Categories/Categories';
 import courses from './assets/courses.svg'
 import expert from './assets/expert.svg';
 
@@ -34,6 +35,7 @@ function App() {
             </div>
           </section>
         </div>
+        <Categories/>
       </Router>
     </>
   );

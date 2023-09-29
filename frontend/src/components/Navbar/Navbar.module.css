@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: space-around;
   padding: 10px 0;
-  
+  flex-wrap: wrap;
  filter:brightness(1);
 }
 
