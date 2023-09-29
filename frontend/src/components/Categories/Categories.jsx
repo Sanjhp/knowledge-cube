@@ -1,6 +1,6 @@
 import React from 'react'
 import category from './category.module.css';
-import { Link, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import design from '../../assets/categories/designimg.jpg';
 import develeopment from '../../assets/categories/developmentimg.jpg';
 import Software from '../../assets/categories/softwareimg.jpg';

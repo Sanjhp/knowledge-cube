@@ -52,3 +52,10 @@ font-size: 20px;
 .button:hover{
     box-shadow:0 0 10px rgba(136, 214, 222, 0.5); ;
 }
+
+@media (max-width: 476px) {
+  .button{
+    display: none;
+  }
+  
+}
