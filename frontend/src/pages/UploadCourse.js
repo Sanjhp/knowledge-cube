@@ -22,13 +22,13 @@ const UploadCourse = () => {
   ];
   return (
     <div className="grid grid-cols-6">
-      <div className="grid grid-rows-6  justify-center items-center px-12 border-r-2 border-gray-100 border-solid">
-        <div className="flex flex-col items-center justify-center">
+      <div className="grid grid-rows-2  justify-center items-center px-12 border-r-2 border-gray-100 border-solid">
+        {/* <div className="flex flex-col items-center justify-center">
           <img
             src="https://i.ibb.co/5MXSrg8/cropped-logo.png"
             className="w-16"
           />
-        </div>
+        </div> */}
         <div className="grid grid-rows-5 gap-2">
           {list.map((element) => (
             <span className="flex pt-1 pb-4 px-8 border-b-2 border-gray-100 border-solid hover:bg-gray-200 hover:rounded-md">
@@ -38,12 +38,20 @@ const UploadCourse = () => {
           ))}
         </div>
       </div>
-      <div className="col-span-5 flex flex-col px-12 py-8">
-        <div className="flex flex-row justify-between items-center px-4 py-4">
-          <span className="text-xl font-thin text-gray-600">
-            Good Morning
-            <span className="font-semibold text-[#3484B4]"> {username}</span>
-          </span>
+      <div className="col-span-5 flex flex-col px-8 py-6">
+        <div className="flex flex-row justify-between items-center px-2 py-2">
+          <div className="flex flex-row items-center">
+            <div className="flex flex-col items-center justify-center mr-4">
+              <img
+                src="https://i.ibb.co/5MXSrg8/cropped-logo.png"
+                className="w-16"
+              />
+            </div>
+            <span className="text-xl font-thin text-gray-600">
+              Good Morning
+              <span className="font-semibold text-[#3484B4]"> {username}</span>
+            </span>
+          </div>
           <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-4 py-4 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-[200px]">
             <Link
               to="/new-course"
