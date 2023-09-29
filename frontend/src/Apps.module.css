@@ -17,6 +17,43 @@
   bottom: 21%;
   left: 0;
   right: 0;
+  pointer-events: none;
   min-height: 80vh;
 }
 
+
+.grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
+  background-color: #ffffff;
+ position: relative;
+ top: -40px;
+ font-size: 12px;
+ margin-left: 260px;
+ max-width: 1000px;
+  box-shadow: 0 0 30px -15px rgba(223, 10, 10, 0.4);
+}
+
+.gridItem {
+  padding: 1rem ;
+  padding-left: 3rem;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.gridItem img{
+  padding:6px;
+  border-radius: 40px;
+  background-color: black;
+  border-width: 15px;   
+}
+
+.item2 img{
+   padding:6px;
+  border-radius: 40px;
+  background-color: rgb(136, 214, 222);
+  border-width: 15px;  
+}
