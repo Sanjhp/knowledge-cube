@@ -22,7 +22,7 @@ const UploadCourse = () => {
   ];
   return (
     <div className="grid grid-cols-6">
-      <div className="grid grid-rows-2  justify-center items-center px-12 border-r-2 border-gray-100 border-solid">
+      <div className="grid grid-rows-2 justify-center items-center px-12 border-r-2 border-gray-100 border-solid">
         {/* <div className="flex flex-col items-center justify-center">
           <img
             src="https://i.ibb.co/5MXSrg8/cropped-logo.png"
