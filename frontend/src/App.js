@@ -1,10 +1,11 @@
-import { Link, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {  BrowserRouter as Router } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Apps from './Apps.module.css';
 import HeroSection from './components/HeroSection/HeroSection';
 import Categories from './components/Categories/Categories';
-import courses from './assets/courses.svg'
-import expert from './assets/expert.svg';
+// import courses from './assets/courses.svg'
+// import expert from './assets/expert.svg';
+import Courses from './components/Courses/Courses';
 
 function App() {
   return (
@@ -17,25 +18,10 @@ function App() {
           <HeroSection/>
           </div>
 
-          <section>
-            <div className={Apps.grid}>
-              <div className={Apps.gridItem}>
-                <img src={courses} alt="cor" />
-                <h2>100k Online Courses</h2>
-
-              </div>
-              <div className={Apps.gridItem + ' ' + Apps.item2}>
-                <img src={expert} alt="cor" />
-                <h2>Expert Instruction</h2>
-              </div>
-              <div className={Apps.gridItem}>
-                <img src={courses} alt="cor" />
-                <h2>Lifetime Access</h2>
-              </div>
-            </div>
-          </section>
+          
         </div>
         <Categories/>
+        <Courses/>
       </Router>
     </>
   );
