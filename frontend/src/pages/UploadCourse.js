@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 
 const UploadCourse = () => {
   const list = [
-    { name: "Dashbaord", to: "/dshboard" },
-    { name: "Dashboard", to: "/dshboard" },
-    { name: "Dashboard", to: "/dshboard" },
+    { name: "Dashbaord", to: "/dshboard", icon: "ri-profile-fill mx-2" },
+    { name: "About", to: "/about", icon: "ri-user-3-line mx-2" },
+    { name: "Comments", to: "/comments", icon: "ri-chat-1-line mx-2" },
+    { name: "Messages", to: "/messages", icon: "ri-message-3-line mx-2" },
+    { name: "Logout", to: "/logout", icon: "ri-logout-circle-r-line mx-2" },
   ];
   const username = "Samantha";
   const LanguageOptions = [
@@ -20,17 +22,17 @@ const UploadCourse = () => {
   ];
   return (
     <div className="grid grid-cols-6">
-      <div className="grid grid-rows-2 justify-center items-center px-12 py-8 border-r-2 border-gray-100 border-solid">
+      <div className="grid grid-rows-6  justify-center items-center px-12 border-r-2 border-gray-100 border-solid">
         <div className="flex flex-col items-center justify-center">
           <img
             src="https://i.ibb.co/5MXSrg8/cropped-logo.png"
-            className="w-[100px]"
+            className="w-16"
           />
         </div>
-        <div className="flex flex-col border-l-2 border-r-2 border-t-2 border-gray-50 border-solid">
+        <div className="grid grid-rows-5 gap-2">
           {list.map((element) => (
-            <span className="flex px-2 my-4 items-center justify-center border-b-2 border-gray-100 border-solid">
-              <i class="ri-profile-fill mx-2"></i>
+            <span className="flex pt-1 pb-4 px-8 border-b-2 border-gray-100 border-solid hover:bg-gray-200 hover:rounded-md">
+              <i className={element.icon}></i>
               <Link to={element.to}>{element.name}</Link>
             </span>
           ))}
@@ -155,10 +157,22 @@ const UploadCourse = () => {
                 placeholder="type here"
               />
             </div>
-            <div className="grid col-span-5 ">
-              <span className="text-gray-500">Title</span>
+            <div className="grid col-span-5">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                className="w-6 h-6 mx-4"
+              >
+                <path
+                  stroke-linecap="round"
+                  d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"
+                />
+              </svg>
               <input
-                type="text"
+                type="file"
                 className="bg-gray-200 px-2 py-2 rounded-xl"
                 placeholder="type here"
               />
