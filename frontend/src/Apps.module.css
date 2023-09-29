@@ -1,0 +1,94 @@
+.container {
+  width: 100%;
+}
+.cover {
+  background-image: url(./assets/hero-banner3.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 80vh;
+  background-attachment: fixed;
+}
+
+.coverOverlay {
+  background-color: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 0;
+  bottom: 21%;
+  left: 0;
+  right: 0;
+  min-height: 80vh;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
+  background-color: #ffffff;
+  position: relative;
+  top: -47px;
+  font-size: 12px;
+  margin: 0 auto;
+
+  max-width: 900px;
+  box-shadow: 0 0 30px -15px rgba(223, 10, 10, 0.4);
+  padding: 1rem auto;
+}
+
+.gridItem {
+  padding: 1rem auto;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.gridItem img {
+  padding: 6px;
+  border-radius: 40px;
+  background-color: black;
+  border-width: 15px;
+}
+
+.item2 img {
+  padding: 6px;
+  border-radius: 40px;
+  background-color: rgb(136, 214, 222);
+  border-width: 15px;
+}
+.gridItem h2 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 476px) {
+  .grid {
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 1rem;
+    padding: 1rem;
+    margin: 0 1rem;
+    
+  }
+}
+
+@media (min-width: 476px) and (max-width: 864px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem;
+    padding: 1rem;
+    margin: 0 1rem;
+  }
+  .gridItem:nth-child(3) {
+    grid-column: span 2;
+  }
+}
+
+@media (min-width: 864px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
+    padding: 1rem;
+    margin: 0 auto;
+  }
+}

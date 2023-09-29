@@ -1,24 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import { Link, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './components/Navbar/Navbar';
+import Apps from './Apps.module.css';
+import HeroSection from './components/HeroSection/HeroSection';
+import Categories from './components/Categories/Categories';
+import courses from './assets/courses.svg'
+import expert from './assets/expert.svg';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+        <div className={Apps.container}>
+          <div className={Apps.cover}>
+            <div className={Apps.coverOverlay}></div>
+          <Navbar />
+          <HeroSection/>
+          </div>
+
+          <section>
+            <div className={Apps.grid}>
+              <div className={Apps.gridItem}>
+                <img src={courses} alt="cor" />
+                <h2>100k Online Courses</h2>
+
+              </div>
+              <div className={Apps.gridItem + ' ' + Apps.item2}>
+                <img src={expert} alt="cor" />
+                <h2>Expert Instruction</h2>
+              </div>
+              <div className={Apps.gridItem}>
+                <img src={courses} alt="cor" />
+                <h2>Lifetime Access</h2>
+              </div>
+            </div>
+          </section>
+        </div>
+        <Categories/>
+      </Router>
+    </>
   );
 }
 
