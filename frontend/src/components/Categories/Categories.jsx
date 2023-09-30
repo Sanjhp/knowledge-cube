@@ -53,29 +53,29 @@ const Categories = () => {
             categoryName: "Technology"
         }
     ]
-  return (
-      <div className={category.topcontainer}>
-      <div className={category.container}>
-          <div className={category.Head}>              
-                  <h1>Top Categories</h1>
-                  <Link to="/" className={category.button}>
-                      See All Categories
-                  </Link>              
-          </div>
+    return (
+        <div className={category.topcontainer}>
+            <div className={category.container}>
+                <div className={category.Head}>
+                    <h1>Top Categories</h1>
+                    <Link to="/" className={category.button}>
+                        See All Categories
+                    </Link>
+                </div>
 
-          <div className={category.allCategories}>
-              <div className={category.grid}>
-                  {allCategories.map((item) => (
-                      <div className={category.gridItem} key={item.id}>
-                          <img src={item.img} alt={item.categoryName} />
-                          <p>{item.categoryName}</p>
-                      </div>
-                  ))}
-              </div>
-          </div>
-      </div>
-      </div>
-  )
+                <div className={category.allCategories}>
+                    <div className={category.grid}>
+                        {allCategories.map((item) => (
+                            <div className={category.gridItem} key={item.id}>
+                                <img src={item.img} alt={item.categoryName} />
+                                <p>{item.categoryName}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
 }
 
 export default Categories;

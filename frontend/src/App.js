@@ -3,8 +3,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Apps from "./Apps.module.css";
 import HeroSection from "./components/HeroSection/HeroSection";
 import Categories from "./components/Categories/Categories";
-// import courses from './assets/courses.svg'
-// import expert from './assets/expert.svg';
+import Reviews from './components/reviews/Reviews';
 import Courses from "./components/Courses/Courses";
 
 function App() {
@@ -20,6 +19,7 @@ function App() {
         </div>
         <Categories />
         <Courses />
+        <Reviews />
       </Router>
     </>
   );

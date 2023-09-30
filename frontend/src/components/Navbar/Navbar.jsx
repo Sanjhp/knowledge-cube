@@ -1,9 +1,9 @@
 import React from 'react'
 import styles from './Navbar.module.css';
-import { Link, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import logo from '../../assets/navbar-logo.png'
 function Navbar() {
-  
+
   return (
     <>
       <navbar className={styles.navbar}>

@@ -96,8 +96,9 @@
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 1rem;
     padding: 0.6rem;
-    margin: 0 2rem;
+    margin: 0 1.2rem;
     margin-top:-60vh ;
+    min-width: 56vh;
   }
   .gridItem:nth-child(3) {
     grid-column: span 2;
