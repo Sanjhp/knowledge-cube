@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import rstyle from './reviews.module.css';
-import r1 from '../../assets/reviews/girl-img-study.jpg';
-import r2 from '../../assets/reviews/testimonial-v2-1.jpg';
-import r3 from '../../assets/reviews/testimonial-v2-2.jpg';
+
 
 const Reviews = () => {
     const allReviews = [
