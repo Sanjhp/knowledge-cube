@@ -1,55 +1,47 @@
 import React from 'react'
 import category from './category.module.css';
 import { Link } from 'react-router-dom';
-import design from '../../assets/categories/designimg.jpg';
-import develeopment from '../../assets/categories/developmentimg.jpg';
-import Software from '../../assets/categories/softwareimg.jpg';
-import Business from '../../assets/categories/categories.jpg';
-import Marketing from '../../assets/categories/marketingimg.jpg';
-import Photography from '../../assets/categories/photographyimg.jpg';
-import Health from '../../assets/categories/healthimg.jpg';
-import Technology from '../../assets/categories/technologyimg.jpg'
 
 const Categories = () => {
     const allCategories = [
         {
             id: 1,
-            img: design,
+            img: "http://skilify.theuxuidesigner.com/images/img/designimg.jpg",
             categoryName: "Design"
         },
         {
             id: 2,
-            img: develeopment,
+            img: "http://skilify.theuxuidesigner.com/images/img/developmentimg.jpg",
             categoryName: "Development"
         },
         {
             id: 3,
-            img: Software,
+            img: "http://skilify.theuxuidesigner.com/images/img/softwareimg.jpg",
             categoryName: "IT & Software"
         },
         {
             id: 4,
-            img: Business,
+            img: "http://skilify.theuxuidesigner.com/images/img/categories.jpg",
             categoryName: "Business"
         },
         {
             id: 5,
-            img: Marketing,
+            img: "http://skilify.theuxuidesigner.com/images/img/marketingimg.jpg",
             categoryName: "Marketing"
         },
         {
             id: 6,
-            img: Photography,
+            img: "http://skilify.theuxuidesigner.com/images/img/photographyimg.jpg",
             categoryName: "Photography"
         },
         {
             id: 7,
-            img: Health,
+            img: "http://skilify.theuxuidesigner.com/images/img/healthimg.jpg",
             categoryName: "Health & Care"
         },
         {
             id: 8,
-            img: Technology,
+            img: "http://skilify.theuxuidesigner.com/images/img/technologyimg.jpg",
             categoryName: "Technology"
         }
     ]

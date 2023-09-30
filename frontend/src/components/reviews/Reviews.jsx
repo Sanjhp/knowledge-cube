@@ -8,20 +8,20 @@ const Reviews = () => {
     const allReviews = [
         {
             id: 1,
-            img: r1,
+            img: "http://skilify.theuxuidesigner.com/images/webp/testimonial-v2-1.webp",
             feedback:
                 'If you want to grow your career in the correct direction, you must register on skilify. This will allow you to learn many things from different courses',
             name: 'Bradley Smythe | Student',
         },
         {
             id: 2,
-            img: r2,
+            img: "http://skilify.theuxuidesigner.com/images/webp/testimonial-v2-2.webp",
             feedback: 'Skilify is the best platform that gives us the most meaningful complete courses for your career.',
             name: 'Riaz Surti | Hearthy Foods',
         },
         {
             id: 3,
-            img: r3,
+            img: "http://skilify.theuxuidesigner.com/images/webp/girl-img-study.webp",
             feedback:
                 'Are you finding a place where you will get all courses related to your career, then skilify is the right place. Here you will get a wide range of courses from which you can select the one for you.',
             name: 'Mahir Dindsa | Student',
