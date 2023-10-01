@@ -1,4 +1,9 @@
-.container {
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* .container {
   width: 100%;
 }
 .cover {
@@ -18,4 +23,4 @@
   left: 0;
   right: 0;
   min-height: 80vh;
-}
+} */

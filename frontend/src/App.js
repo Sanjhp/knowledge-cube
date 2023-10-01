@@ -1,43 +1,40 @@
-import { BrowserRouter as Router } from "react-router-dom";
-import Navbar from "./components/Navbar/Navbar";
-import Apps from "./Apps.module.css";
-import HeroSection from "./components/HeroSection/HeroSection";
-import Categories from "./components/Categories/Categories";
-import Reviews from './components/reviews/Reviews';
-import Courses from "./components/Courses/Courses";
-import Features from "./components/Features/Features";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Footer from "./components/Footer/Footer";
+import Home from "./pages/Home/Home";
+import Course from "./pages/UploadCourse/UploadCourse";
+import Categories from "./pages/CourseCategories/CourseCategories";
+import Updateprofile from "./pages/UpdateProfile/Updateprofile";
+import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import Signin from "./pages/Signin/Signin";
+import Signup from "./pages/Signup/Signup";
+// import Navbar from "./components/Navbar/Navbar";
+
 
 function App() {
   return (
     <>
       <Router>
-        <div className={Apps.container}>
-          <div className={Apps.cover}>
-            <div className={Apps.coverOverlay}></div>
-            <Navbar />
-            <HeroSection />
-          </div>
-        </div>
-        <Categories />
-        <Courses />
-        <Reviews />
-        <Features />
-        <Footer />
+        {/* <Navbar /> */}
+        {/* <Main/> */}
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/upload-course" element={<Course />} />
+          <Route exact path="/categories" element={<Categories />} />
+          <Route exact path="/login" element={<Signin />} />
+          <Route exact path="/register" element={<Signup />} />
+          <Route exact path="/profile-update" element={<Updateprofile />} />
+          <Route exact path="/forget-password" element={<ForgetPassword />} />
+          <Route exact path="/reset-password" element={<ResetPassword />} />
+          {/* <Route exact path="/collection" element={<Collection />} /> 
+          <Route exact path="/courses" element={<Courses />} />
+          <Route exact path="/features" element={<Features />} /> 
+          <Route exact path="/about" element={<About />} />
+          <Route exact path="/contact" element={<Contact />} />*/}
+        </Routes>
+       
       </Router>
     </>
   );
 }
-
 export default App;
-// {/* <Main />
-//           <Routes>
-//           <Route path="/" element={<Home />} />
-//           <Route path="/courses" element={<Courses />} />
-//           <Route path="/features" element={<Features />} />
-//           <Route path="/about" element={<About />} />
-//           <Route path="/contact" element={<Contact />} />
-//           <Route path="/login" element={<Login />} />
-//           <Route path="/register" element={<Register />} />
-//         </Routes>
-//           <Footer /> */}
