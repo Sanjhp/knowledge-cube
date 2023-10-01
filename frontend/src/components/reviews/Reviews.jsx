@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import rstyle from './reviews.module.css';
 
 
@@ -27,14 +27,27 @@ const Reviews = () => {
     ];
 
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [animationDirection, setAnimationDirection] = useState(null);
 
     const handleNext = () => {
+        setAnimationDirection("slideInFromRight");
         setCurrentIndex((prevIndex) => (prevIndex + 1) % allReviews.length);
     };
 
     const handlePrev = () => {
+        setAnimationDirection("slideInFromLeft");
         setCurrentIndex((prevIndex) => (prevIndex - 1 + allReviews.length) % allReviews.length);
     };
+
+    // Use useEffect to reset animationDirection after the animation duration
+    useEffect(() => {
+        if (animationDirection) {
+            const animationDuration = 500; // Adjust the duration to match your animation duration
+            setTimeout(() => {
+                setAnimationDirection(null);
+            }, animationDuration);
+        }
+    }, [animationDirection]);
 
     const currentReview = allReviews[currentIndex];
 
@@ -53,7 +66,7 @@ const Reviews = () => {
                     </div>
                 </div>
                 <div className={rstyle.row}>
-                    <div className={rstyle.reviewContainer }>
+                    <div className={`${rstyle.reviewContainer} ${animationDirection ? rstyle[animationDirection] : ''}`}>
                         <img src={currentReview.img} alt={currentReview.name} className={rstyle.reviewImage} />
                         <div className={rstyle.reviewContent}>
                             <p className={rstyle.feedback}>{currentReview.feedback}</p>
