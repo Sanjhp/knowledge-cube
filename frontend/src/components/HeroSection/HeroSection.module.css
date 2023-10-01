@@ -1,43 +1,41 @@
 .hero {
   min-height: 80vh;
   text-align: center;
-  filter:brightness(1);
+  filter: brightness(1);
 }
 
 .heading {
-  color:#fff;
+  color: #fff;
   margin-top: 50px;
   font-size: 40px;
-    font-weight: 600;
-    font-family: 'Martian Mono', monospace;
-  
+  font-weight: 600;
+  font-family: "Martian Mono", monospace;
 }
 
 .subheading {
   font-size: 20px;
-  color:#fff;
+  color: #fff;
 }
 .button {
   display: inline-block;
   padding: 10px 20px;
-  background-color: rgb(136, 214, 222)  ;
+  background-color: rgb(136, 214, 222);
   color: aliceblue;
   text-decoration: none;
   /* border: 1px solid #000; */
 }
 
 .button:hover {
-   box-shadow:0 0 10px rgba(136, 214, 222, 0.5); 
+  box-shadow: 0 0 10px rgba(136, 214, 222, 0.5);
 }
 
-@media  (max-width: 650px) {
-  .heading{
+@media (max-width: 650px) {
+  .heading {
     font-size: 30px;
   }
-  .subheading{
+  .subheading {
     font-size: 18px;
   }
-  
 }
 
 .grid {
@@ -87,7 +85,7 @@
     grid-gap: 1rem;
     padding: 1rem;
     margin: 0 1rem;
-   margin-top:-65vh ;
+    margin-top: -65vh;
   }
 }
 
@@ -97,7 +95,7 @@
     grid-gap: 1rem;
     padding: 0.6rem;
     margin: 0 1.2rem;
-    margin-top:-60vh ;
+    margin-top: -60vh;
     min-width: 56vh;
   }
   .gridItem:nth-child(3) {
@@ -111,16 +109,16 @@
     grid-gap: 1rem;
     padding: 1rem;
     margin: 0 2rem;
-    margin-top:-60vh ;
+    margin-top: -60vh;
   }
 }
 
-@media  (min-width: 976px) {
+@media (min-width: 976px) {
   .grid {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 1rem;
     padding: 1rem;
     margin: 0 auto;
-    margin-top:-60vh ;
+    margin-top: -60vh;
   }
 }
