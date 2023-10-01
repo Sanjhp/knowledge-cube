@@ -6,6 +6,7 @@ import Categories from "./components/Categories/Categories";
 import Reviews from './components/reviews/Reviews';
 import Courses from "./components/Courses/Courses";
 import Features from "./components/Features/Features";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Courses />
         <Reviews />
         <Features />
+        <Footer />
       </Router>
     </>
   );
