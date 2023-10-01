@@ -28,19 +28,18 @@
   flex-wrap: wrap;
 }
 .button {
-  display: inline-block;
+ background: rgb(136, 214, 222);
+  border-radius: 4px;
+  font-size: 16px;
   padding: 10px 20px;
-  background-color: rgb(136, 214, 222)  ;
   color: aliceblue;
   text-decoration: none;
-  /* border: 1px solid #000; */
-  border-radius: 4px;
   font-size: 16px;
   font-weight: bold;
 }
 
 .button:hover {
-   box-shadow:0 0 10px rgba(136, 214, 222, 0.5); 
+  box-shadow: 0 0 10px rgba(136, 214, 222, 0.5);
 }
 
 .gridItem {
@@ -51,7 +50,7 @@
   border-radius: 16px;
   padding-top: 16px;
   box-shadow: 0 0 30px -15px rgba(0, 0, 0, 0.4);
-  transition: transform 0.3s; 
+  transition: transform 0.3s;
 }
 
 .gridItem p {
@@ -85,30 +84,29 @@
   max-height: 20px;
 }
 
-h3{
-      color: #302D3A;
-    font-weight: 500;
-    font-size: 19px;
-    text-align: left;
-    margin-bottom: 2px;
+h3 {
+  color: #302d3a;
+  font-weight: 500;
+  font-size: 19px;
+  text-align: left;
+  margin-bottom: 2px;
 }
 
 .priceInfo {
   display: flex;
   flex-direction: row-reverse;
-  gap:10px;
+  gap: 10px;
 }
 
-.priceInfo  .discountedPrice{
-  
-      font-size: 18px;
-    color: #F68C20;
-    font-weight: bold;
-}
-.priceInfo .Originalprice{
-  text-decoration: line-through;  
+.priceInfo .discountedPrice {
   font-size: 18px;
-    color: #91929A;
+  color: #f68c20;
+  font-weight: bold;
+}
+.priceInfo .Originalprice {
+  text-decoration: line-through;
+  font-size: 18px;
+  color: #91929a;
 }
 
 .gridItem:hover {
@@ -117,7 +115,7 @@ h3{
 }
 
 @media (max-width: 576px) {
-  .Head{
+  .Head {
     align-items: center;
     justify-content: center;
     font-size: 14px;
@@ -125,19 +123,19 @@ h3{
   .grid {
     grid-template-columns: repeat(1, 1fr);
   }
-   .button{
+  .button {
     margin-left: 10px;
     margin-top: 10px;
     margin-bottom: 8px;
   }
 }
-@media  (min-width: 576px) and (max-width: 997px) {
+@media (min-width: 576px) and (max-width: 997px) {
   .Head {
     align-items: center;
     justify-content: center;
     font-size: 14px;
   }
-  .button{
+  .button {
     margin-left: 10px;
     margin-top: 10px;
     margin-bottom: 8px;
@@ -145,16 +143,15 @@ h3{
   .grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .container{
+  .container {
     padding: 0;
     margin: 2vh 6vw;
   }
-   .Head{
+  .Head {
     align-items: center;
     justify-content: space-between;
-    margin-right:12px ;
-    margin-left:12px ;
-    
+    margin-right: 12px;
+    margin-left: 12px;
   }
 }
 @media (min-width: 996px) and (max-width: 1186px) {
@@ -162,7 +159,7 @@ h3{
     align-items: center;
     justify-content: center;
   }
-  .button{
+  .button {
     margin-left: 10px;
     margin-top: 10px;
     margin-bottom: 8px;
@@ -170,25 +167,23 @@ h3{
   .grid {
     grid-template-columns: repeat(3, 1fr);
   }
-  .container{
+  .container {
     padding: 0;
     margin: 3vh 8vw;
   }
-   .Head{
+  .Head {
     align-items: center;
     justify-content: space-between;
-    margin-right:12px ;
-    margin-left:12px ;
-    
+    margin-right: 12px;
+    margin-left: 12px;
   }
 }
- 
 
 @media (min-width: 1186px) {
   .grid {
-    grid-template-columns: repeat(3 , 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
-  .container{
+  .container {
     padding: 0;
     margin: 4vh 16vw;
   }

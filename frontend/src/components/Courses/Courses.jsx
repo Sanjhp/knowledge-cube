@@ -1,12 +1,4 @@
-import React from 'react'
-import img1 from '../../assets/courses/crd-img.jpg';
-import img2 from '../../assets/courses/crd-img2.jpg'
-import img3 from '../../assets/courses/crd-img3.jpg';
-import img4 from '../../assets/courses/crd-img4.jpg';
-import img5 from '../../assets/courses/crd-img5.jpg';
-import star from '../../assets/courses/star.svg';
-import play from '../../assets/courses/crd-play.svg';
-import view from '../../assets/courses/crd-view.svg';
+import React from 'react' 
 import { Link } from 'react-router-dom'
 import courses from './courses.module.css'
 
@@ -15,7 +7,7 @@ const Courses = () => {
     const allCourses = [
         {
             id: 1,
-            img: img1,
+            img: "http://skilify.theuxuidesigner.com/images/webp/crd-img.webp",
             courseName: "Learn Python Programming Beginner",
             stars: 4.5,
             views: "49,00",
@@ -25,7 +17,7 @@ const Courses = () => {
         },
         {
             id: 2,
-            img: img2,
+            img: "http://skilify.theuxuidesigner.com/images/webp/crd-img2.webp",
             courseName: "Statistics Data Science and Business Analysis",
             stars: 4.3,
             views: "23,00",
@@ -35,7 +27,7 @@ const Courses = () => {
         },
         {
             id: 3,
-            img: img3,
+            img: "http://skilify.theuxuidesigner.com/images/webp/crd-img3.webp",
             courseName: "Learn HTML5 Programming Beginning",
             stars: 4.7,
             views: "70,00",
@@ -45,7 +37,7 @@ const Courses = () => {
         },
         {
             id: 4,
-            img: img1,
+            img: "http://skilify.theuxuidesigner.com/images/webp/crd-img.webp",
             courseName: "Software Development From A to Z Beginner",
             stars: 4.2,
             views: "35,00",
@@ -55,7 +47,7 @@ const Courses = () => {
         },
         {
             id: 5,
-            img: img4,
+            img: "http://skilify.theuxuidesigner.com/images/webp/crd-img4.webp",
             courseName: "Graphic Design Masterclass for Beginning",
             stars: 4.5,
             views: "49,00",
@@ -65,7 +57,7 @@ const Courses = () => {
         },
         {
             id: 6,
-            img: img5,
+            img: "http://skilify.theuxuidesigner.com/images/webp/crd-img5.webp",
             courseName: "The Complete JavaScript Course Beginner",
             stars: 4.8,
             views: "85,00",
@@ -96,13 +88,13 @@ const Courses = () => {
 
                                 <div className={courses.infoItems}>
                                     <p>
-                                        <img src={star} alt="star" /> {course.stars}
+                                        <img src="http://skilify.theuxuidesigner.com/images/svg/star.svg" alt="star" /> {course.stars}
                                     </p>
                                     <p>
-                                        <img src={view} alt="star" /> {course.views}
+                                        <img src="http://skilify.theuxuidesigner.com/images/svg/crd-view.svg" alt="star" /> {course.views}
                                     </p>
                                     <p>
-                                        <img src={play} alt="star" /> {course.plays}
+                                        <img src="http://skilify.theuxuidesigner.com/images/svg/crd-play.svg" alt="star" /> {course.plays}
                                     </p>
 
 

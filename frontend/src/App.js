@@ -5,6 +5,7 @@ import HeroSection from "./components/HeroSection/HeroSection";
 import Categories from "./components/Categories/Categories";
 import Reviews from './components/reviews/Reviews';
 import Courses from "./components/Courses/Courses";
+import Features from "./components/Features/Features";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Categories />
         <Courses />
         <Reviews />
+        <Features />
       </Router>
     </>
   );
