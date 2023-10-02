@@ -4,13 +4,17 @@ import {BrowserRouter , Routes , Route} from "react-router-dom"
 import UploadCourse from './pages/UploadCourse';
 import CourseHeader from './pages/CourseHeader';
 import CourseCollection from './pages/CourseCollection';
+import AllCourses from './pages/AllCourses';
 
 function App() {
   return (
     <BrowserRouter>
     <Routes>
-      <Route path="/" element={<CourseCollection/>}></Route>
+      <Route path="/" element={<AllCourses/>}></Route>
     </Routes>
+      <UploadCourse/>
+      <CourseHeader/>
+      <CourseCollection/>
     </BrowserRouter>
   );
 }
