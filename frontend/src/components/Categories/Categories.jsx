@@ -46,17 +46,17 @@ const Categories = () => {
         }
     ]
     return (
-        <div className={category.topcontainer}>
-            <div className={category.container}>
+        <div className={category.topcontainer} style={{zIndex:"20"}}>
+            <div className={category.containerStyle}>
                 <div className={category.Head}>
                     <h1>Top Categories</h1>
-                    <Link to="/" className={category.button}>
+                    <Link to="/categories" className={category.button}>
                         See All Categories
                     </Link>
                 </div>
 
                 <div className={category.allCategories}>
-                    <div className={category.grid}>
+                    <div className={category.gridBox}>
                         {allCategories.map((item) => (
                             <div className={category.gridItem} key={item.id}>
                                 <img src={item.img} alt={item.categoryName} />

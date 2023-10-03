@@ -1,4 +1,4 @@
-.grid {
+.gridBox {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 1em;
@@ -20,7 +20,7 @@
   margin-top: 18vh;
   
 }
-.container{
+.containerStyle{
   margin: 2px 18vw;
   
 }
@@ -75,7 +75,7 @@ margin: 0;
     align-items: center;
     justify-content: center;
   }
-  .grid {
+  .gridBox {
     grid-template-columns: repeat(1, 1fr);
   }
    .button{
@@ -101,10 +101,10 @@ margin: 0;
     margin-top: 10px;
     margin-bottom: 8px;
   }
-  .grid {
+  .gridBox {
     grid-template-columns: repeat(2, 1fr);
   }
-  .container{
+  .containerStyle{
     padding: 0;
    margin: 0 6vw;
   }
@@ -115,20 +115,20 @@ margin: 0;
 
 @media (min-width: 996px) and (max-width: 1186px) {
  
-  .grid {
+  .gridBox {
     grid-template-columns: repeat(3, 1fr);
   }
-  .container{
+  .containerStyle{
     padding: 0;
     margin: 0 8vw;
   }
 }
 
 @media (min-width: 1186px) {
-  .grid {
+  .gridBox {
     grid-template-columns: repeat(4, 1fr);
   }
-  .container{
+  .containerStyle{
     padding: 0;
     margin: 0 16vw;
   }
