@@ -1,5 +1,5 @@
 .hero {
-  min-height: 80vh;
+  
   text-align: center;
   filter: brightness(1);
 }
@@ -38,13 +38,13 @@
   }
 }
 
-.grid {
+.gridBox {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 2rem;
   background-color: #ffffff;
   position: relative;
-  top: 25vh;
+  top: 70vh;
   font-size: 12px;
   margin: 0 auto;
   max-width: 900px;
@@ -80,7 +80,7 @@
   text-overflow: ellipsis;
 }
 @media (max-width: 476px) {
-  .grid {
+  .gridBox {
     grid-template-columns: repeat(1, 1fr);
     grid-gap: 1rem;
     padding: 1rem;
@@ -90,7 +90,7 @@
 }
 
 @media (min-width: 476px) and (max-width: 865px) {
-  .grid {
+  .gridBox {
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 1rem;
     padding: 0.6rem;
@@ -104,7 +104,7 @@
 }
 
 @media (min-width: 864px) and (max-width: 976px) {
-  .grid {
+  .gridBox {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 1rem;
     padding: 1rem;
@@ -114,7 +114,7 @@
 }
 
 @media (min-width: 976px) {
-  .grid {
+  .gridBox {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 1rem;
     padding: 1rem;

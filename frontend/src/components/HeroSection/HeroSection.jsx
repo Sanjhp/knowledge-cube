@@ -12,8 +12,9 @@ function HeroSection() {
         <p className={HSstyles.subheading}>Here you can select the best course for your career from a wide range of courses.</p>
         <a href="https://www.youtube.com/watch?v=I2UBjN5ER4s&t=847s&ab_channel=BrianDesign" className={HSstyles.button}>Get started now for free</a>
       </section>
+
       <section>
-        <div className={HSstyles.grid}>
+        <div className={HSstyles.gridBox}>
           <div className={HSstyles.gridItem}>
             <img src={courses} alt="cor" />
             <h2>100k Online Courses</h2>
