@@ -28,18 +28,86 @@ const CourseOverview = () => {
     },
   ];
   const categories = ["Overview", "Curriculum", "Instructor", "Reviews"];
-  const courseDesc = [
+  const cards = [
     {
-      CourseDescription:
-        " Do esse nisi duis do reprehenderit tempor tempor veniam commodo velit.Anim non incididunt aliqua reprehenderit Lorem laboris commodo eu deserunt nulla sunt proident laboris eiusmod.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
+      name: "Overview",
+      details: [
+        {
+          header: "Course Description1",
+          detail:
+            " Do esse nisi duis do reprehenderit tempor tempor veniam commodo velit.Anim non incididunt aliqua reprehenderit Lorem laboris commodo eu deserunt nulla sunt proident laboris eiusmod.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
+        },
+        {
+          header: "Course Description2",
+          detail:
+            " Dolore proident consectetur fugiat Lorem aute cupidatat non in eu Lorem ullamco sint anim.Aute sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
+        },
+        {
+          header: "Course Description3",
+          detail:
+            " Et ex commodo voluptate dolore esse sunt nisi mollit reprehenderit commodo amet ea occaecat ullamco.Ex quis tempor velit id commodo eu qui deserunt nostrud ut aute magna. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
+        },
+      ],
     },
     {
-      CourseDescription:
-        " Dolore proident consectetur fugiat Lorem aute cupidatat non in eu Lorem ullamco sint anim.Aute sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
+      name: "Curriculum",
+      details: [
+        {
+          header: "Course Description4",
+          detail:
+            " Do esse nisi duis do reprehenderit tempor tempor veniam commodo velit.Anim non incididunt aliqua reprehenderit Lorem laboris commodo eu deserunt nulla sunt proident laboris eiusmod.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
+        },
+        {
+          header: "Course Description5",
+          detail:
+            " Dolore proident consectetur fugiat Lorem aute cupidatat non in eu Lorem ullamco sint anim.Aute sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
+        },
+        {
+          header: "Course Description6",
+          detail:
+            " Et ex commodo voluptate dolore esse sunt nisi mollit reprehenderit commodo amet ea occaecat ullamco.Ex quis tempor velit id commodo eu qui deserunt nostrud ut aute magna. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
+        },
+      ],
     },
     {
-      CourseDescription:
-        " Et ex commodo voluptate dolore esse sunt nisi mollit reprehenderit commodo amet ea occaecat ullamco.Ex quis tempor velit id commodo eu qui deserunt nostrud ut aute magna. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
+      name: "Instructor",
+      details: [
+        {
+          header: "Course Description7",
+          detail:
+            " Do esse nisi duis do reprehenderit tempor tempor veniam commodo velit.Anim non incididunt aliqua reprehenderit Lorem laboris commodo eu deserunt nulla sunt proident laboris eiusmod.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
+        },
+        {
+          header: "Course Description8",
+          detail:
+            " Dolore proident consectetur fugiat Lorem aute cupidatat non in eu Lorem ullamco sint anim.Aute sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
+        },
+        {
+          header: "Course Description9",
+          detail:
+            " Et ex commodo voluptate dolore esse sunt nisi mollit reprehenderit commodo amet ea occaecat ullamco.Ex quis tempor velit id commodo eu qui deserunt nostrud ut aute magna. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
+        },
+      ],
+    },
+    {
+      name: "Reviews",
+      details: [
+        {
+          header: "Course Description10",
+          detail:
+            " Do esse nisi duis do reprehenderit tempor tempor veniam commodo velit.Anim non incididunt aliqua reprehenderit Lorem laboris commodo eu deserunt nulla sunt proident laboris eiusmod.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
+        },
+        {
+          header: "Course Description11",
+          detail:
+            " Dolore proident consectetur fugiat Lorem aute cupidatat non in eu Lorem ullamco sint anim.Aute sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
+        },
+        {
+          header: "Course Description12",
+          detail:
+            " Et ex commodo voluptate dolore esse sunt nisi mollit reprehenderit commodo amet ea occaecat ullamco.Ex quis tempor velit id commodo eu qui deserunt nostrud ut aute magna. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
+        },
+      ],
     },
   ];
   const coursePricecard = [
@@ -107,13 +175,22 @@ const CourseOverview = () => {
       ],
     },
   ];
+  const [set, setSet] = useState(cards[0].details);
+  function clickFunction(val) {
+    for (let i = 0; i < cards.length; i++) {
+      if (cards[i].name === val) {
+        setSet(cards[i].details);
+        break;
+      }
+    }
+  }
   return (
     <div className="grid grid-cols-12 gap-2">
       {/* HEADER AND INSIGHTS */}
       <div className="grid grid-cols-12 col-span-8 gap-4 px-12 py-12">
         {text.map((element) => (
           <div className="col-span-12">
-            <span className="text-6xl flex flex-cols col-span-5 my-4">
+            <span className="text-5xl flex flex-cols col-span-5 my-4">
               {element.title}
             </span>
             <span className="text-sm font-extralight flex flex-cols col-span-5 my-2">
@@ -124,7 +201,7 @@ const CourseOverview = () => {
                 <span className="flex flex-rows mx-2 col-span-4 justify-center items-center">
                   <i className={insight.iconClass}></i>
                   <span className="text-sm font-extralight">
-                    {insight.rating} {insight.views} {insight.duration}{" "}
+                    {insight.rating} {insight.views} {insight.duration}
                     {insight.lessons}
                   </span>
                 </span>
@@ -135,19 +212,21 @@ const CourseOverview = () => {
         {/* FILTER AND DESCRIPTION */}
         <div className="grid grid-cols-12 justify-center items-center col-span-12 col-start-1">
           {categories.map((key, element) => (
-            <div
+            <button
               key={key}
-              className="flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm hover:bg-orange-500 hover:text-white items-center bg-gray-200 text-gray-700 font-extralight"
+              className="flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm hover:bg-orange-500 hover:text-white items-center bg-gray-200 text-gray-700 font-extralight focus:bg-orange-500 focus:text-white active:bg-orange-400 active:text-white"
+              onClick={() => clickFunction(categories[element])}
             >
               {categories[element]}
-            </div>
+            </button>
           ))}
         </div>
         <div className="col-span-12 col-start-1">
-          {courseDesc.map((element) => (
-            <div className="col-span-8 py-4">
-              <span className="text-3xl">Course Description</span> <br />
-              {element.CourseDescription}
+          {set.map((ele) => (
+            <div className="col-span-8 my-4">
+              <span className="text-3xl">{ele.header}</span>
+              <br />
+              {ele.detail}
             </div>
           ))}
         </div>
