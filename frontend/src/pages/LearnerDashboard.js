@@ -48,13 +48,15 @@ const LearnerDashboard = () => {
           { courseName: "Course 1" },
           { lesson: "lesson1" },
           { lecturer: "Mr.Hemant Sharma" },
-          { time: "10:00 AM" },
+          { length: "length: 50min" },
+          { time: "time: 10:00 AM" },
         ],
         [
           { courseName: "Course 1" },
           { lesson: "lesson1" },
           { lecturer: "Mr.Hemant Sharma" },
-          { time: "10:00 AM" },
+          { length: "length: 50min" },
+          { time: "time: 10:00 AM" },
         ],
       ],
     },
@@ -65,13 +67,15 @@ const LearnerDashboard = () => {
           { courseName: "Course 1" },
           { lesson: "lesson1" },
           { lecturer: "Mr.Hemant Sharma" },
-          { time: "10:00 AM" },
+          { length: "length: 50min" },
+          { time: "time: 10:00 AM" },
         ],
         [
           { courseName: "Course 1" },
           { lesson: "lesson1" },
           { lecturer: "Mr.Hemant Sharma" },
-          { time: "10:00 AM" },
+          { length: "length: 50min" },
+          { time: "time:10: 00 AM" },
         ],
       ],
     },
@@ -134,7 +138,7 @@ const LearnerDashboard = () => {
             </span>
             <span className="border-b-[1px] border-gray-200 my-4"></span>
             <div className="flex justify-between items-center">
-              <span className="flex">{element.coursePrice} lessons</span>
+              <span className="flex">{element.coursePrice}</span>
               <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-32">
                 <Link
                   to="/new-course"
@@ -147,7 +151,7 @@ const LearnerDashboard = () => {
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-12 col-span-12">
+      <div className="grid grid-cols-12 col-span-12 gap-8">
         <div className="grid grid-cols-6 col-span-6 justify-between items-center px-8">
           <span className="col-span-5 col-start-1 text-2xl font-bold">
             Lesson Schedule
@@ -173,18 +177,87 @@ const LearnerDashboard = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-12 col-span-12 px-8">
-        <div className="grid grid-cols-6 col-span-6">
-            {
-                lessonSchedule.map((element)=>(
-                    <div className="grid grid-cols-6 col-span-6">
-                        <div className="grid grid-cols-6 col-span-6">
-                            <span className="text-xl font-semibold">{element.date}</span>
-
+      <div className="grid grid-cols-12 justify-between items-center col-span-12 gap-16 px-8">
+        <div className="grid grid-cols-6 justify-between items-center col-span-6">
+          {lessonSchedule.map((element) => (
+            <div className="grid grid-cols-6 col-span-6">
+              <span className="text-xl font-semibold mb-4">{element.date}</span>
+              <div className="grid grid-cols-6 col-span-6">
+                {element.lessons.map((key, index) => (
+                  <div
+                    key={key}
+                    className="grid grid-cols-3 col-span-6 shadow-[#3484B4] shadow-sm transition delay-50 hover:-translate-y-2 duration-500 rounded-md px-4 py-4 mb-4"
+                  >
+                    {element.lessons[index].map((elements) => (
+                      <div className="grid">
+                        <div className="grid">
+                          <span className="font-semibold">
+                            {elements.courseName}
+                          </span>
+                          <span className="text-l font-semibold">
+                            {elements.lesson}
+                          </span>
                         </div>
-                    </div>
-                ))
-            }
+
+                        <div className="grid">
+                          <div className="grid"></div>
+
+                          <span className="text-sm font-extralight">
+                            {elements.lecturer} {elements.time}
+                          </span>
+
+                          <span className="font-extralight text-sm">
+                            {elements.length}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-4 justify-between items-center col-span-6">
+          {lessonSchedule.map((element) => (
+            <div className="grid grid-cols-4 justify-between items-center col-span-4">
+              <span className="text-xl font-semibold mb-4">{element.date}</span>
+              <div className="grid grid-cols-6 col-span-6">
+                {element.lessons.map((key, index) => (
+                  <div
+                    key={key}
+                    className="grid grid-cols-3 col-span-6 shadow-[#3484B4] shadow-sm transition delay-50 hover:-translate-y-2 duration-500 rounded-md px-4 py-4 mb-4 bg-[#3484B4]"
+                  >
+                    {element.lessons[index].map((elements) => (
+                      <div className="grid">
+                        <div className="grid">
+                          <span className="font-semibold text-white">
+                            {elements.courseName}
+                          </span>
+                          <span className="text-l font-semibold text-white">
+                            {elements.lesson}
+                          </span>
+                        </div>
+
+                        <div className="grid">
+                          <div className="grid"></div>
+
+                          <span className="text-sm font-extralight text-white">
+                            {elements.lecturer} {elements.time}
+                          </span>
+
+                          <span className="font-extralight text-sm text-white">
+                            {elements.length}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
