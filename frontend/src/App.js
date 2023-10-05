@@ -18,6 +18,7 @@ import CourseOverview from "./pages/CourseOverview";
 import Features from "./components/Features/Features";
 import CourseCategories from "./pages/CourseCategories/CourseCategories";
 import LearnerDashboard from "./pages/LearnerDashboard";
+import CreaterDashboard from "./pages/CreaterDashboard";
 function App() {
   return (
     <BrowserRouter>
@@ -43,7 +44,8 @@ function App() {
       {/* <CourseHeader /> */}
       {/* <CourseCollection /> */}
       {/* <CourseOverview/> */}
-      <LearnerDashboard/>
+      {/* <LearnerDashboard/> */}
+      <CreaterDashboard/>
     </BrowserRouter>
   );
 }
