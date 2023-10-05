@@ -39,12 +39,12 @@ function App() {
         {/* <Route exact path="/contact" element={<Contact />} /> */}
       </Routes>
 
-      {/* <AllCourses/>   */}
-      {/* <UploadCourse /> */}
-      {/* <CourseHeader /> */}
-      {/* <CourseCollection /> */}
-      {/* <CourseOverview/> */}
-      {/* <LearnerDashboard/> */}
+      <AllCourses/>  
+      <UploadCourse />
+      <CourseHeader />
+      <CourseCollection />
+      <CourseOverview/>
+      <LearnerDashboard/>
       <CreaterDashboard/>
     </BrowserRouter>
   );

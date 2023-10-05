@@ -113,7 +113,7 @@ const CreaterDashboard = () => {
           <i class="ri-search-line -ml-2 bg-black px-4 py-2 rounded-tr-md rounded-br-md text-white shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] hover:bg-gray-400 hover:text-black text-xs"></i>
         </span>
 
-        <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-32">
+        <div className="bg-black border-black border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-black hover:border-black hover:border-2 hover:border-solid w-32">
           <Link
             to="/new-course"
             className="flex flex-row justify-center items-center text-xs"
