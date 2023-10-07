@@ -13,9 +13,9 @@ const AllCourses = () => {
         {
           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
           insights: [
-            { stars: "8", class: "ri-star-line text-yellow-500" },
-            { views: "12", class: "ri-eye-line text-red-500" },
-            { lessons: "4", class: "ri-play-circle-line text-green-500" },
+            { stars: "8", class: "ri-star-line text-yellow-500 text-base" },
+            // { views: "12", class: "ri-eye-line text-red-500" },
+            // { lessons: "4", class: "ri-play-circle-line text-green-500" },
           ],
           courseName: "Introduction to Python Programming",
           info: [
@@ -23,10 +23,10 @@ const AllCourses = () => {
               instructor: "Dr. Hemant Sharma",
               class: "text-gray-400 font-extralight text-sm",
             },
-            {
-              actPrice: "$456",
-              class: "text-gray-400 text-sm font-extralight line-through",
-            },
+            // {
+            //   actPrice: "$456",
+            //   class: "text-gray-400 text-sm font-extralight line-through",
+            // },
             {
               disPrice: "$100",
               class: "text-xl font-semibold text-orange-300",
@@ -44,9 +44,9 @@ const AllCourses = () => {
         {
           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
           insights: [
-            { stars: "8", class: "ri-star-line text-yellow-500" },
-            { views: "12", class: "ri-eye-line text-red-500" },
-            { lessons: "4", class: "ri-play-circle-line text-green-500" },
+            { stars: "8", class: "ri-star-line text-yellow-500 text-base" },
+            // { views: "12", class: "ri-eye-line text-red-500" },
+            // { lessons: "4", class: "ri-play-circle-line text-green-500" },
           ],
           courseName: "Introduction to Python Programming",
           info: [
@@ -54,10 +54,10 @@ const AllCourses = () => {
               instructor: "Dr. Hemant Sharma",
               class: "text-gray-400 font-extralight text-sm",
             },
-            {
-              actPrice: "$456",
-              class: "text-gray-400 text-sm font-extralight line-through",
-            },
+            // {
+            //   actPrice: "$456",
+            //   class: "text-gray-400 text-sm font-extralight line-through",
+            // },
             {
               disPrice: "$100",
               class: "text-xl font-semibold text-orange-300",
@@ -75,9 +75,9 @@ const AllCourses = () => {
         {
           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
           insights: [
-            { stars: "8", class: "ri-star-line text-yellow-500" },
-            { views: "12", class: "ri-eye-line text-red-500" },
-            { lessons: "4", class: "ri-play-circle-line text-green-500" },
+            { stars: "8", class: "ri-star-line text-yellow-500 text-base" },
+            // { views: "12", class: "ri-eye-line text-red-500" },
+            // { lessons: "4", class: "ri-play-circle-line text-green-500" },
           ],
           courseName: "Introduction to Python Programming",
           info: [
@@ -85,10 +85,10 @@ const AllCourses = () => {
               instructor: "Dr. Hemant Sharma",
               class: "text-gray-400 font-extralight text-sm",
             },
-            {
-              actPrice: "$456",
-              class: "text-gray-400 text-sm font-extralight line-through",
-            },
+            // {
+            //   actPrice: "$456",
+            //   class: "text-gray-400 text-sm font-extralight line-through",
+            // },
             {
               disPrice: "$100",
               class: "text-xl font-semibold text-orange-300",
@@ -106,9 +106,9 @@ const AllCourses = () => {
         {
           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
           insights: [
-            { stars: "8", class: "ri-star-line text-yellow-500" },
-            { views: "12", class: "ri-eye-line text-red-500" },
-            { lessons: "4", class: "ri-play-circle-line text-green-500" },
+            { stars: "8", class: "ri-star-line text-yellow-500 text-base" },
+            // { views: "12", class: "ri-eye-line text-red-500" },
+            // { lessons: "4", class: "ri-play-circle-line text-green-500" },
           ],
           courseName: "Introduction to Python Programming",
           info: [
@@ -116,10 +116,10 @@ const AllCourses = () => {
               instructor: "Dr. Hemant Sharma",
               class: "text-gray-400 font-extralight text-sm",
             },
-            {
-              actPrice: "$456",
-              class: "text-gray-400 text-sm font-extralight line-through",
-            },
+            // {
+            //   actPrice: "$456",
+            //   class: "text-gray-400 text-sm font-extralight line-through",
+            // },
             {
               disPrice: "$100",
               class: "text-xl font-semibold text-orange-300",
@@ -137,9 +137,9 @@ const AllCourses = () => {
         {
           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
           insights: [
-            { stars: "8", class: "ri-star-line text-yellow-500" },
-            { views: "12", class: "ri-eye-line text-red-500" },
-            { lessons: "4", class: "ri-play-circle-line text-green-500" },
+            { stars: "8", class: "ri-star-line text-yellow-500 text-base" },
+            // { views: "12", class: "ri-eye-line text-red-500" },
+            // { lessons: "4", class: "ri-play-circle-line text-green-500" },
           ],
           courseName: "Introduction to Python Programming",
           info: [
@@ -147,10 +147,10 @@ const AllCourses = () => {
               instructor: "Dr. Hemant Sharma",
               class: "text-gray-400 font-extralight text-sm",
             },
-            {
-              actPrice: "$456",
-              class: "text-gray-400 text-sm font-extralight line-through",
-            },
+            // {
+            //   actPrice: "$456",
+            //   class: "text-gray-400 text-sm font-extralight line-through",
+            // },
             {
               disPrice: "$100",
               class: "text-xl font-semibold text-orange-300",
@@ -168,9 +168,9 @@ const AllCourses = () => {
         {
           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
           insights: [
-            { stars: "8", class: "ri-star-line text-yellow-500" },
-            { views: "12", class: "ri-eye-line text-red-500" },
-            { lessons: "4", class: "ri-play-circle-line text-green-500" },
+            { stars: "8", class: "ri-star-line text-yellow-500 text-base" },
+            // { views: "12", class: "ri-eye-line text-red-500" },
+            // { lessons: "4", class: "ri-play-circle-line text-green-500" },
           ],
           courseName: "Introduction to Python Programming",
           info: [
@@ -178,10 +178,10 @@ const AllCourses = () => {
               instructor: "Dr. Hemant Sharma",
               class: "text-gray-400 font-extralight text-sm",
             },
-            {
-              actPrice: "$456",
-              class: "text-gray-400 text-sm font-extralight line-through",
-            },
+            // {
+            //   actPrice: "$456",
+            //   class: "text-gray-400 text-sm font-extralight line-through",
+            // },
             {
               disPrice: "$100",
               class: "text-xl font-semibold text-orange-300",
@@ -211,9 +211,9 @@ const AllCourses = () => {
             {
               img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
               insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
+                { stars: "8", class: "ri-star-line text-yellow-500 text-base" },
+                // { views: "12", class: "ri-eye-line text-red-500" },
+                // { lessons: "4", class: "ri-play-circle-line text-green-500" },
               ],
               courseName: "Introduction to Python Programming",
               info: [
@@ -221,10 +221,10 @@ const AllCourses = () => {
                   instructor: "Dr. Hemant Sharma",
                   class: "text-gray-400 font-extralight text-sm",
                 },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
+                // {
+                //   actPrice: "$456",
+                //   class: "text-gray-400 text-sm font-extralight line-through",
+                // },
                 {
                   disPrice: "$100",
                   class: "text-xl font-semibold text-orange-300",
@@ -242,9 +242,9 @@ const AllCourses = () => {
             {
               img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
               insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
+                { stars: "8", class: "ri-star-line text-yellow-500 text-base" },
+                // { views: "12", class: "ri-eye-line text-red-500" },
+                // { lessons: "4", class: "ri-play-circle-line text-green-500" },
               ],
               courseName: "Introduction to Python Programming",
               info: [
@@ -252,10 +252,10 @@ const AllCourses = () => {
                   instructor: "Dr. Hemant Sharma",
                   class: "text-gray-400 font-extralight text-sm",
                 },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
+                // {
+                //   actPrice: "$456",
+                //   class: "text-gray-400 text-sm font-extralight line-through",
+                // },
                 {
                   disPrice: "$100",
                   class: "text-xl font-semibold text-orange-300",
@@ -273,9 +273,9 @@ const AllCourses = () => {
             {
               img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
               insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
+                { stars: "8", class: "ri-star-line text-yellow-500 text-base" },
+                // { views: "12", class: "ri-eye-line text-red-500" },
+                // { lessons: "4", class: "ri-play-circle-line text-green-500" },
               ],
               courseName: "Introduction to Python Programming",
               info: [
@@ -283,10 +283,10 @@ const AllCourses = () => {
                   instructor: "Dr. Hemant Sharma",
                   class: "text-gray-400 font-extralight text-sm",
                 },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
+                // {
+                //   actPrice: "$456",
+                //   class: "text-gray-400 text-sm font-extralight line-through",
+                // },
                 {
                   disPrice: "$100",
                   class: "text-xl font-semibold text-orange-300",
@@ -304,9 +304,9 @@ const AllCourses = () => {
             {
               img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
               insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
+                { stars: "8", class: "ri-star-line text-yellow-500 text-base" },
+                // { views: "12", class: "ri-eye-line text-red-500" },
+                // { lessons: "4", class: "ri-play-circle-line text-green-500" },
               ],
               courseName: "Introduction to Python Programming",
               info: [
@@ -314,10 +314,10 @@ const AllCourses = () => {
                   instructor: "Dr. Hemant Sharma",
                   class: "text-gray-400 font-extralight text-sm",
                 },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
+                // {
+                //   actPrice: "$456",
+                //   class: "text-gray-400 text-sm font-extralight line-through",
+                // },
                 {
                   disPrice: "$100",
                   class: "text-xl font-semibold text-orange-300",
@@ -335,9 +335,9 @@ const AllCourses = () => {
             {
               img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
               insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
+                { stars: "8", class: "ri-star-line text-yellow-500 text-base" },
+                // { views: "12", class: "ri-eye-line text-red-500" },
+                // { lessons: "4", class: "ri-play-circle-line text-green-500" },
               ],
               courseName: "Introduction to Python Programming",
               info: [
@@ -345,10 +345,10 @@ const AllCourses = () => {
                   instructor: "Dr. Hemant Sharma",
                   class: "text-gray-400 font-extralight text-sm",
                 },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
+                // {
+                //   actPrice: "$456",
+                //   class: "text-gray-400 text-sm font-extralight line-through",
+                // },
                 {
                   disPrice: "$100",
                   class: "text-xl font-semibold text-orange-300",
@@ -366,9 +366,9 @@ const AllCourses = () => {
             {
               img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
               insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
+                { stars: "8", class: "ri-star-line text-yellow-500 text-base" },
+                // { views: "12", class: "ri-eye-line text-red-500" },
+                // { lessons: "4", class: "ri-play-circle-line text-green-500" },
               ],
               courseName: "Introduction to Python Programming",
               info: [
@@ -376,10 +376,10 @@ const AllCourses = () => {
                   instructor: "Dr. Hemant Sharma",
                   class: "text-gray-400 font-extralight text-sm",
                 },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
+                // {
+                //   actPrice: "$456",
+                //   class: "text-gray-400 text-sm font-extralight line-through",
+                // },
                 {
                   disPrice: "$100",
                   class: "text-xl font-semibold text-orange-300",
@@ -972,8 +972,8 @@ const AllCourses = () => {
   // const focusLabelMap=[{All :true} , {Design:false} , {Marketing:false} , {Management:false}];
   const [container, setContainer] = useState(categories[0].details);
   // const [focusLabel, setFocusLabel] = useState(focusLabelMap);
-  const [light , setLight] = useState(true);
-  const [unlight , setUnlight] = useState(false);
+  const [light, setLight] = useState(true);
+  const [unlight, setUnlight] = useState(false);
   function filterFunction(val) {
     if (
       val != "All" &&
@@ -995,10 +995,10 @@ const AllCourses = () => {
     // setFocusLabel()
     // setFocusLabel(focusLabelMap);
   }
-  useEffect(()=>{
+  useEffect(() => {
     setLight(true);
     setUnlight(false);
-  },[])
+  }, []);
 
   return (
     <div className="grid grid-cols-12 justify-center items-center bg-blue-50 bg-opacity-30">
@@ -1018,29 +1018,28 @@ const AllCourses = () => {
         {categories.map((element) => (
           <button
             className={
-              element.name === "All" && light===true && unlight != true
+              element.name === "All" && light === true && unlight != true
                 ? "flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm active:bg-black active:text-white hover:bg-gray-700 hover:text-white items-center bg-black text-white font-extralight text-sm focus:bg-black focus:text-white w-16"
                 : "flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm active:bg-black active:text-white hover:bg-gray-700 hover:text-white items-center bg-gray-200 text-gray-700 font-extralight text-sm focus:bg-black focus:text-white w-16"
             }
             onClick={() => filterFunction(element.name)}
           >
             {element.name}
-        
           </button>
         ))}
-         <select className="ml-[-80px] flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm  items-center bg-gray-300 text-black font-extralight text-sm w-[200px]">
-            <option>Price</option>
-            <option>$300</option>
-            <option>$300</option>
-            <option>$300</option>
-           </select>
+        <select className="ml-[-80px] flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm  items-center bg-gray-300 text-black font-extralight text-sm w-[200px]">
+          <option>Price</option>
+          <option>$300</option>
+          <option>$300</option>
+          <option>$300</option>
+        </select>
 
-           <select className="ml-[-30px] flex col-span-2 justify-center mx-8 px-2 py-2 rounded-sm  items-center bg-gray-300 text-black font-extralight text-sm w-[200px]">
-            <option>Category</option>
-            <option>Design</option>
-            <option>Marketing</option>
-            <option>Management</option>
-           </select>
+        <select className="ml-[-30px] flex col-span-2 justify-center mx-8 px-2 py-2 rounded-sm  items-center bg-gray-300 text-black font-extralight text-sm w-[200px]">
+          <option>Category</option>
+          <option>Design</option>
+          <option>Marketing</option>
+          <option>Management</option>
+        </select>
       </div>
       <span className="grid col-span-10 col-start-2 border-b-[1px] border-[#3483b428]"></span>
 
