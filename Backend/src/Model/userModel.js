@@ -1,52 +1,52 @@
 import mongoose from "mongoose";
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken";
 
-const userSchema = mongoose.Schema({
+const userSchema = mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: false
+      type: String,
+      required: false,
     },
     email: {
-        type: String,
-        required: false
+      type: String,
+      required: false,
     },
     phone: {
-        type: String,
-        required: false
+      type: String,
+      required: false,
     },
     dob: {
-        type: String,
-        required: false
+      type: String,
+      required: false,
     },
     password: {
-        type: String,
-        required: false
+      type: String,
+      required: false,
     },
-    role:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Role',
+    role: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Role",
+    },
 
-    },
     otp: {
-        value: { type: String },
-        expire: { type: Date }
+      value: { type: String },
+      expire: { type: Date },
     },
-},
-    { timestamps: true }
+  },
+  { timestamps: true }
 );
 
 userSchema.methods.generateAuthToken = async function () {
-    try {
-        const token = jwt.sign({ _id: this.id }, process.env.SECRET_KEY, {
-            expiresIn: '24h',
-        });
-        return token;
-    } catch (error) {
-        throw new Error('Token generation failed');
-    }
-}
+  try {
+    const token = jwt.sign({ _id: this.id }, process.env.SECRET_KEY, {
+      expiresIn: "24h",
+    });
+    return token;
+  } catch (error) {
+    throw new Error("Token generation failed");
+  }
+};
 
-const UserModel = mongoose.model('user-details', userSchema)
+const UserModel = mongoose.model("user-details", userSchema);
 
 export default UserModel;
-
