@@ -21,10 +21,10 @@ import LearnerDashboard from "./pages/LearnerDashboard";
 import CreaterDashboard from "./pages/CreaterDashboard";
 import Navbar from "./components/Navbar/Navbar";
 import CreatorNavbar from "./components/Navbar/CreatorNavbar";
+import LearnerNavbar from "./components/Navbar/LearnerNavbar";
 function App() {
   return (
     <BrowserRouter>
-        <CreatorNavbar/>
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route exact path="/upload-course" element={<Course />} />
