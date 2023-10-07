@@ -5,8 +5,6 @@ const CreaterDashboard = () => {
   const stats = [
     {
       star: "1.4k",
-      views: "2.4k",
-      courses: "Course",
     },
   ];
   const card = [

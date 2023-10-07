@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -968,26 +968,38 @@ const AllCourses = () => {
       ],
     },
   ];
-  
+
   // const focusLabelMap=[{All :true} , {Design:false} , {Marketing:false} , {Management:false}];
   const [container, setContainer] = useState(categories[0].details);
   // const [focusLabel, setFocusLabel] = useState(focusLabelMap);
+  const [light , setLight] = useState(true);
+  const [unlight , setUnlight] = useState(false);
   function filterFunction(val) {
+    if (
+      val != "All" &&
+      (val === "Design" || val === "Marketing" || val === "Management")
+    ) {
+      setLight(false);
+      setUnlight(true);
+    }
     for (let i = 0; i < categories.length; i++) {
       if (categories[i].name === val) {
         setContainer(categories[i].details);
         break;
         // categories[ i ].set = true;
         // focusLabelMap[ i ] = true;
-      } 
+      }
       // categories[ i ].set = false ;
       // focusLabelMap[ i ] = false ;
     }
     // setFocusLabel()
     // setFocusLabel(focusLabelMap);
-    
   }
-  
+  useEffect(()=>{
+    setLight(true);
+    setUnlight(false);
+  },[])
+
   return (
     <div className="grid grid-cols-12 justify-center items-center bg-blue-50 bg-opacity-30">
       <div className="grid grid-cols-10 justify-center items-center col-span-12 px-20 py-20 rounded-sm bg-blue-100 bg-opacity-50">
@@ -1006,7 +1018,9 @@ const AllCourses = () => {
         {categories.map((element) => (
           <button
             className={
-              "flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm active:bg-black active:text-white hover:bg-gray-700 hover:text-white items-center bg-gray-200 text-gray-700 font-extralight text-sm focus:bg-black focus:text-white"
+              element.name === "All" && light===true && unlight != true
+                ? "flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm active:bg-black active:text-white hover:bg-gray-700 hover:text-white items-center bg-black text-white font-extralight text-sm focus:bg-black focus:text-white"
+                : "flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm active:bg-black active:text-white hover:bg-gray-700 hover:text-white items-center bg-gray-200 text-gray-700 font-extralight text-sm focus:bg-black focus:text-white"
             }
             onClick={() => filterFunction(element.name)}
           >

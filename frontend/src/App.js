@@ -23,14 +23,14 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path="/" element={<Home />}></Route> */}
-        {/* <Route exact path="/upload-course" element={<Course />} />
+        <Route path="/" element={<Home />}></Route>
+        <Route exact path="/upload-course" element={<Course />} />
         <Route exact path="/categories" element={<CourseCategories />} />
         <Route exact path="/login" element={<Signin />} />
         <Route exact path="/register" element={<Signup />} />
         <Route exact path="/profile-update" element={<Updateprofile />} />
         <Route exact path="/forget-password" element={<ForgetPassword />} />
-        <Route exact path="/reset-password" element={<ResetPassword />} /> */}
+        <Route exact path="/reset-password" element={<ResetPassword />} />
 
         {/* <Route exact path="/collection" element={<Collection />} />  */}
         {/* <Route exact path="/courses" element={<CourseCollection />} />
@@ -38,14 +38,6 @@ function App() {
         {/* <Route exact path="/about" element={<About />} /> */}
         {/* <Route exact path="/contact" element={<Contact />} /> */}
       </Routes>
-
-      <AllCourses/>  
-      <UploadCourse />
-      <CourseHeader />
-      <CourseCollection />
-      <CourseOverview/>
-      <LearnerDashboard/>
-      <CreaterDashboard/>
     </BrowserRouter>
   );
 }

@@ -176,7 +176,16 @@ const CourseOverview = () => {
     },
   ];
   const [set, setSet] = useState(cards[0].details);
+  const [highlight, setHighlight] = useState(true);
+  const [unhighlight , setUnhighlight] = useState(false);
   function clickFunction(val) {
+    if (
+      val != "Overview" &&
+      (val === "Curriculum" || val === "Instructor" || val === "Reviews")
+    ) {
+      setHighlight(false);
+      setUnhighlight(true);
+    }
     for (let i = 0; i < cards.length; i++) {
       if (cards[i].name === val) {
         setSet(cards[i].details);
@@ -184,6 +193,28 @@ const CourseOverview = () => {
       }
     }
   }
+  useEffect(() => {
+    setHighlight(true);
+    setUnhighlight(false);
+    function clickFunction(val) {
+      if (
+        val != "Overview" &&
+        (val === "Curriculum" || val === "Instructor" || val === "Reviews")
+      ) {
+        setHighlight(false);
+      }
+      for (let i = 0; i < cards.length; i++) {
+        if (cards[i].name === val) {
+          setSet(cards[i].details);
+          break;
+        }
+      }
+    } 
+  },[]);
+  // const style = {
+  //   color: highlight ? "white" : "black",
+  //   backgroundColor: highlight ? "black" : "gray",
+  // };
   return (
     <div className="grid grid-cols-12 gap-2">
       {/* HEADER AND INSIGHTS */}
@@ -214,7 +245,12 @@ const CourseOverview = () => {
           {categories.map((key, element) => (
             <button
               key={key}
-              className="flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm hover:bg-orange-500 hover:text-white items-center bg-gray-200 text-gray-700 font-extralight focus:bg-orange-500 focus:text-white active:bg-orange-400 active:text-white"
+              // style={ backgroundColor}
+              className={
+                categories[element] === "Overview" && highlight === true && unhighlight != true
+                  ? "flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm hover:bg-orange-500 hover:text-white items-center bg-orange-500 text-white font-extralight focus:bg-orange-500 focus:text-white active:bg-orange-400 active:text-white"
+                  : "flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm hover:bg-orange-500 hover:text-white items-center bg-gray-300 text-gray-700 font-extralight focus:bg-orange-500 focus:text-white active:bg-orange-400 active:text-white"
+              }
               onClick={() => clickFunction(categories[element])}
             >
               {categories[element]}
