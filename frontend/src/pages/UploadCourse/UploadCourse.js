@@ -22,23 +22,7 @@ const UploadCourse = () => {
   ];
   return (
     <div className="grid grid-cols-6">
-      <div className="grid grid-rows-2 justify-center items-center px-12 border-r-2 border-gray-100 border-solid">
-        {/* <div className="flex flex-col items-center justify-center">
-          <img
-            src="https://i.ibb.co/5MXSrg8/cropped-logo.png"
-            className="w-16"
-          />
-        </div> */}
-        <div className="grid grid-rows-5 gap-2">
-          {list.map((element) => (
-            <span className="flex pt-1 pb-4 px-8 border-b-2 border-gray-100 border-solid hover:bg-gray-200 hover:rounded-md">
-              <i className={element.icon}></i>
-              <Link to={element.to}>{element.name}</Link>
-            </span>
-          ))}
-        </div>
-      </div>
-      <div className="col-span-5 flex flex-col px-8 py-6">
+      <div className="col-span-6 flex flex-col px-8 py-6">
         <div className="flex flex-row justify-between items-center px-2 py-2">
           <div className="flex flex-row items-center">
             <div className="flex flex-col items-center justify-center mr-4">

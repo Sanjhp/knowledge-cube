@@ -19,9 +19,12 @@ import Features from "./components/Features/Features";
 import CourseCategories from "./pages/CourseCategories/CourseCategories";
 import LearnerDashboard from "./pages/LearnerDashboard";
 import CreaterDashboard from "./pages/CreaterDashboard";
+import Navbar from "./components/Navbar/Navbar";
+import CreatorNavbar from "./components/Navbar/CreatorNavbar";
 function App() {
   return (
     <BrowserRouter>
+        <CreatorNavbar/>
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route exact path="/upload-course" element={<Course />} />
@@ -32,6 +35,7 @@ function App() {
         <Route exact path="/forget-password" element={<ForgetPassword />} />
         <Route exact path="/reset-password" element={<ResetPassword />} />
         <Route exact path="/creator-dashboard" element={<CreaterDashboard />} />
+        <Route exact path="/learner-dashboard" element={<LearnerDashboard />} />
 
         {/* <Route exact path="/collection" element={<Collection />} />  */}
         {/* <Route exact path="/courses" element={<CourseCollection />} />
