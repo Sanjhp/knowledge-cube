@@ -31,6 +31,7 @@ function App() {
         <Route exact path="/profile-update" element={<Updateprofile />} />
         <Route exact path="/forget-password" element={<ForgetPassword />} />
         <Route exact path="/reset-password" element={<ResetPassword />} />
+        <Route exact path="/creator-dashboard" element={<CreaterDashboard />} />
 
         {/* <Route exact path="/collection" element={<Collection />} />  */}
         {/* <Route exact path="/courses" element={<CourseCollection />} />
