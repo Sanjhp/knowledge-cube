@@ -29,6 +29,7 @@ function App() {
         <Route path="/" element={<Home />}></Route>
         <Route exact path="/upload-course" element={<Course />} />
         <Route exact path="/categories" element={<CourseCategories />} />
+        <Route exact path="/all-courses" element={<AllCourses />} />
         <Route exact path="/login" element={<Signin />} />
         <Route exact path="/register" element={<Signup />} />
         <Route exact path="/profile-update" element={<Updateprofile />} />

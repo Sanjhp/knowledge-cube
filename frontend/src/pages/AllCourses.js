@@ -391,582 +391,582 @@ const AllCourses = () => {
         },
       ],
     },
-    {
-      name: "Design",
-      set: false,
-      details: [
-        {
-          index: "0",
-          fav: false,
-          category: "Development",
-          courseCard: [
-            {
-              img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
-              insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
-              ],
-              courseName: "Figma Tutorial",
-              info: [
-                {
-                  instructor: "Dr. Hemant Sharma",
-                  class: "text-gray-400 font-extralight text-sm",
-                },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
-                {
-                  disPrice: "$100",
-                  class: "text-xl font-semibold text-orange-300",
-                },
-              ],
-            },
-          ],
-          to: "/path",
-        },
-        {
-          index: "0",
-          fav: false,
-          category: "Development",
-          courseCard: [
-            {
-              img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
-              insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
-              ],
-              courseName: "Figma Tutorial",
-              info: [
-                {
-                  instructor: "Dr. Hemant Sharma",
-                  class: "text-gray-400 font-extralight text-sm",
-                },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
-                {
-                  disPrice: "$100",
-                  class: "text-xl font-semibold text-orange-300",
-                },
-              ],
-            },
-          ],
-          to: "/path",
-        },
-        {
-          index: "0",
-          fav: false,
-          category: "Development",
-          courseCard: [
-            {
-              img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
-              insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
-              ],
-              courseName: "Figma Tutorial",
-              info: [
-                {
-                  instructor: "Dr. Hemant Sharma",
-                  class: "text-gray-400 font-extralight text-sm",
-                },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
-                {
-                  disPrice: "$100",
-                  class: "text-xl font-semibold text-orange-300",
-                },
-              ],
-            },
-          ],
-          to: "/path",
-        },
-        {
-          index: "0",
-          fav: false,
-          category: "Development",
-          courseCard: [
-            {
-              img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
-              insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
-              ],
-              courseName: "Figma Tutorial",
-              info: [
-                {
-                  instructor: "Dr. Hemant Sharma",
-                  class: "text-gray-400 font-extralight text-sm",
-                },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
-                {
-                  disPrice: "$100",
-                  class: "text-xl font-semibold text-orange-300",
-                },
-              ],
-            },
-          ],
-          to: "/path",
-        },
-        {
-          index: "0",
-          fav: false,
-          category: "Development",
-          courseCard: [
-            {
-              img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
-              insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
-              ],
-              courseName: "Figma Tutorial",
-              info: [
-                {
-                  instructor: "Dr. Hemant Sharma",
-                  class: "text-gray-400 font-extralight text-sm",
-                },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
-                {
-                  disPrice: "$100",
-                  class: "text-xl font-semibold text-orange-300",
-                },
-              ],
-            },
-          ],
-          to: "/path",
-        },
-        {
-          index: "0",
-          fav: false,
-          category: "Development",
-          courseCard: [
-            {
-              img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
-              insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
-              ],
-              courseName: "Figma Tutorial",
-              info: [
-                {
-                  instructor: "Dr. Hemant Sharma",
-                  class: "text-gray-400 font-extralight text-sm",
-                },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
-                {
-                  disPrice: "$100",
-                  class: "text-xl font-semibold text-orange-300",
-                },
-              ],
-            },
-          ],
-          to: "/path",
-        },
-      ],
-    },
-    {
-      name: "Marketing",
-      set: false,
-      details: [
-        {
-          index: "0",
-          fav: false,
-          category: "Development",
-          courseCard: [
-            {
-              img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
-              insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
-              ],
-              courseName: "Introduction to Python Programming",
-              info: [
-                {
-                  instructor: "Dr. Hemant Sharma",
-                  class: "text-gray-400 font-extralight text-sm",
-                },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
-                {
-                  disPrice: "$100",
-                  class: "text-xl font-semibold text-orange-300",
-                },
-              ],
-            },
-          ],
-          to: "/path",
-        },
-        {
-          index: "0",
-          fav: false,
-          category: "Development",
-          courseCard: [
-            {
-              img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
-              insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
-              ],
-              courseName: "Introduction to Python Programming",
-              info: [
-                {
-                  instructor: "Dr. Hemant Sharma",
-                  class: "text-gray-400 font-extralight text-sm",
-                },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
-                {
-                  disPrice: "$100",
-                  class: "text-xl font-semibold text-orange-300",
-                },
-              ],
-            },
-          ],
-          to: "/path",
-        },
-        {
-          index: "0",
-          fav: false,
-          category: "Development",
-          courseCard: [
-            {
-              img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
-              insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
-              ],
-              courseName: "Introduction to Python Programming",
-              info: [
-                {
-                  instructor: "Dr. Hemant Sharma",
-                  class: "text-gray-400 font-extralight text-sm",
-                },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
-                {
-                  disPrice: "$100",
-                  class: "text-xl font-semibold text-orange-300",
-                },
-              ],
-            },
-          ],
-          to: "/path",
-        },
-        {
-          index: "0",
-          fav: false,
-          category: "Development",
-          courseCard: [
-            {
-              img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
-              insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
-              ],
-              courseName: "Introduction to Python Programming",
-              info: [
-                {
-                  instructor: "Dr. Hemant Sharma",
-                  class: "text-gray-400 font-extralight text-sm",
-                },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
-                {
-                  disPrice: "$100",
-                  class: "text-xl font-semibold text-orange-300",
-                },
-              ],
-            },
-          ],
-          to: "/path",
-        },
-        {
-          index: "0",
-          fav: false,
-          category: "Development",
-          courseCard: [
-            {
-              img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
-              insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
-              ],
-              courseName: "Introduction to Python Programming",
-              info: [
-                {
-                  instructor: "Dr. Hemant Sharma",
-                  class: "text-gray-400 font-extralight text-sm",
-                },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
-                {
-                  disPrice: "$100",
-                  class: "text-xl font-semibold text-orange-300",
-                },
-              ],
-            },
-          ],
-          to: "/path",
-        },
-        {
-          index: "0",
-          fav: false,
-          category: "Development",
-          courseCard: [
-            {
-              img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
-              insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
-              ],
-              courseName: "Introduction to Python Programming",
-              info: [
-                {
-                  instructor: "Dr. Hemant Sharma",
-                  class: "text-gray-400 font-extralight text-sm",
-                },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
-                {
-                  disPrice: "$100",
-                  class: "text-xl font-semibold text-orange-300",
-                },
-              ],
-            },
-          ],
-          to: "/path",
-        },
-      ],
-    },
-    {
-      name: "Management",
-      set: false,
-      details: [
-        {
-          index: "0",
-          fav: false,
-          category: "Development",
-          courseCard: [
-            {
-              img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
-              insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
-              ],
-              courseName: "Introduction to Python Programming",
-              info: [
-                {
-                  instructor: "Dr. Hemant Sharma",
-                  class: "text-gray-400 font-extralight text-sm",
-                },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
-                {
-                  disPrice: "$100",
-                  class: "text-xl font-semibold text-orange-300",
-                },
-              ],
-            },
-          ],
-          to: "/path",
-        },
-        {
-          index: "0",
-          fav: false,
-          category: "Development",
-          courseCard: [
-            {
-              img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
-              insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
-              ],
-              courseName: "Introduction to Python Programming",
-              info: [
-                {
-                  instructor: "Dr. Hemant Sharma",
-                  class: "text-gray-400 font-extralight text-sm",
-                },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
-                {
-                  disPrice: "$100",
-                  class: "text-xl font-semibold text-orange-300",
-                },
-              ],
-            },
-          ],
-          to: "/path",
-        },
-        {
-          index: "0",
-          fav: false,
-          category: "Development",
-          courseCard: [
-            {
-              img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
-              insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
-              ],
-              courseName: "Introduction to Python Programming",
-              info: [
-                {
-                  instructor: "Dr. Hemant Sharma",
-                  class: "text-gray-400 font-extralight text-sm",
-                },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
-                {
-                  disPrice: "$100",
-                  class: "text-xl font-semibold text-orange-300",
-                },
-              ],
-            },
-          ],
-          to: "/path",
-        },
-        {
-          index: "0",
-          fav: false,
-          category: "Development",
-          courseCard: [
-            {
-              img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
-              insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
-              ],
-              courseName: "Introduction to Python Programming",
-              info: [
-                {
-                  instructor: "Dr. Hemant Sharma",
-                  class: "text-gray-400 font-extralight text-sm",
-                },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
-                {
-                  disPrice: "$100",
-                  class: "text-xl font-semibold text-orange-300",
-                },
-              ],
-            },
-          ],
-          to: "/path",
-        },
-        {
-          index: "0",
-          fav: false,
-          category: "Development",
-          courseCard: [
-            {
-              img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
-              insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
-              ],
-              courseName: "Introduction to Python Programming",
-              info: [
-                {
-                  instructor: "Dr. Hemant Sharma",
-                  class: "text-gray-400 font-extralight text-sm",
-                },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
-                {
-                  disPrice: "$100",
-                  class: "text-xl font-semibold text-orange-300",
-                },
-              ],
-            },
-          ],
-          to: "/path",
-        },
-        {
-          index: "0",
-          fav: false,
-          category: "Development",
-          courseCard: [
-            {
-              img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
-              insights: [
-                { stars: "8", class: "ri-star-line text-yellow-500" },
-                { views: "12", class: "ri-eye-line text-red-500" },
-                { lessons: "4", class: "ri-play-circle-line text-green-500" },
-              ],
-              courseName: "Introduction to Python Programming",
-              info: [
-                {
-                  instructor: "Dr. Hemant Sharma",
-                  class: "text-gray-400 font-extralight text-sm",
-                },
-                {
-                  actPrice: "$456",
-                  class: "text-gray-400 text-sm font-extralight line-through",
-                },
-                {
-                  disPrice: "$100",
-                  class: "text-xl font-semibold text-orange-300",
-                },
-              ],
-            },
-          ],
-          to: "/path",
-        },
-      ],
-    },
+    // {
+    //   // name: "Design",
+    //   set: false,
+    //   details: [
+    //     {
+    //       index: "0",
+    //       fav: false,
+    //       category: "Development",
+    //       courseCard: [
+    //         {
+    //           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+    //           insights: [
+    //             { stars: "8", class: "ri-star-line text-yellow-500" },
+    //             { views: "12", class: "ri-eye-line text-red-500" },
+    //             { lessons: "4", class: "ri-play-circle-line text-green-500" },
+    //           ],
+    //           courseName: "Figma Tutorial",
+    //           info: [
+    //             {
+    //               instructor: "Dr. Hemant Sharma",
+    //               class: "text-gray-400 font-extralight text-sm",
+    //             },
+    //             {
+    //               actPrice: "$456",
+    //               class: "text-gray-400 text-sm font-extralight line-through",
+    //             },
+    //             {
+    //               disPrice: "$100",
+    //               class: "text-xl font-semibold text-orange-300",
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //       to: "/path",
+    //     },
+    //     {
+    //       index: "0",
+    //       fav: false,
+    //       category: "Development",
+    //       courseCard: [
+    //         {
+    //           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+    //           insights: [
+    //             { stars: "8", class: "ri-star-line text-yellow-500" },
+    //             { views: "12", class: "ri-eye-line text-red-500" },
+    //             { lessons: "4", class: "ri-play-circle-line text-green-500" },
+    //           ],
+    //           courseName: "Figma Tutorial",
+    //           info: [
+    //             {
+    //               instructor: "Dr. Hemant Sharma",
+    //               class: "text-gray-400 font-extralight text-sm",
+    //             },
+    //             {
+    //               actPrice: "$456",
+    //               class: "text-gray-400 text-sm font-extralight line-through",
+    //             },
+    //             {
+    //               disPrice: "$100",
+    //               class: "text-xl font-semibold text-orange-300",
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //       to: "/path",
+    //     },
+    //     {
+    //       index: "0",
+    //       fav: false,
+    //       category: "Development",
+    //       courseCard: [
+    //         {
+    //           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+    //           insights: [
+    //             { stars: "8", class: "ri-star-line text-yellow-500" },
+    //             { views: "12", class: "ri-eye-line text-red-500" },
+    //             { lessons: "4", class: "ri-play-circle-line text-green-500" },
+    //           ],
+    //           courseName: "Figma Tutorial",
+    //           info: [
+    //             {
+    //               instructor: "Dr. Hemant Sharma",
+    //               class: "text-gray-400 font-extralight text-sm",
+    //             },
+    //             {
+    //               actPrice: "$456",
+    //               class: "text-gray-400 text-sm font-extralight line-through",
+    //             },
+    //             {
+    //               disPrice: "$100",
+    //               class: "text-xl font-semibold text-orange-300",
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //       to: "/path",
+    //     },
+    //     {
+    //       index: "0",
+    //       fav: false,
+    //       category: "Development",
+    //       courseCard: [
+    //         {
+    //           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+    //           insights: [
+    //             { stars: "8", class: "ri-star-line text-yellow-500" },
+    //             { views: "12", class: "ri-eye-line text-red-500" },
+    //             { lessons: "4", class: "ri-play-circle-line text-green-500" },
+    //           ],
+    //           courseName: "Figma Tutorial",
+    //           info: [
+    //             {
+    //               instructor: "Dr. Hemant Sharma",
+    //               class: "text-gray-400 font-extralight text-sm",
+    //             },
+    //             {
+    //               actPrice: "$456",
+    //               class: "text-gray-400 text-sm font-extralight line-through",
+    //             },
+    //             {
+    //               disPrice: "$100",
+    //               class: "text-xl font-semibold text-orange-300",
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //       to: "/path",
+    //     },
+    //     {
+    //       index: "0",
+    //       fav: false,
+    //       category: "Development",
+    //       courseCard: [
+    //         {
+    //           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+    //           insights: [
+    //             { stars: "8", class: "ri-star-line text-yellow-500" },
+    //             { views: "12", class: "ri-eye-line text-red-500" },
+    //             { lessons: "4", class: "ri-play-circle-line text-green-500" },
+    //           ],
+    //           courseName: "Figma Tutorial",
+    //           info: [
+    //             {
+    //               instructor: "Dr. Hemant Sharma",
+    //               class: "text-gray-400 font-extralight text-sm",
+    //             },
+    //             {
+    //               actPrice: "$456",
+    //               class: "text-gray-400 text-sm font-extralight line-through",
+    //             },
+    //             {
+    //               disPrice: "$100",
+    //               class: "text-xl font-semibold text-orange-300",
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //       to: "/path",
+    //     },
+    //     {
+    //       index: "0",
+    //       fav: false,
+    //       category: "Development",
+    //       courseCard: [
+    //         {
+    //           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+    //           insights: [
+    //             { stars: "8", class: "ri-star-line text-yellow-500" },
+    //             { views: "12", class: "ri-eye-line text-red-500" },
+    //             { lessons: "4", class: "ri-play-circle-line text-green-500" },
+    //           ],
+    //           courseName: "Figma Tutorial",
+    //           info: [
+    //             {
+    //               instructor: "Dr. Hemant Sharma",
+    //               class: "text-gray-400 font-extralight text-sm",
+    //             },
+    //             {
+    //               actPrice: "$456",
+    //               class: "text-gray-400 text-sm font-extralight line-through",
+    //             },
+    //             {
+    //               disPrice: "$100",
+    //               class: "text-xl font-semibold text-orange-300",
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //       to: "/path",
+    //     },
+    //   ],
+    // },
+    // {
+    //   // name: "Marketing",
+    //   set: false,
+    //   details: [
+    //     {
+    //       index: "0",
+    //       fav: false,
+    //       category: "Development",
+    //       courseCard: [
+    //         {
+    //           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+    //           insights: [
+    //             { stars: "8", class: "ri-star-line text-yellow-500" },
+    //             { views: "12", class: "ri-eye-line text-red-500" },
+    //             { lessons: "4", class: "ri-play-circle-line text-green-500" },
+    //           ],
+    //           courseName: "Introduction to Python Programming",
+    //           info: [
+    //             {
+    //               instructor: "Dr. Hemant Sharma",
+    //               class: "text-gray-400 font-extralight text-sm",
+    //             },
+    //             {
+    //               actPrice: "$456",
+    //               class: "text-gray-400 text-sm font-extralight line-through",
+    //             },
+    //             {
+    //               disPrice: "$100",
+    //               class: "text-xl font-semibold text-orange-300",
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //       to: "/path",
+    //     },
+    //     {
+    //       index: "0",
+    //       fav: false,
+    //       category: "Development",
+    //       courseCard: [
+    //         {
+    //           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+    //           insights: [
+    //             { stars: "8", class: "ri-star-line text-yellow-500" },
+    //             { views: "12", class: "ri-eye-line text-red-500" },
+    //             { lessons: "4", class: "ri-play-circle-line text-green-500" },
+    //           ],
+    //           courseName: "Introduction to Python Programming",
+    //           info: [
+    //             {
+    //               instructor: "Dr. Hemant Sharma",
+    //               class: "text-gray-400 font-extralight text-sm",
+    //             },
+    //             {
+    //               actPrice: "$456",
+    //               class: "text-gray-400 text-sm font-extralight line-through",
+    //             },
+    //             {
+    //               disPrice: "$100",
+    //               class: "text-xl font-semibold text-orange-300",
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //       to: "/path",
+    //     },
+    //     {
+    //       index: "0",
+    //       fav: false,
+    //       category: "Development",
+    //       courseCard: [
+    //         {
+    //           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+    //           insights: [
+    //             { stars: "8", class: "ri-star-line text-yellow-500" },
+    //             { views: "12", class: "ri-eye-line text-red-500" },
+    //             { lessons: "4", class: "ri-play-circle-line text-green-500" },
+    //           ],
+    //           courseName: "Introduction to Python Programming",
+    //           info: [
+    //             {
+    //               instructor: "Dr. Hemant Sharma",
+    //               class: "text-gray-400 font-extralight text-sm",
+    //             },
+    //             {
+    //               actPrice: "$456",
+    //               class: "text-gray-400 text-sm font-extralight line-through",
+    //             },
+    //             {
+    //               disPrice: "$100",
+    //               class: "text-xl font-semibold text-orange-300",
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //       to: "/path",
+    //     },
+    //     {
+    //       index: "0",
+    //       fav: false,
+    //       category: "Development",
+    //       courseCard: [
+    //         {
+    //           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+    //           insights: [
+    //             { stars: "8", class: "ri-star-line text-yellow-500" },
+    //             { views: "12", class: "ri-eye-line text-red-500" },
+    //             { lessons: "4", class: "ri-play-circle-line text-green-500" },
+    //           ],
+    //           courseName: "Introduction to Python Programming",
+    //           info: [
+    //             {
+    //               instructor: "Dr. Hemant Sharma",
+    //               class: "text-gray-400 font-extralight text-sm",
+    //             },
+    //             {
+    //               actPrice: "$456",
+    //               class: "text-gray-400 text-sm font-extralight line-through",
+    //             },
+    //             {
+    //               disPrice: "$100",
+    //               class: "text-xl font-semibold text-orange-300",
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //       to: "/path",
+    //     },
+    //     {
+    //       index: "0",
+    //       fav: false,
+    //       category: "Development",
+    //       courseCard: [
+    //         {
+    //           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+    //           insights: [
+    //             { stars: "8", class: "ri-star-line text-yellow-500" },
+    //             { views: "12", class: "ri-eye-line text-red-500" },
+    //             { lessons: "4", class: "ri-play-circle-line text-green-500" },
+    //           ],
+    //           courseName: "Introduction to Python Programming",
+    //           info: [
+    //             {
+    //               instructor: "Dr. Hemant Sharma",
+    //               class: "text-gray-400 font-extralight text-sm",
+    //             },
+    //             {
+    //               actPrice: "$456",
+    //               class: "text-gray-400 text-sm font-extralight line-through",
+    //             },
+    //             {
+    //               disPrice: "$100",
+    //               class: "text-xl font-semibold text-orange-300",
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //       to: "/path",
+    //     },
+    //     {
+    //       index: "0",
+    //       fav: false,
+    //       category: "Development",
+    //       courseCard: [
+    //         {
+    //           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+    //           insights: [
+    //             { stars: "8", class: "ri-star-line text-yellow-500" },
+    //             { views: "12", class: "ri-eye-line text-red-500" },
+    //             { lessons: "4", class: "ri-play-circle-line text-green-500" },
+    //           ],
+    //           courseName: "Introduction to Python Programming",
+    //           info: [
+    //             {
+    //               instructor: "Dr. Hemant Sharma",
+    //               class: "text-gray-400 font-extralight text-sm",
+    //             },
+    //             {
+    //               actPrice: "$456",
+    //               class: "text-gray-400 text-sm font-extralight line-through",
+    //             },
+    //             {
+    //               disPrice: "$100",
+    //               class: "text-xl font-semibold text-orange-300",
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //       to: "/path",
+    //     },
+    //   ],
+    // },
+    // {
+    //   // name: "Management",
+    //   set: false,
+    //   details: [
+    //     {
+    //       index: "0",
+    //       fav: false,
+    //       category: "Development",
+    //       courseCard: [
+    //         {
+    //           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+    //           insights: [
+    //             { stars: "8", class: "ri-star-line text-yellow-500" },
+    //             { views: "12", class: "ri-eye-line text-red-500" },
+    //             { lessons: "4", class: "ri-play-circle-line text-green-500" },
+    //           ],
+    //           courseName: "Introduction to Python Programming",
+    //           info: [
+    //             {
+    //               instructor: "Dr. Hemant Sharma",
+    //               class: "text-gray-400 font-extralight text-sm",
+    //             },
+    //             {
+    //               actPrice: "$456",
+    //               class: "text-gray-400 text-sm font-extralight line-through",
+    //             },
+    //             {
+    //               disPrice: "$100",
+    //               class: "text-xl font-semibold text-orange-300",
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //       to: "/path",
+    //     },
+    //     {
+    //       index: "0",
+    //       fav: false,
+    //       category: "Development",
+    //       courseCard: [
+    //         {
+    //           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+    //           insights: [
+    //             { stars: "8", class: "ri-star-line text-yellow-500" },
+    //             { views: "12", class: "ri-eye-line text-red-500" },
+    //             { lessons: "4", class: "ri-play-circle-line text-green-500" },
+    //           ],
+    //           courseName: "Introduction to Python Programming",
+    //           info: [
+    //             {
+    //               instructor: "Dr. Hemant Sharma",
+    //               class: "text-gray-400 font-extralight text-sm",
+    //             },
+    //             {
+    //               actPrice: "$456",
+    //               class: "text-gray-400 text-sm font-extralight line-through",
+    //             },
+    //             {
+    //               disPrice: "$100",
+    //               class: "text-xl font-semibold text-orange-300",
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //       to: "/path",
+    //     },
+    //     {
+    //       index: "0",
+    //       fav: false,
+    //       category: "Development",
+    //       courseCard: [
+    //         {
+    //           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+    //           insights: [
+    //             { stars: "8", class: "ri-star-line text-yellow-500" },
+    //             { views: "12", class: "ri-eye-line text-red-500" },
+    //             { lessons: "4", class: "ri-play-circle-line text-green-500" },
+    //           ],
+    //           courseName: "Introduction to Python Programming",
+    //           info: [
+    //             {
+    //               instructor: "Dr. Hemant Sharma",
+    //               class: "text-gray-400 font-extralight text-sm",
+    //             },
+    //             {
+    //               actPrice: "$456",
+    //               class: "text-gray-400 text-sm font-extralight line-through",
+    //             },
+    //             {
+    //               disPrice: "$100",
+    //               class: "text-xl font-semibold text-orange-300",
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //       to: "/path",
+    //     },
+    //     {
+    //       index: "0",
+    //       fav: false,
+    //       category: "Development",
+    //       courseCard: [
+    //         {
+    //           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+    //           insights: [
+    //             { stars: "8", class: "ri-star-line text-yellow-500" },
+    //             { views: "12", class: "ri-eye-line text-red-500" },
+    //             { lessons: "4", class: "ri-play-circle-line text-green-500" },
+    //           ],
+    //           courseName: "Introduction to Python Programming",
+    //           info: [
+    //             {
+    //               instructor: "Dr. Hemant Sharma",
+    //               class: "text-gray-400 font-extralight text-sm",
+    //             },
+    //             {
+    //               actPrice: "$456",
+    //               class: "text-gray-400 text-sm font-extralight line-through",
+    //             },
+    //             {
+    //               disPrice: "$100",
+    //               class: "text-xl font-semibold text-orange-300",
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //       to: "/path",
+    //     },
+    //     {
+    //       index: "0",
+    //       fav: false,
+    //       category: "Development",
+    //       courseCard: [
+    //         {
+    //           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+    //           insights: [
+    //             { stars: "8", class: "ri-star-line text-yellow-500" },
+    //             { views: "12", class: "ri-eye-line text-red-500" },
+    //             { lessons: "4", class: "ri-play-circle-line text-green-500" },
+    //           ],
+    //           courseName: "Introduction to Python Programming",
+    //           info: [
+    //             {
+    //               instructor: "Dr. Hemant Sharma",
+    //               class: "text-gray-400 font-extralight text-sm",
+    //             },
+    //             {
+    //               actPrice: "$456",
+    //               class: "text-gray-400 text-sm font-extralight line-through",
+    //             },
+    //             {
+    //               disPrice: "$100",
+    //               class: "text-xl font-semibold text-orange-300",
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //       to: "/path",
+    //     },
+    //     {
+    //       index: "0",
+    //       fav: false,
+    //       category: "Development",
+    //       courseCard: [
+    //         {
+    //           img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+    //           insights: [
+    //             { stars: "8", class: "ri-star-line text-yellow-500" },
+    //             { views: "12", class: "ri-eye-line text-red-500" },
+    //             { lessons: "4", class: "ri-play-circle-line text-green-500" },
+    //           ],
+    //           courseName: "Introduction to Python Programming",
+    //           info: [
+    //             {
+    //               instructor: "Dr. Hemant Sharma",
+    //               class: "text-gray-400 font-extralight text-sm",
+    //             },
+    //             {
+    //               actPrice: "$456",
+    //               class: "text-gray-400 text-sm font-extralight line-through",
+    //             },
+    //             {
+    //               disPrice: "$100",
+    //               class: "text-xl font-semibold text-orange-300",
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //       to: "/path",
+    //     },
+    //   ],
+    // },
   ];
 
   // const focusLabelMap=[{All :true} , {Design:false} , {Marketing:false} , {Management:false}];
@@ -1009,24 +1009,38 @@ const AllCourses = () => {
             id="search"
             type="search"
             placeholder="search here..."
-            className="flex bg-white text-gray-500 font-thin px-2 py-2 hover:shadow-[0_0px_12px_12px_rgba(0,0,0,0.2)] rounded-md border-gray-100 shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] text-xs"
+            className="flex bg-white text-gray-500 font-thin px-2 py-2 hover:shadow-[0_0px_12px_12px_rgba(0,0,0,0.2)] rounded-md border-gray-100 shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] text-xs w-[300px]"
           />
           <i class="ri-search-line -ml-2 bg-black px-4 py-2 rounded-tr-md rounded-br-md text-white shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] hover:bg-gray-400 hover:text-black text-sm"></i>
         </span>
       </div>
-      <div className="grid grid-cols-10 justify-center items-center col-span-6 col-start-4 px-8 py-8">
+      <div className="grid grid-cols-10 justify-center items-center col-span-10 col-start-4 px-8 py-8">
         {categories.map((element) => (
           <button
             className={
               element.name === "All" && light===true && unlight != true
-                ? "flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm active:bg-black active:text-white hover:bg-gray-700 hover:text-white items-center bg-black text-white font-extralight text-sm focus:bg-black focus:text-white"
-                : "flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm active:bg-black active:text-white hover:bg-gray-700 hover:text-white items-center bg-gray-200 text-gray-700 font-extralight text-sm focus:bg-black focus:text-white"
+                ? "flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm active:bg-black active:text-white hover:bg-gray-700 hover:text-white items-center bg-black text-white font-extralight text-sm focus:bg-black focus:text-white w-16"
+                : "flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm active:bg-black active:text-white hover:bg-gray-700 hover:text-white items-center bg-gray-200 text-gray-700 font-extralight text-sm focus:bg-black focus:text-white w-16"
             }
             onClick={() => filterFunction(element.name)}
           >
             {element.name}
+        
           </button>
         ))}
+         <select className="ml-[-80px] flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm  items-center bg-gray-300 text-black font-extralight text-sm w-[200px]">
+            <option>Price</option>
+            <option>$300</option>
+            <option>$300</option>
+            <option>$300</option>
+           </select>
+
+           <select className="ml-[-30px] flex col-span-2 justify-center mx-8 px-2 py-2 rounded-sm  items-center bg-gray-300 text-black font-extralight text-sm w-[200px]">
+            <option>Category</option>
+            <option>Design</option>
+            <option>Marketing</option>
+            <option>Management</option>
+           </select>
       </div>
       <span className="grid col-span-10 col-start-2 border-b-[1px] border-[#3483b428]"></span>
 
