@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const LearnerNavbar = () => {
     const navigation = [
-        {name: "Dashboard", to:"/creator-dashboard"},
-        {name: "View Courses", to:"/courses"},
+        {name: "Dashboard", to:"/learner-dashboard"},
+        {name: "View Courses", to:"/categories"},
         // {name: "Edit Course", to:"/edit-course"},
         // {name: "Update Profile", to:"/"},
         {name: "Community Chat", to:"/community-chat"},

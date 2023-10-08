@@ -37,6 +37,7 @@ function App() {
         <Route exact path="/reset-password" element={<ResetPassword />} />
         <Route exact path="/creator-dashboard" element={<CreaterDashboard />} />
         <Route exact path="/learner-dashboard" element={<LearnerDashboard />} />
+        <Route exact path="/course-overview" element={<CourseOverview />} />
 
         {/* <Route exact path="/collection" element={<Collection />} />  */}
         {/* <Route exact path="/courses" element={<CourseCollection />} />

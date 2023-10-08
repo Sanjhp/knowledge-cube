@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import CreatorNavbar from "../components/Navbar/CreatorNavbar";
 
 const CreaterDashboard = () => {
   const stats = [
@@ -41,7 +42,9 @@ const CreaterDashboard = () => {
     },
   ];
   return (
-    <div className="grid grid-cols-12 justify-center items-center">
+    <div>
+      <CreatorNavbar/>
+       <div className="grid grid-cols-12 justify-center items-center">
       <div className="grid grid-cols-12 col-span-12 justify-between items-center gap-8 pt-8 px-4 col-start-2">
         <div className="grid col-span-2 bg-white shadow-gray-400 shadow-2xl px-2 py-2">
           <img
@@ -96,7 +99,7 @@ const CreaterDashboard = () => {
 
         <div className="bg-black border-black border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-black hover:border-black hover:border-2 hover:border-solid w-32">
           <Link
-            to="/new-course"
+            to="/upload-course"
             className="flex flex-row justify-center items-center text-xs"
           >
             New Course
@@ -141,6 +144,9 @@ const CreaterDashboard = () => {
         ))}
       </div>
     </div>
+
+    </div>
+   
   );
 };
 
