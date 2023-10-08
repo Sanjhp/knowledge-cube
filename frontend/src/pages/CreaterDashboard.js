@@ -1,12 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import CreatorNavbar from "../components/Navbar/CreatorNavbar";
 
 const CreaterDashboard = () => {
   const stats = [
     {
       star: "1.4k",
-      views: "2.4k",
-      courses: "Course",
     },
   ];
   const card = [
@@ -43,7 +42,9 @@ const CreaterDashboard = () => {
     },
   ];
   return (
-    <div className="grid grid-cols-12 justify-center items-center">
+    <div>
+      <CreatorNavbar/>
+       <div className="grid grid-cols-12 justify-center items-center">
       <div className="grid grid-cols-12 col-span-12 justify-between items-center gap-8 pt-8 px-4 col-start-2">
         <div className="grid col-span-2 bg-white shadow-gray-400 shadow-2xl px-2 py-2">
           <img
@@ -58,14 +59,6 @@ const CreaterDashboard = () => {
               <span className="text-sm text-gray-300 col-span-3">
                 Art Illustrator
               </span>
-            </div>
-            <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-32">
-              <Link
-                to="/upload-course"
-                className="flex flex-row justify-center items-center"
-              >
-                Follow
-              </Link>
             </div>
           </div>
 
@@ -83,18 +76,9 @@ const CreaterDashboard = () => {
             <div className="col-span-8">
               {stats.map((element) => (
                 <div className="grid grid-cols-12 col-span-8">
-                  <span className="flex col-span-3 items-center justify-center">
-                    <i className="ri-star-line text-yellow-500"></i>{" "}
+                  <span className="flex col-span-3 col-start-1">
+                    <i className="ri-star-line text-yellow-500 text-xl"></i>{" "}
                     {element.star}
-                  </span>
-                  <span className="flex col-span-3 items-center justify-center">
-                    <i className="ri-eye-line text-red-500"></i>
-                    {element.views}
-                  </span>
-
-                  <span className="flex col-span-3 items-center justify-center">
-                    <i className="ri-play-circle-line text-green-500"></i>
-                    {element.courses}
                   </span>
                 </div>
               ))}
@@ -108,7 +92,7 @@ const CreaterDashboard = () => {
             id="search"
             type="search"
             placeholder="search here..."
-            className="flex bg-white text-gray-500 font-thin px-2 py-2 hover:shadow-[0_0px_12px_12px_rgba(0,0,0,0.2)] rounded-md border-gray-100 shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] text-xs"
+            className="flex bg-white text-gray-500 font-thin px-2 py-2 hover:shadow-[0_0px_12px_12px_rgba(0,0,0,0.2)] rounded-md border-gray-100 shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] text-xs w-[300px]"
           />
           <i class="ri-search-line -ml-2 bg-black px-4 py-2 rounded-tr-md rounded-br-md text-white shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] hover:bg-gray-400 hover:text-black text-xs"></i>
         </span>
@@ -160,6 +144,9 @@ const CreaterDashboard = () => {
         ))}
       </div>
     </div>
+
+    </div>
+   
   );
 };
 

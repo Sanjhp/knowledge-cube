@@ -68,7 +68,7 @@ const CourseCollection = () => {
         <div className="grid col-span-2 justify-center items-center">
           <div className="bg-[#51aae1] border-[#51aae1] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-[#588fefd5] hover:border-[#588fefd5] hover:border-2 hover:border-solid w-[200px]">
             <Link
-              to="/new-course"
+              to="/all-courses"
               className="flex flex-row justify-center items-center"
             >
               See all Categories

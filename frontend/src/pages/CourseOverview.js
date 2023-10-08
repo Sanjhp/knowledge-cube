@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import LearnerNavbar from "../components/Navbar/LearnerNavbar";
 
 const CourseOverview = () => {
   const text = [
@@ -176,7 +177,16 @@ const CourseOverview = () => {
     },
   ];
   const [set, setSet] = useState(cards[0].details);
+  const [highlight, setHighlight] = useState(true);
+  const [unhighlight, setUnhighlight] = useState(false);
   function clickFunction(val) {
+    if (
+      val != "Overview" &&
+      (val === "Curriculum" || val === "Instructor" || val === "Reviews")
+    ) {
+      setHighlight(false);
+      setUnhighlight(true);
+    }
     for (let i = 0; i < cards.length; i++) {
       if (cards[i].name === val) {
         setSet(cards[i].details);
@@ -184,126 +194,158 @@ const CourseOverview = () => {
       }
     }
   }
+  useEffect(() => {
+    setHighlight(true);
+    setUnhighlight(false);
+    function clickFunction(val) {
+      if (
+        val != "Overview" &&
+        (val === "Curriculum" || val === "Instructor" || val === "Reviews")
+      ) {
+        setHighlight(false);
+      }
+      for (let i = 0; i < cards.length; i++) {
+        if (cards[i].name === val) {
+          setSet(cards[i].details);
+          break;
+        }
+      }
+    }
+  }, []);
+  // const style = {
+  //   color: highlight ? "white" : "black",
+  //   backgroundColor: highlight ? "black" : "gray",
+  // };
   return (
-    <div className="grid grid-cols-12 gap-2">
-      {/* HEADER AND INSIGHTS */}
-      <div className="grid grid-cols-12 col-span-8 gap-4 px-12 py-12">
-        {text.map((element) => (
-          <div className="col-span-12">
-            <span className="text-5xl flex flex-cols col-span-5 my-4">
-              {element.title}
-            </span>
-            <span className="text-sm font-extralight flex flex-cols col-span-5 my-2">
-              {element.subtitle}
-            </span>
-            <div className="flex flex-rows col-span-5 my-2">
-              {element.insights.map((insight) => (
-                <span className="flex flex-rows mx-2 col-span-4 justify-center items-center">
-                  <i className={insight.iconClass}></i>
-                  <span className="text-sm font-extralight">
-                    {insight.rating} {insight.views} {insight.duration}
-                    {insight.lessons}
-                  </span>
-                </span>
-              ))}
-            </div>
-          </div>
-        ))}
-        {/* FILTER AND DESCRIPTION */}
-        <div className="grid grid-cols-12 justify-center items-center col-span-12 col-start-1">
-          {categories.map((key, element) => (
-            <button
-              key={key}
-              className="flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm hover:bg-orange-500 hover:text-white items-center bg-gray-200 text-gray-700 font-extralight focus:bg-orange-500 focus:text-white active:bg-orange-400 active:text-white"
-              onClick={() => clickFunction(categories[element])}
-            >
-              {categories[element]}
-            </button>
-          ))}
-        </div>
-        <div className="col-span-12 col-start-1">
-          {set.map((ele) => (
-            <div className="col-span-8 my-4">
-              <span className="text-3xl">{ele.header}</span>
-              <br />
-              {ele.detail}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* COURSE PRICE CARD */}
-      <div className="grid grid-cols-4 col-span-4 col-start-9 items-center my-8 mx-8">
-        {coursePricecard.map((element) => (
-          <div className="flex flex-col col-span-4 px-4 py-4 bg-white border-2 border-gray-100 shadow-2xl shadow-gray-400 rounded-md transition ease-in delay-0 hover:-translate-y-2 duration:1000">
-            {element.courseCard.map((elements) => (
-              <div className="flex flex-col">
-                <img src={elements.img} className="w-fill rounded-md z-10" />
-                <div className="flex flex-row justify-center items-center my-4">
-                  {elements.insights.map((insight) => (
-                    <span className={insight.class + " mx-2"}>
-                      {insight.disPrice}
-                      {insight.actPrice}
+    <div>
+      <LearnerNavbar />
+      <div className="grid grid-cols-12 gap-2">
+        {/* HEADER AND INSIGHTS */}
+        <div className="grid grid-cols-12 col-span-8 gap-4 px-12 py-12">
+          {text.map((element) => (
+            <div className="col-span-12">
+              <span className="text-5xl flex flex-cols col-span-5 my-4">
+                {element.title}
+              </span>
+              <span className="text-sm font-extralight flex flex-cols col-span-5 my-2">
+                {element.subtitle}
+              </span>
+              <div className="flex flex-rows col-span-5 my-2">
+                {element.insights.map((insight) => (
+                  <span className="flex flex-rows mx-2 col-span-4 justify-center items-center">
+                    <i className={insight.iconClass}></i>
+                    <span className="text-sm font-extralight">
+                      {insight.rating} {insight.views} {insight.duration}
+                      {insight.lessons}
                     </span>
-                  ))}
-                </div>
-                <span className="flex justify-center items-center text-center text-orange-400 leading-6 mb-4">
-                  <i class="ri-time-line text-orange-400"></i>
-                  {elements.dealLeft}
-                </span>
-                <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid">
-                  <Link
-                    to="/new-course"
-                    className="flex flex-row justify-center items-center"
-                  >
-                    Buy Now
-                  </Link>
-                </div>
-                <span className="text-xl font-semibold mt-4">
-                  This course includes
-                </span>
-                <div className="flex flex-col border-b-[1px] border-gray-200">
-                  {elements.info.map((ele) => (
-                    <div className="flex flex-cols items-center">
-                      <img src={ele.img} className="mr-2" />
-                      <span className="font-extralight my-2">
-                        {ele.language}
-                        {ele.requisites}
-                        {ele.access}
-                        {ele.perks}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                <span className="text-xl font-semibold mt-4">
-                  Training 5 or more people?
-                </span>
-                <div className="flex flex-col border-b-[1px] border-gray-200">
-                  {elements.dealForTeams.map((ele) => (
-                    <div className="flex flex-cols items-center">
-                      <span className="font-extralight my-2">
-                        {ele.deal1}
-                        <Link to={ele.to} className="text-orange-400">
-                          {ele.cta}
-                        </Link>
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                <span className="text-xl font-semibold mt-4">
-                  Share this course
-                </span>
-                <div className="flex flex-rows justify-center items-center">
-                  {elements.socials.map((ele) => (
-                    <Link to={ele.facebook}>
-                      <i className={ele.iconclass}></i>
-                    </Link>
-                  ))}
-                </div>
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+          {/* FILTER AND DESCRIPTION */}
+          <div className="grid grid-cols-12 justify-center items-center col-span-12 col-start-1">
+            {categories.map((key, element) => (
+              <button
+                key={key}
+                // style={ backgroundColor}
+                className={
+                  categories[element] === "Overview" &&
+                  highlight === true &&
+                  unhighlight != true
+                    ? "flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm hover:bg-orange-500 hover:text-white items-center bg-orange-500 text-white font-extralight focus:bg-orange-500 focus:text-white active:bg-orange-400 active:text-white"
+                    : "flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm hover:bg-orange-500 hover:text-white items-center bg-gray-300 text-gray-700 font-extralight focus:bg-orange-500 focus:text-white active:bg-orange-400 active:text-white"
+                }
+                onClick={() => clickFunction(categories[element])}
+              >
+                {categories[element]}
+              </button>
+            ))}
+          </div>
+          <div className="col-span-12 col-start-1">
+            {set.map((ele) => (
+              <div className="col-span-8 my-4">
+                <span className="text-3xl">{ele.header}</span>
+                <br />
+                {ele.detail}
               </div>
             ))}
           </div>
-        ))}
+        </div>
+
+        {/* COURSE PRICE CARD */}
+        <div className="grid grid-cols-4 col-span-4 col-start-9 items-center my-8 mx-8">
+          {coursePricecard.map((element) => (
+            <div className="flex flex-col col-span-4 px-4 py-4 bg-white border-2 border-gray-100 shadow-2xl shadow-gray-400 rounded-md transition ease-in delay-0 hover:-translate-y-2 duration:1000">
+              {element.courseCard.map((elements) => (
+                <div className="flex flex-col">
+                  <img src={elements.img} className="w-fill rounded-md z-10" />
+                  <div className="flex flex-row justify-center items-center my-4">
+                    {elements.insights.map((insight) => (
+                      <span className={insight.class + " mx-2"}>
+                        {insight.disPrice}
+                        {insight.actPrice}
+                      </span>
+                    ))}
+                  </div>
+                  <span className="flex justify-center items-center text-center text-orange-400 leading-6 mb-4">
+                    <i class="ri-time-line text-orange-400"></i>
+                    {elements.dealLeft}
+                  </span>
+                  <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid">
+                    <Link
+                      to="/new-course"
+                      className="flex flex-row justify-center items-center"
+                    >
+                      Buy Now
+                    </Link>
+                  </div>
+                  <span className="text-xl font-semibold mt-4">
+                    This course includes
+                  </span>
+                  <div className="flex flex-col border-b-[1px] border-gray-200">
+                    {elements.info.map((ele) => (
+                      <div className="flex flex-cols items-center">
+                        <img src={ele.img} className="mr-2" />
+                        <span className="font-extralight my-2">
+                          {ele.language}
+                          {ele.requisites}
+                          {ele.access}
+                          {ele.perks}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  <span className="text-xl font-semibold mt-4">
+                    Training 5 or more people?
+                  </span>
+                  <div className="flex flex-col border-b-[1px] border-gray-200">
+                    {elements.dealForTeams.map((ele) => (
+                      <div className="flex flex-cols items-center">
+                        <span className="font-extralight my-2">
+                          {ele.deal1}
+                          <Link to={ele.to} className="text-orange-400">
+                            {ele.cta}
+                          </Link>
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  <span className="text-xl font-semibold mt-4">
+                    Share this course
+                  </span>
+                  <div className="flex flex-rows justify-center items-center">
+                    {elements.socials.map((ele) => (
+                      <Link to={ele.facebook}>
+                        <i className={ele.iconclass}></i>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
