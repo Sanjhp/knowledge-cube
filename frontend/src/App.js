@@ -22,7 +22,7 @@ import CreaterDashboard from "./pages/CreaterDashboard";
 import Navbar from "./components/Navbar/Navbar";
 import CreatorNavbar from "./components/Navbar/CreatorNavbar";
 import LearnerNavbar from "./components/Navbar/LearnerNavbar";
-// import EditCourse from "./pages/EditCourse";
+import EditCourse from "./pages/EditCourse";
 import ChatBox from "./pages/Chat";
 function App() {
   return (
@@ -41,7 +41,7 @@ function App() {
         <Route exact path="/profile-update" element={<Updateprofile />} />
         <Route exact path="/forget-password" element={<ForgetPassword />} />
         <Route exact path="/reset-password" element={<ResetPassword />} />
-        {/* <Route exact path="/edit-course" element={<EditCourse />} /> */}
+        <Route exact path="/edit-course" element={<EditCourse />} />
         <Route exact path="/chat" element={<ChatBox />} />
 
         {/* <Route exact path="/course-header" element={<CourseHeader />} /> */}
