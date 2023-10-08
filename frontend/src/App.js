@@ -35,7 +35,7 @@ function App() {
         <Route exact path="/register" element={<Signup />} />
         <Route exact path="/profile-update" element={<Updateprofile />} />
         <Route exact path="/forget-password" element={<ForgetPassword />} />
-        {/* <Route exact path="/reset-password" element={<ResetPassword />} /> */}
+        <Route exact path="/reset-password" element={<ResetPassword />} />
         {/* <Route exact path="/course-header" element={<CourseHeader />} /> */}
         {/* <Route exact path="/features" element={<Features />} /> */}
         {/* <Route exact path="/collection" element={<Collection />} />  */}

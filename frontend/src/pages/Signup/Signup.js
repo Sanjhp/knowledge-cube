@@ -1,44 +1,91 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./SignUp.module.css";
 import { Link, useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 function SignupPage() {
-  const navigate = useNavigate();
-
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    PAN: "",
-    dob: "",
-    password: "",
+  const validateSchema = yup.object().shape({
+    name: yup
+      .string()
+      .min(3, "Name should be a minimum of 3 characters")
+      .required("Name is required"),
+    phone: yup
+      .string()
+      .matches(/^\d{10}$/, "Phone number is invalid.")
+      .required("Phone number is required"),
+    dob: yup
+      .date()
+      .max(new Date(), "Date of birth cannot be in the future")
+      .required("Date of birth is required"),
+    email: yup
+      .string()
+      .email("Invalid email address")
+      .required("Email is required"),
+    password: yup
+      .string()
+      .min(8, "Password should be a minimum of 8 characters")
+      .required("Password is required"),
+    // role: yup
+    //   .string()
+    //   .oneOf(["Learner", "Creator"], "Invalid role")
+    //   .required("Role is required"),
   });
 
-  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(validateSchema),
+  });
+  const [role, setRole] = useState([]);
+  console.log("role :>> ", role);
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  const GetRole = async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/roles/get-role`
+      );
+      setRole(res?.data?.data);
+    } catch (error) {
+      console.log("error :>> ", error);
+    }
   };
+  useEffect(() => {
+    GetRole();
+  }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Place your signup logic here (sending data to the backend or other actions)
-    // For now, let's just simulate a successful signup
-    setLoading(true);
-    setTimeout(() => {
+  const handleRegister = async (data) => {
+    console.log("data :>> ", data);
+    const formattedBirthDate = new Date(data.dob).toISOString().split("T")[0];
+    const formattedData = { ...data, dob: formattedBirthDate };
+    try {
+      setLoading(true);
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/users/register`,
+        formattedData
+      );
       setLoading(false);
       toast.success("User registered successfully!!");
-      navigate("/signin");
-    }, 1500);
+      navigate("/login");
+    } catch (error) {
+      setLoading(false);
+      console.log("error :>> ", error);
+      if (error?.response?.data?.error) {
+        toast.error(error?.response?.data?.error);
+        console.log("err :>> ", error);
+      } else {
+        toast.error("An error occured!");
+        console.log("err :>> ", error);
+      }
+    }
   };
 
   return (
@@ -66,7 +113,7 @@ function SignupPage() {
             </p>
           </div>
           <div className={styles.signupCard}>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(handleRegister)}>
               {/* Name Input */}
               <div className={styles.inputContainer}>
                 <label className={styles.label} htmlFor="name">
@@ -77,10 +124,11 @@ function SignupPage() {
                   type="text"
                   id="name"
                   name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
+                  {...register("name")}
                 />
+                {errors && errors?.name && (
+                  <p className={styles.errorMessage}>{errors?.name?.message}</p>
+                )}
               </div>
 
               {/* Email Input */}
@@ -93,10 +141,13 @@ function SignupPage() {
                   type="email"
                   id="email"
                   name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
+                  {...register("email")}
                 />
+                {errors && errors?.email && (
+                  <p className={styles.errorMessage}>
+                    {errors?.email?.message}
+                  </p>
+                )}
               </div>
 
               {/* Phone Input */}
@@ -109,26 +160,13 @@ function SignupPage() {
                   type="tel"
                   id="phone"
                   name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
+                  {...register("phone")}
                 />
-              </div>
-
-              {/* PAN Input */}
-              <div className={styles.inputContainer}>
-                <label className={styles.label} htmlFor="PAN">
-                  PAN
-                </label>
-                <input
-                  className={styles.input}
-                  type="text"
-                  id="PAN"
-                  name="PAN"
-                  value={formData.PAN}
-                  onChange={handleChange}
-                  required
-                />
+                {errors && errors?.phone && (
+                  <p className={styles.errorMessage}>
+                    {errors?.phone?.message}
+                  </p>
+                )}
               </div>
 
               {/* Date of Birth Input */}
@@ -141,13 +179,14 @@ function SignupPage() {
                   type="date"
                   id="dob"
                   name="dob"
-                  value={formData.dob}
-                  onChange={handleChange}
-                  required
+                  {...register("dob")}
                 />
+                {errors && errors?.dob && (
+                  <p className={styles.errorMessage}>{errors?.dob?.message}</p>
+                )}
               </div>
 
-              {/* Password Input */}
+              {/* password for user */}
               <div className={styles.inputContainer}>
                 <label className={styles.label} htmlFor="password">
                   Password
@@ -157,15 +196,37 @@ function SignupPage() {
                   type="password"
                   id="password"
                   name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
+                  {...register("password")}
                 />
+                {errors && errors?.password && (
+                  <p className={styles.errorMessage}>
+                    {errors?.password.message}
+                  </p>
+                )}
               </div>
-
-              {/* Error message */}
-              {error && <p className={styles.error}>{error}</p>}
-
+              {/* role for user */}
+              <div className={styles.inputContainer}>
+                <label className={styles.label} htmlFor="role">
+                  Role
+                </label>
+                <select
+                  className={styles.input}
+                  id="role"
+                  name="role"
+                  {...register("role")}
+                >
+                  <option>Select a role</option>
+                  <option name="learner" value={role[0]?._id}>
+                    Learner
+                  </option>
+                  <option name="educator" value={role[1]?._id}>
+                    Educator
+                  </option>
+                </select>
+                {errors && errors?.role && (
+                  <p className={styles.errorMessage}>{errors?.role?.message}</p>
+                )}
+              </div>
               <button
                 className={styles.button}
                 type="submit"
@@ -179,7 +240,7 @@ function SignupPage() {
 
           <p className={styles.loginLinkp} style={{ color: "#000000" }}>
             Already have an account?{" "}
-            <Link to="/signin" className={styles.loginLink}>
+            <Link to="/login" className={styles.loginLink}>
               Login
             </Link>
           </p>

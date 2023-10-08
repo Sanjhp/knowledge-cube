@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const UploadCourse = () => {
   const list = [
-    { name: "Dashbaord", to: "/dshboard", icon: "ri-profile-fill mx-2" },
+    { name: "Dashbaord", to: "/creator-dashboard", icon: "ri-profile-fill mx-2" },
     { name: "About", to: "/about", icon: "ri-user-3-line mx-2" },
     { name: "Comments", to: "/comments", icon: "ri-chat-1-line mx-2" },
     { name: "Messages", to: "/messages", icon: "ri-message-3-line mx-2" },

@@ -1,12 +1,35 @@
-/* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from "react";
 import styles from "./Signin.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import Cookies from "js-cookie";
+
+const validateSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  password: yup
+    .string()
+    .min(8, "Password should be a minimum of 8 characters")
+    .required("Password is required"),
+});
 
 function LoginPage() {
+  const [roleName, setRoleName] = useState("");
   const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(validateSchema),
+  });
 
   const {
     loginContainer,
@@ -29,34 +52,61 @@ function LoginPage() {
     loginOptions,
   } = styles;
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    rememberMe: false,
-  });
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [forgotPasswordMode, setForgotPasswordMode] = useState(false);
+  const [role, setRole] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    const newValue = type === "checkbox" ? checked : value;
+  const getRoleNameFromId = (roleId) => {
+    const roleMappings = {
+      "65147cfea8299f9299022a1c": "Learner",
+      "65147d6da8299f9299022a1f": "Creator",
+    };
 
-    setFormData({
-      ...formData,
-      [name]: newValue,
-    });
+    return roleMappings[roleId] || "unknown";
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(e);
-    navigate("/");
+  const RoleFunction = async (roleId) => {
+    try {
+      const roleName = getRoleNameFromId(roleId);
+      console.log("Role Name:", roleName);
+
+      return roleName;
+    } catch (error) {
+      console.log("error :>> ", error);
+      throw error;
+    }
   };
 
-  const handleBackToLogin = () => {
-    setForgotPasswordMode(false);
-    setError("");
+  const handleLogin = async (data) => {
+    try {
+      setLoading(true);
+      const res = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/users/login`,
+        data
+      );
+      console.log("res :>> ", res.data.token);
+      const token = res?.data?.token;
+      Cookies.set("token",token)
+      const roleId = res?.data?.user?.role;
+      console.log(roleId);
+      const roleName = await RoleFunction(roleId);
+      setLoading(false);
+      Cookies.set("roleName", roleName);
+      toast.success(res?.data?.message);
+      if (roleName === "Learner") {
+        navigate("/learner-dashboard");
+      } else if (roleName === "Creator") {
+        navigate("/creator-dashboard");
+      }
+    } catch (error) {
+      setLoading(false);
+      if (error?.response?.data?.message) {
+        toast.error(error?.response?.data?.message);
+        console.log("err :>> ", error);
+      } else {
+        toast.error("An error occured!");
+        console.log("err :>> ", error);
+      }
+    }
   };
 
   return (
@@ -84,8 +134,7 @@ function LoginPage() {
             </p>
           </div>
           <div className={loginCard}>
-            {error && <p className={errorMessage}>{error}</p>}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(handleLogin)}>
               <div className={inputContainer}>
                 <label className={label} htmlFor="email">
                   E-mail
@@ -95,10 +144,13 @@ function LoginPage() {
                   type="text"
                   id="email"
                   name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
+                  {...register("email")}
                 />
+                {errors && errors?.email && (
+                  <p className={styles.errorMessage}>
+                    {errors?.email?.message}
+                  </p>
+                )}
               </div>
               <div className={inputContainer}>
                 <label className={label} htmlFor="password">
@@ -109,25 +161,14 @@ function LoginPage() {
                   type="password"
                   id="password"
                   name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
+                  {...register("password")}
                 />
+                {errors && errors?.password && (
+                  <p className={styles.errorMessage}>
+                    {errors?.password?.message}
+                  </p>
+                )}
               </div>
-              {!forgotPasswordMode && (
-                <div className={rememberMe}>
-                  <label className={rememberMeLabel}>
-                    <input
-                      className={rememberMeCheckbox}
-                      type="checkbox"
-                      name="rememberMe"
-                      checked={formData.rememberMe}
-                      onChange={handleChange}
-                    />
-                    Remember me
-                  </label>
-                </div>
-              )}
               <button
                 className={button}
                 type="submit"
@@ -139,18 +180,21 @@ function LoginPage() {
             </form>
             <div className={loginOptions} style={{ color: "#000000" }}>
               <p>
-                {!forgotPasswordMode ? (
+                {/* {!forgotPasswordMode ? (
                   "Don't have an account? "
-                ) : (
-                  <span>
-                    <Link className={signupLink} onClick={handleBackToLogin}>
-                      Back to Login
-                    </Link>
-                    <br />
-                    <br />
-                  </span>
-                )}
-                <Link to="/signup" className={signupLink}>
+                ) : ( */}
+                <span>
+                  <Link
+                    className={signupLink}
+                    onClick={() => navigate("/login")}
+                  >
+                    Back to Login
+                  </Link>
+                  <br />
+                  <br />
+                </span>
+                {/* )} */}
+                <Link to="/register" className={signupLink}>
                   Sign up
                 </Link>
               </p>

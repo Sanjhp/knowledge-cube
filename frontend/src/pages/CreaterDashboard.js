@@ -61,7 +61,7 @@ const CreaterDashboard = () => {
             </div>
             <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-32">
               <Link
-                to="/new-course"
+                to="/upload-course"
                 className="flex flex-row justify-center items-center"
               >
                 Follow
@@ -115,7 +115,7 @@ const CreaterDashboard = () => {
 
         <div className="bg-black border-black border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-black hover:border-black hover:border-2 hover:border-solid w-32">
           <Link
-            to="/new-course"
+            to="/upload-course"
             className="flex flex-row justify-center items-center text-xs"
           >
             New Course

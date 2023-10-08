@@ -39,11 +39,28 @@ export const getAllRole = async (req, res) => {
       .json({ success: true, message: "", data: role });
   } catch (error) {
     console.log(error);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: true,
+      error: error.message,
+    });
+  }
+};
+
+export const getRoleById = async (req, res) => {
+  try {
+    const role = await RoleModel.findById(req.params.id);
+    if (!role) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ success: true, message: "Role not found" });
+    }
+    return res
+      .status(StatusCodes.OK)
+      .json({ success: true, message: "Role fetched successfully", role });
+  } catch (error) {
+    console.log("error :>> ", error);
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({
-        success: true,
-        error: error.message
-      });
+      .json({ success: false, error: error.message });
   }
 };
