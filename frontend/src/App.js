@@ -22,6 +22,7 @@ import CreaterDashboard from "./pages/CreaterDashboard";
 import Navbar from "./components/Navbar/Navbar";
 import CreatorNavbar from "./components/Navbar/CreatorNavbar";
 import LearnerNavbar from "./components/Navbar/LearnerNavbar";
+import EditCourse from "./pages/EditCourse";
 function App() {
   return (
     <BrowserRouter>
@@ -38,6 +39,7 @@ function App() {
         <Route exact path="/creator-dashboard" element={<CreaterDashboard />} />
         <Route exact path="/learner-dashboard" element={<LearnerDashboard />} />
         <Route exact path="/course-overview" element={<CourseOverview />} />
+        <Route exact path="/edit-course" element={<EditCourse />} />
 
         {/* <Route exact path="/collection" element={<Collection />} />  */}
         {/* <Route exact path="/courses" element={<CourseCollection />} />
