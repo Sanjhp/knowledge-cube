@@ -1,0 +1,65 @@
+
+.chat-box {
+       align-self: flex-end;
+    justify-content: space-between;
+    padding: 30px;
+}
+
+/* Message styles */
+.messages {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+max-height: 90vh}
+
+.message {
+    display: flex;
+    align-items: center;
+    /* Center content vertically */
+    padding: 8px 16px;
+    border-radius: 20px;
+    max-width: 70%;
+    word-wrap: break-word;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.messages::-webkit-scrollbar {
+    display: none;
+    /* Hide scrollbar for WebKit browsers (Chrome, Safari, etc.) */
+}
+.icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    border-radius: 50%;
+}
+
+/* Input and button styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
