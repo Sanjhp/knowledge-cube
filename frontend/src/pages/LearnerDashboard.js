@@ -199,11 +199,11 @@ const LearnerDashboard = () => {
             </span>
           </span>
         </div>
-        <div className="grid grid-cols-12 col-span-12 col-start-1 justify-center gap-4 items-center my-8 mx-8">
-          <div className="col-span-12">
+        <div className="grid grid-cols-12 col-span-12 col-start-1 justify-center gap-4 items-center my-4 mx-4">
+          <div className="col-span-12 z-10">
             <Carousal>
               {list.map((element) => (
-                <div className="flex flex-col col-span-6 px-4 mx-4 my-8 py-4 bg-white border-2 border-gray-100 shadow-2xl shadow-gray-400 rounded-md transition ease-in delay-0 hover:-translate-y-2 duration:1000">
+                <div className="flex flex-col col-span-6 px-4 mx-4 my-8 py-4 bg-white border-2 border-gray-100 shadow-2xl shadow-gray-400 rounded-md transition ease-in delay-0 hover:-translate-y-2 duration:1000 z-50">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"

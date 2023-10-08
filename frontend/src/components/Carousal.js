@@ -10,7 +10,7 @@ const Carousal = ({ children: list }) => {
   const next = () =>
     setCurr((curr) => (curr === list.length - 1 ? 0 : curr + 1));
   return (
-    <div className="col-span-12 overflow-hidden relative">
+    <div className="col-span-12 overflow-hidden relative z-20">
      <div className="flex transition-transform ease-out duration-500" style={{transform:`translateX(-${curr *100}%)`}}>{list}</div>
       <div className="absolute inset-0 flex items-center justify-between p-4">
         <button
