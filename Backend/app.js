@@ -5,6 +5,7 @@ import connectionDB from "./src/Db/connectDb.js";
 import path from "path";
 import userRouter from "./src/Routes/userRoutes.js";
 import RoleRouter from "./src/Routes/roleRoutes.js";
+import courseRouter from "./src/Routes/courseRoutes.js";
 const PORT = process.env.PORT || 4000;
 
 connectionDB();
@@ -18,6 +19,7 @@ app.use(cors());
 // routes
 app.use("/api/users", userRouter);
 app.use("/api/roles", RoleRouter);
+app.use("/api/course-creator", courseRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is runing PORT:${PORT}`);

@@ -161,8 +161,6 @@ export const UpdateProfile = async (req, res) => {
   }
 };
 
-
-
 // Forget Password Api
 
 export const forgotPassword = async (req, res) => {
@@ -195,7 +193,7 @@ export const forgotPassword = async (req, res) => {
       }
 
       const mail = await sendMail({
-        from: `"ScrictVault " <${process.env.SMTP_EMAIL}>`,
+        from: `"KnowledgeCube " <${process.env.SMTP_EMAIL}>`,
         to: email,
         subject: 'Forgot Password',
         text: `Your OTP is ${otp} valid for 5 minutes`,
