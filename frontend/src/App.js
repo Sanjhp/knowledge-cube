@@ -23,6 +23,7 @@ import Navbar from "./components/Navbar/Navbar";
 import CreatorNavbar from "./components/Navbar/CreatorNavbar";
 import LearnerNavbar from "./components/Navbar/LearnerNavbar";
 import EditCourse from "./pages/EditCourse";
+import PrivateMessaging from "./pages/PrivateMessaging";
 function App() {
   return (
     <BrowserRouter>
@@ -40,6 +41,7 @@ function App() {
         <Route exact path="/learner-dashboard" element={<LearnerDashboard />} />
         <Route exact path="/course-overview" element={<CourseOverview />} />
         <Route exact path="/edit-course" element={<EditCourse />} />
+        <Route exact path="/messages" element={<PrivateMessaging />} />
 
         {/* <Route exact path="/collection" element={<Collection />} />  */}
         {/* <Route exact path="/courses" element={<CourseCollection />} />
