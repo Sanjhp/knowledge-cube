@@ -5,22 +5,76 @@ import { StatusCodes } from "http-status-codes";
 
 // API endpoint for uploading a course
 
-export const UploadCourse = async (req, res) => {
-  try {
-    const { title, language, skillLevel, price, description, creatorId } =
-      req.body;
-    console.log("req.body :>> ", req.body);
-    const coverImage = req.files["coverImage"]
-      ? req.files["coverImage"][0].path
-      : null;
-    const certificate = req.files["certificate"]
-      ? req.files["certificate"][0].path
-      : null;
-    const assessmentPdf = req.files["assessmentPdf"]
-      ? req.files["assessmentPdf"][0].path
-      : null;
+// export const UploadCourse = async (req, res) => {
+//   try {
+//     const { title, language, skillLevel, price, description, creatorId } =
+//       req.body;
+//     console.log("req.body :>> ", req.body);
+//     const coverImage = req.files["coverImage"]
+//       ? req.files["coverImage"][0].path
+//       : null;
+//     const certificate = req.files["certificate"]
+//       ? req.files["certificate"][0].path
+//       : null;
+//     const assessmentPdf = req.files["assessmentPdf"]
+//       ? req.files["assessmentPdf"][0].path
+//       : null;
 
-    if (!coverImage || !creatorId || !certificate || !assessmentPdf) {
+//     if (!coverImage || !creatorId || !certificate || !assessmentPdf) {
+//       return res.status(StatusCodes.BAD_REQUEST).json({
+//         success: false,
+//         message: "Invalid request. Please provide all required fields.",
+//       });
+//     }
+
+//     const user = await User.findById(creatorId).populate('role');
+//     console.log("user :>> ", user);
+
+//     if (!user || user.role.roleName !== "Creator") {
+//       return res.status(StatusCodes.FORBIDDEN).json({
+//         success: false,
+//         message: "Only creators are allowed to upload courses.",
+//       });
+//     }
+
+//     const course = await Course.create({
+//       title,
+//       coverImage,
+//       language,
+//       skillLevel,
+//       price,
+//       description,
+//       certificate,
+//       assessmentPdf,
+//       chapters: [],
+//       creatorId,
+      
+//     });
+
+//     return res.status(StatusCodes.OK).json({
+//       success: true,
+//       message: "Course added successfully!",
+//       course: course,
+//       creator: user
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+//       success: false,
+//       message: "Failed to add the course",
+//       error: error.message,
+//     });
+//   }
+// };
+export const UploadCourseAndChapter = async (req, res) => {
+  try {
+    const { title, language, skillLevel, price, description, creatorId } = req.body;
+    const coverImage = req.files["coverImage"] ? req.files["coverImage"][0].path : null;
+    const certificate = req.files["certificate"] ? req.files["certificate"][0].path : null;
+    const assessmentPdf = req.files["assessmentPdf"] ? req.files["assessmentPdf"][0].path : null;
+    const videoUrl = req.files["video"][0].path;
+
+    if (!coverImage || !creatorId || !certificate || !assessmentPdf || !videoUrl) {
       return res.status(StatusCodes.BAD_REQUEST).json({
         success: false,
         message: "Invalid request. Please provide all required fields.",
@@ -28,15 +82,18 @@ export const UploadCourse = async (req, res) => {
     }
 
     const user = await User.findById(creatorId).populate('role');
-    console.log("user :>> ", user);
 
     if (!user || user.role.roleName !== "Creator") {
       return res.status(StatusCodes.FORBIDDEN).json({
         success: false,
-        message: "Only creators are allowed to upload courses.",
+        message: "Only creators are allowed to upload courses and chapters.",
       });
     }
 
+    // Create the chapter
+    const chapter = await Chapter.create({ title, videoUrl });
+
+    // Create the course and add the chapter to its chapters array
     const course = await Course.create({
       title,
       coverImage,
@@ -46,26 +103,28 @@ export const UploadCourse = async (req, res) => {
       description,
       certificate,
       assessmentPdf,
-      chapters: [],
+      chapters: [chapter._id], // Add the chapter ID to the chapters array
       creatorId,
-      
     });
 
     return res.status(StatusCodes.OK).json({
       success: true,
-      message: "Course added successfully!",
+      message: "Course and chapter added successfully!",
       course: course,
-      creator: user
+      chapter: chapter,
+      creator: user,
     });
   } catch (error) {
     console.error(error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
-      message: "Failed to add the course",
+      message: "Failed to add the course and chapter",
       error: error.message,
     });
   }
 };
+
+
 
 // API endpoint for uploading a chapter for a specific course
 export const UploadChapterById = async (req, res) => {

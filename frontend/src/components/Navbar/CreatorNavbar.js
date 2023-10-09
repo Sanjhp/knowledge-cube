@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const CreatorNavbar = () => {
+const CreatorNavbar = ({ handleLogout }) => {
   const navigation = [
-    {name: "Dashboard", to:"/creator-dashboard"},
-    {name: "Upload Course", to:"/upload-course"},
-    {name: "Edit Course", to:"/edit-course"},
+    { name: "Dashboard", to: "/creator-dashboard" },
+    { name: "Upload Course", to: "/upload-course" },
+    { name: "Edit Course", to: "/edit-course" },
     // {name: "Update Profile", to:"/"},
-    {name: "Community Chat", to:"/community-chat"},
+    { name: "Community Chat", to: "/community-chat" },
     // "Logout",
   ];
   return (
@@ -31,14 +31,14 @@ const CreatorNavbar = () => {
             to="/update-profile"
             className="flex flex-row justify-center items-center text-xs "
           >
-          <i class="ri-user-line text-black text-xs mr-4"></i>
-          Profile
-            
+            <i class="ri-user-line text-black text-xs mr-4"></i>
+            Profile
+
           </Link>
         </div>
         <div className="bg-gray-700 border-gray-700 border-2 border-solid rounded-sm px-2 py-2 text-center text-white hover:bg-gray-800  hover:border-gray-700 hover:border-2 hover:border-solid w-16 col-span-1">
           <Link
-            to="/logout"
+            onClick={handleLogout}
             className="flex flex-row justify-center items-center text-xs"
           >
             Log out

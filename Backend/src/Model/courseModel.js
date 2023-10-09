@@ -19,9 +19,14 @@ const courseSchema = mongoose.Schema({
   },
   chapters: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Chapter",
-      required: false,
+      title: {
+        type: String,
+        required: true,
+      },
+      videoUrl: {
+        type: String,
+        required: true,
+      },
     },
   ],
   price: {
