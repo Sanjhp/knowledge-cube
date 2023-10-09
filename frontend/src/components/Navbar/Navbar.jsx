@@ -5,6 +5,7 @@ import logo from "../../assets/navbar-logo.png";
 import Cookies from "js-cookie";
 import LearnerNavbar from "./LearnerNavbar";
 import CreatorNavbar from "./CreatorNavbar";
+import handleLogout from "./Logout";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -36,13 +37,7 @@ function Navbar() {
     }
   }, []);
 
-  const handleLogout = () => {
-    Cookies.remove("token");
-    Cookies.remove("roleId")
-    Cookies.remove("roleName")
-    setAccessToken("");
-    navigate("/login");
-  };
+ 
   if (!accessToken) {
     return (
       <>

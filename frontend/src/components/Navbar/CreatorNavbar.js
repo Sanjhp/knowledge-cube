@@ -2,14 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const CreatorNavbar = ({ handleLogout }) => {
-  const navigation = [
-    { name: "Dashboard", to: "/creator-dashboard" },
-    { name: "Upload Course", to: "/upload-course" },
-    { name: "Edit Course", to: "/edit-course" },
-    // {name: "Update Profile", to:"/"},
-    { name: "Community Chat", to: "/community-chat" },
-    // "Logout",
-  ];
+ 
   return (
     <div className="grid grid-cols-12 px-4 justify-between items-center">
       <div className="grid grid-cols-12 col-span-12 col-start-1 px-4 py-4 justify-between items-center">
@@ -20,29 +13,47 @@ const CreatorNavbar = ({ handleLogout }) => {
           />
         </div>
         <div className="col-span-9 ml-[90px]">
-          {navigation.map((element) => (
-            <Link to={element.to} className="mx-4 py-4 text-sm text-gray-600 hover:text-gray-500 hover:underline">
-              {element.name}
-            </Link>
-          ))}
+          <Link
+            to="/creator-dashboard"
+            className="mx-4 py-4 text-sm text-gray-600 hover:text-gray-500 hover:underline"
+          >
+            Dashboard
+          </Link>
+          <Link
+            to="/upload-course"
+            className="mx-4 py-4 text-sm text-gray-600 hover:text-gray-500 hover:underline"
+          >
+            Upload Course
+          </Link>
+          <Link
+            to="/edit-course"
+            className="mx-4 py-4 text-sm text-gray-600 hover:text-gray-500 hover:underline"
+          >
+            Edit Course
+          </Link>
+          <Link
+            to="/community-chat"
+            className="mx-4 py-4 text-sm text-gray-600 hover:text-gray-500 hover:underline"
+          >
+            Community Chat
+          </Link>
         </div>
         <div className="bg-transparent border-gray-700 border-2 border-solid rounded-sm px-2 py-2 text-center text-black hover:text-white hover:bg-gray-700  hover:border-gray-700 hover:border-2 hover:border-solid w-[90px] col-span-1">
           <Link
-            to="/update-profile"
+            to="/profile-update"
             className="flex flex-row justify-center items-center text-xs "
           >
             <i class="ri-user-line text-black text-xs mr-4"></i>
             Profile
-
           </Link>
         </div>
         <div className="bg-gray-700 border-gray-700 border-2 border-solid rounded-sm px-2 py-2 text-center text-white hover:bg-gray-800  hover:border-gray-700 hover:border-2 hover:border-solid w-16 col-span-1">
-          <Link
+          <button
             onClick={handleLogout}
             className="flex flex-row justify-center items-center text-xs"
           >
             Log out
-          </Link>
+          </button>
         </div>
       </div>
     </div>

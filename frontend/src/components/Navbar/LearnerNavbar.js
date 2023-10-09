@@ -1,9 +1,8 @@
 import React from 'react'
 import { Link } from "react-router-dom";
+import handleLogout from './Logout';
 
-
-const LearnerNavbar = ({ handleLogout }) => {
-
+const LearnerNavbar = () => {
   return (
     <div className="grid grid-cols-12 px-4 justify-between items-center">
       <div className="grid grid-cols-12 col-span-12 col-start-1 px-4 py-4 justify-between items-center">
