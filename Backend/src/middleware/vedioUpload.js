@@ -4,12 +4,24 @@ import path from "path";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
+    console.log("Field Name:", file.fieldname);
+    console.log("File Name:", file.originalname);
     let destinationFolder = "public/video-lectures";
 
     const ext = path.extname(file.originalname);
+    console.log("ext :>> ", ext);
     if (ext === ".jpg" || ext === ".jpeg" || ext === ".png" || ext === ".gif") {
       destinationFolder = "public/course-images";
+    } else if (ext === ".pdf" || ext === ".doc" || ext === ".docx") {
+      // Check for assessmentPdf and certificates
+      if (file.fieldname === "assessmentPdf") {
+        destinationFolder = "public/assessment-pdfs";
+      } else if (file.fieldname === "certificate") {
+        destinationFolder = "public/certificates";
+      }
     }
+    // console.log('object :>> ', object);
+    console.log("Destination Folder:", destinationFolder);
 
     // Create destination folder if it doesn't exist
     if (!fs.existsSync(destinationFolder)) {
@@ -22,29 +34,89 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + file.originalname);
   },
 });
+
 // const fileFilter = (req, file, cb) => {
-//   console.log("Original File Extension:", path.extname(file.originalname));
-//   let ext = path.extname(file.originalname).toLowerCase();
-//   console.log("Standardized Extension:", ext);
-//   if (ext !== ".mkv" && ext !== ".mp4") {
-//     return cb(new Error("Only video files are allowed"));
+
+// const fileFilter = (req, file, cb) => {
+//   const ext = path.extname(file.originalname).toLowerCase();
+
+//   if (
+//     file.fieldname === "coverImage" ||
+//     file.fieldname === "certificate" ||
+//     file.fieldname === "assessmentPdf"
+//   ) {
+//     return cb(null, true);
 //   }
-//   cb(null, true);
+//   return cb(new Error("Unexpected field"));
 // };
+
+// const fileFilter = (req, file, cb) => {
+//   const ext = path.extname(file.originalname).toLowerCase();
+//   console.log("ext :>> ", ext);
+
+//   // Check for allowed extensions for coverImage, certificate, and assessmentPdf
+//   if (
+//     (file.fieldname === "coverImage" &&
+//       (ext === ".jpg" ||
+//         ext === ".jpeg" ||
+//         ext === ".png" ||
+//         ext === ".gif")) ||
+//     (file.fieldname === "certificate" &&
+//       (ext === ".pdf" || ext === ".doc" || ext === ".docx")) ||
+//     (file.fieldname === "assessmentPdf" &&
+//       (ext === ".pdf" || ext === ".doc" || ext === ".docx"))
+//   ) {
+//     console.log("Field Name:", file.fieldname);
+//     console.log("File Name:", file.originalname);
+//     return cb(null, true);
+//   }
+
+//   return cb(
+//     new Error(
+//       "Invalid file format. Allowed formats: .jpg, .jpeg, .png, .gif, .pdf, .doc, .docx"
+//     )
+//   );
+// };
+
 const fileFilter = (req, file, cb) => {
   const ext = path.extname(file.originalname).toLowerCase();
+  console.log("ext :>> ", ext);
 
-  if (req.fieldname === "coverImage") {
+  // Check for allowed extensions for coverImage, certificate, assessmentPdf, and video
+  if (
+    (file.fieldname === "coverImage" &&
+      (ext === ".jpg" ||
+        ext === ".jpeg" ||
+        ext === ".png" ||
+        ext === ".gif")) ||
+    (file.fieldname === "certificate" &&
+      (ext === ".pdf" || ext === ".doc" || ext === ".docx")) ||
+    (file.fieldname === "assessmentPdf" &&
+      (ext === ".pdf" || ext === ".doc" || ext === ".docx")) ||
+    (file.fieldname === "video" &&
+      (ext === ".mp4" || ext === ".avi" || ext === ".mov"))
+  ) {
+    console.log("Field Name:", file.fieldname);
+    console.log("File Name:", file.originalname);
     return cb(null, true);
   }
-  if (ext === ".mkv" || ext === ".mp4") {
-    return cb(null, true);
-  }
-  return cb(new Error("Only .mkv and .mp4 video files are allowed"));
+
+  return cb(
+    new Error(
+      "Invalid file format. Allowed formats: .jpg, .jpeg, .png, .gif, .pdf, .doc, .docx, .mp4, .avi, .mov"
+    )
+  );
 };
 
-const videoUpload = multer({
+
+const fileUpload = multer({
   storage: storage,
-//   fileFilter: fileFilter,
-});
-export default videoUpload;
+  fileFilter: fileFilter,
+}).fields([
+  { name: "coverImage", maxCount: 1 },
+  { name: "certificate", maxCount: 1 },
+  { name: "assessmentPdf", maxCount: 1 },
+  { name: "video", maxCount: 1 },
+]);
+
+export default fileUpload;

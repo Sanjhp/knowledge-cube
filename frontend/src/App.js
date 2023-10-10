@@ -23,13 +23,15 @@ import Navbar from "./components/Navbar/Navbar";
 import CreatorNavbar from "./components/Navbar/CreatorNavbar";
 import LearnerNavbar from "./components/Navbar/LearnerNavbar";
 import EditCourse from "./pages/EditCourse";
-import ChatBox from "./pages/Chat";
+import PrivateMessaging from "./pages/PrivateMessaging";
+import Chapter from "./pages/UploadCourse/UploadChapterByCourse";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route exact path="/upload-course" element={<Course />} />
+        <Route exact path="/chapter-upload/:courseId" element={<Chapter />} />
         <Route exact path="/categories" element={<CourseCategories />} />
         <Route exact path="/all-courses" element={<AllCourses />} />
         <Route exact path="/course-collection" element={<CourseCollection />} />
@@ -42,7 +44,7 @@ function App() {
         <Route exact path="/forget-password" element={<ForgetPassword />} />
         <Route exact path="/reset-password" element={<ResetPassword />} />
         <Route exact path="/edit-course" element={<EditCourse />} />
-        <Route exact path="/chat" element={<ChatBox />} />
+        <Route exact path="/messages" element={<PrivateMessaging />} />
 
         {/* <Route exact path="/course-header" element={<CourseHeader />} /> */}
         {/* <Route exact path="/features" element={<Features />} /> */}
