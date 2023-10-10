@@ -44,7 +44,9 @@ function App() {
         <Route exact path="/forget-password" element={<ForgetPassword />} />
         <Route exact path="/reset-password" element={<ResetPassword />} />
         <Route exact path="/edit-course" element={<EditCourse />} />
-        <Route exact path="/messages" element={<PrivateMessaging />} />
+        {/* <Route exact path="/messages" element={<PrivateMessaging />} /> */}
+        <Route exact path="/community-chat" element={<PrivateMessaging />} />
+
 
         {/* <Route exact path="/course-header" element={<CourseHeader />} /> */}
         {/* <Route exact path="/features" element={<Features />} /> */}

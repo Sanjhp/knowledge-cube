@@ -132,11 +132,14 @@ export const UploadChapterById = async (req, res) => {
 export const GetAllCourses = async (req, res) => {
   try {
     const courses = await Course.find()
+      .populate("chapters")
+      .populate("category")
       .populate({
-        path: 'user',
+        path: "user",
+        model: "User", // Ensure that the model name matches the registered model name in Mongoose
         populate: {
-          path: 'role',
-          model: 'Role',
+          path: "role",
+          model: "Role",
         },
       });
 
@@ -148,12 +151,11 @@ export const GetAllCourses = async (req, res) => {
     console.error(error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
-      message: 'Failed to retrieve courses',
+      message: "Failed to retrieve courses",
       error: error.message,
     });
   }
 };
-
 
 // API endpoint for getting a single course by ID
 export const GetCourseById = async (req, res) => {
@@ -192,7 +194,6 @@ export const GetCourseById = async (req, res) => {
     });
   }
 };
-
 
 // API endpoint for getting a single chapter by ID
 export const GetChapterById = async (req, res) => {
