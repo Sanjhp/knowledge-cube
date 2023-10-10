@@ -11,18 +11,9 @@ import Cookies from "js-cookie";
 import { useParams } from "react-router-dom";
 
 const UploadChapterByCourse = () => {
+  const navigate = useNavigate();
   const { courseId } = useParams();
-  console.log("courseId :>> ", courseId);
-  const [val, setVal] = useState([]);
-  var count = 1;
 
-  function handleAdd() {
-    count = count + 1;
-    const abc = [...val, []];
-    setVal(abc);
-    // const count2 = count[count.length - 1] + 1;
-    // setCount(count2);
-  }
   const [chapters, setChapters] = useState([{ title: "", video: null }]);
   console.log("chapters :>> ", chapters);
   const handleChapterFileChange = (event, index) => {
@@ -37,7 +28,11 @@ const UploadChapterByCourse = () => {
   };
 
   const handleAddChapter = () => {
-    setChapters([...chapters, { title: "", video: null }]);
+    const chapterNumber = chapters.length + 1;
+    setChapters([
+      ...chapters,
+      { title: "", video: null, number: chapterNumber },
+    ]);
   };
   const uploadChapters = async () => {
     try {
@@ -55,6 +50,7 @@ const UploadChapterByCourse = () => {
 
         if (chapterResponse.status === 200) {
           chapterIds.push(chapterResponse.data.chapterId);
+          navigate("/creator-dashboard");
         } else {
           console.error("Error uploading chapter:", chapter.title);
           return null;
@@ -72,40 +68,27 @@ const UploadChapterByCourse = () => {
       <span className="text-l font-semibold my-8 px-4">Course Content</span>
       {chapters.map((chapter, index) => (
         <div className="grid grid-rows-2 gap-2 px-4 items-center" key={index}>
-          {val.map((data, i) => {
-            return (
-              <div className="grid grid-cols-8 gap-8 rounded-lg shadow-md justify-center items-center px-6 py-6">
-                <div className="grid col-span-1">{`Chapter - ${
-                  index + 1
-                }`}</div>
-                <div className="grid col-span-2 ">
-                  <span className="text-gray-500">Title</span>
-                  <input
-                    type="text"
-                    className="bg-gray-200 px-2 py-2 rounded-xl"
-                    placeholder="Type here"
-                    // value={chapter.title}
-                    // onChange={(e) => {
-                    //   const updatedChapters = [...chapters];
-                    //   updatedChapters[index].title = e.target.value;
-                    //   setChapters(updatedChapters);
-                    // }}
-
-                    value={chapter.title}
-                    onChange={(e) => handleTitleChange(e, index)}
-                  />
-                </div>
-                <div className="grid col-span-5">
-                  <input
-                    type="file"
-                    className="bg-gray-200 px-2 py-2 rounded-xl"
-                    // onChange={(e) => handleChapterFileChange(e, index)}
-                    onChange={(e) => handleChapterFileChange(e, index)}
-                  />
-                </div>
-              </div>
-            );
-          })}
+          <div className="grid grid-cols-8 gap-8 rounded-lg shadow-md justify-center items-center px-6 py-6">
+          <div className="grid col-span-1">{`Chapter - ${chapter.number}`}</div>
+            <div className="grid col-span-2 ">
+              <span className="text-gray-500">Title</span>
+              <input
+                type="text"
+                className="bg-gray-200 px-2 py-2 rounded-xl"
+                placeholder="Type here"
+                value={chapter.title}
+                onChange={(e) => handleTitleChange(e, index)}
+              />
+            </div>
+            <div className="grid col-span-5">
+              <input
+                type="file"
+                className="bg-gray-200 px-2 py-2 rounded-xl"
+                // onChange={(e) => handleChapterFileChange(e, index)}
+                onChange={(e) => handleChapterFileChange(e, index)}
+              />
+            </div>
+          </div>
         </div>
       ))}
       <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 my-6 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-[200px]">
@@ -134,7 +117,7 @@ const UploadChapterByCourse = () => {
 
       <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 my-6 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-[200px]">
         <button
-          onClick={() => handleAdd()}
+          onClick={() => handleAddChapter()}
           className="flex flex-row justify-center items-center"
         >
           <svg
