@@ -2,7 +2,7 @@ import express from "express";
 import uploadMiddleware from "../middleware/vedioUpload.js";
 
 import {
-  UploadCourseAndChapter,
+  UploadCourse,
   GetAllCourses,
   UploadChapterById,
   GetCourseById,
@@ -11,7 +11,7 @@ import {
 
 const router = express.Router();
 //create course route
-router.post("/create-course", uploadMiddleware, UploadCourseAndChapter);
+router.post("/create-course", uploadMiddleware, UploadCourse);
 //create chapter by id route
 router.post("/courses/:courseId/chapters", uploadMiddleware, UploadChapterById);
 // get-all courses route

@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import Cookies from "js-cookie";
+// import Category from "../../../../Backend/src/Model/categoryModel";
 
 const validateSchema = yup.object().shape({
   title: yup.string().required("Title is required"),
@@ -21,11 +22,14 @@ const UploadCourse = () => {
   const [certificateFile, setCertificateFile] = useState(null);
   const [assessmentFile, setAssessmentFile] = useState(null);
   const [selectedImage, setSelectedImage] = useState();
+  const [selectedCategoryId, setSelectedCategoryId] = useState("");
+  console.log('selectedCategoryId :>> ', selectedCategoryId);
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState(null);
   const accessToken = Cookies.get("token");
   const [id, setId] = useState(null);
   console.log("id :>> ", id);
+
   useEffect(() => {
     if (accessToken) {
       const parts = accessToken.split(".");
@@ -72,6 +76,7 @@ const UploadCourse = () => {
   } = useForm({
     resolver: yupResolver(validateSchema),
   });
+  console.log("errors :>> ", errors);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -81,6 +86,7 @@ const UploadCourse = () => {
     assessmentPdf: null,
     certificate: null,
   });
+  console.log("formData :>> ", formData);
 
   const [chapters, setChapters] = useState([{ title: "", video: null }]);
 
@@ -91,10 +97,23 @@ const UploadCourse = () => {
   };
 
   const username = "Samantha";
-
-  const uploadCourse = async (data) => {
+  const [category, setCateogy] = useState([]);
+  const getCategories = async () => {
     try {
-      // let creatorId = Cookies.get("roleId");
+      const categoryRes = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/category/get-categories`
+      );
+      console.log("categoryRes :>> ", categoryRes.data.data);
+      setCateogy(categoryRes.data.data);
+    } catch (error) {
+      console.log("error :>> ", error);
+    }
+  };
+  useEffect(() => {
+    getCategories();
+  }, []);
+  const uploadCourseFunction = async (data) => {
+    try {
       const formData = new FormData();
       formData.append("title", data.title);
       formData.append("description", data.description);
@@ -102,50 +121,72 @@ const UploadCourse = () => {
       formData.append("language", data.language);
       formData.append("coverImage", selectedImage);
       formData.append("skillLevel", data.skillLevel);
+      formData.append("categoryId", selectedCategoryId);
       formData.append("assessmentPdf", assessmentFile);
       formData.append("certificate", certificateFile);
-      formData.append("creatorId", id);
-      console.log(formData);
+      formData.append("creatorId", id);     
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/course-creator/create-course`,
+        formData
+      );
+      setLoading(false);
+      console.log("response :>> ", response);
+      toast.success(response.data.message);
+      const courseId = response.data.course._id;
+      navigate(`/chapter-upload/${courseId}`);
     } catch (error) {
+      setLoading(false);
       console.error("Error uploading course: ", error);
-    }
-  };
-
-  const uploadChapters = async (courseId, chapters) => {
-    try {
-      const chapterIds = [];
-
-      for (const chapter of chapters) {
-        const chapterFormData = new FormData();
-        chapterFormData.append("title", chapter.title);
-        chapterFormData.append("video", chapter.video);
-
-        const chapterResponse = await axios.post(
-          `${process.env.REACT_APP_BASE_URL}/course-creator/courses/${courseId}/chapters`,
-          chapterFormData
-        );
-
-        if (chapterResponse.status === 200) {
-          chapterIds.push(chapterResponse.data.chapterId);
-        } else {
-          console.error("Error uploading chapter:", chapter.title);
-          return null;
-        }
+      if (error?.response?.data?.message === "unAuthorized") {
+        Cookies.remove("token");
+        Cookies.remove("roleName");
+        Cookies.remove("roleId");
+        navigate("/login");
+      } else if (error?.response?.data?.message) {
+        toast.error(error?.response?.data?.message);
+        navigate("/login");
+      } else {
+        toast.error("unsuccess");
+        navigate("/login");
       }
-
-      return chapterIds;
-    } catch (error) {
-      console.error("Error uploading chapters: ", error);
-      return null;
     }
   };
+ 
+  // const uploadChapters = async (courseId, chapters) => {
+  //   try {
+  //     const chapterIds = [];
+
+  //     for (const chapter of chapters) {
+  //       const chapterFormData = new FormData();
+  //       chapterFormData.append("title", chapter.title);
+  //       chapterFormData.append("video", chapter.video);
+
+  //       const chapterResponse = await axios.post(
+  //         `${process.env.REACT_APP_BASE_URL}/course-creator/courses/${courseId}/chapters`,
+  //         chapterFormData
+  //       );
+
+  //       if (chapterResponse.status === 200) {
+  //         chapterIds.push(chapterResponse.data.chapterId);
+  //       } else {
+  //         console.error("Error uploading chapter:", chapter.title);
+  //         return null;
+  //       }
+  //     }
+
+  //     return chapterIds;
+  //   } catch (error) {
+  //     console.error("Error uploading chapters: ", error);
+  //     return null;
+  //   }
+  // };
 
   return (
     <div>
       <CreatorNavbar />
       <div className="grid grid-cols-6 mb-8">
         <form
-          onSubmit={handleSubmit(uploadCourse)}
+          onSubmit={handleSubmit(uploadCourseFunction)}
           className="col-span-6 flex flex-col"
         >
           <div className="flex flex-row justify-between items-center px-8 py-8 bg-slate-200 bg-opacity-30">
@@ -268,94 +309,29 @@ const UploadCourse = () => {
                     </option>
                   </select>
                 </div>
+                <div className="grid gap-2">
+                  <span className="text-gray-500 text-sm">select Category</span>
+                  <select
+                    value={selectedCategoryId}
+                    onChange={(e) => setSelectedCategoryId(e.target.value)}
+                    className="px-4 py-4 text-gray-400 bg-gray-200 rounded-xl"
+                  >
+                    {category.map((cats) => (
+                      <option selected value={cats._id} className="text-gray">
+                        {cats.name}
+                      </option>
+                    ))}
+                    {/* <option selected value="Intermediate" className="text-gray">
+                      Intermediate
+                    </option>
+                    <option selected value="Advance" className="text-gray">
+                      Advance
+                    </option> */}
+                  </select>
+                </div>
               </div>
             </div>
           </div>
-
-          <span className="text-l font-semibold my-8 px-4">Course Content</span>
-          {chapters.map((chapter, index) => (
-            <div
-              className="grid grid-rows-2 gap-2 px-4 items-center"
-              key={index}
-            >
-              {val.map((data, i) => {
-                return (
-                  <div className="grid grid-cols-8 gap-8 rounded-lg shadow-md justify-center items-center px-6 py-6">
-                    <div className="grid col-span-1">{`Chapter - ${
-                      index + 1
-                    }`}</div>
-                    <div className="grid col-span-2 ">
-                      <span className="text-gray-500">Title</span>
-                      <input
-                        type="text"
-                        className="bg-gray-200 px-2 py-2 rounded-xl"
-                        placeholder="Type here"
-                        value={chapter.title}
-                        onChange={(e) => {
-                          const updatedChapters = [...chapters];
-                          updatedChapters[index].title = e.target.value;
-                          setChapters(updatedChapters);
-                        }}
-                      />
-                    </div>
-                    <div className="grid col-span-5">
-                      <input
-                        type="file"
-                        className="bg-gray-200 px-2 py-2 rounded-xl"
-                        onChange={(e) => handleChapterFileChange(e, index)}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          ))}
-          <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 my-6 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-[200px]">
-            <button
-              onClick={uploadChapters}
-              className="flex flex-row justify-center items-center"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              Submit
-            </button>
-          </div>
-
-          <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 my-6 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-[200px]">
-            <button
-              onClick={() => handleAdd()}
-              className="flex flex-row justify-center items-center"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              Add Chapter
-            </button>
-          </div>
-
           <span className="text-l font-semibold my-8 px-4">
             Other Information
           </span>
