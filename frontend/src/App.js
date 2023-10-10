@@ -24,6 +24,7 @@ import CreatorNavbar from "./components/Navbar/CreatorNavbar";
 import LearnerNavbar from "./components/Navbar/LearnerNavbar";
 import EditCourse from "./pages/EditCourse";
 import PrivateMessaging from "./pages/PrivateMessaging";
+import LearnerCourseDetailsPage from "./pages/LearnerCourseDetailsPage";
 function App() {
   return (
     <BrowserRouter>
@@ -43,6 +44,7 @@ function App() {
         <Route exact path="/reset-password" element={<ResetPassword />} />
         <Route exact path="/edit-course" element={<EditCourse />} />
         <Route exact path="/messages" element={<PrivateMessaging />} />
+        <Route exact path="/learner-course-details-page" element={<LearnerCourseDetailsPage />} />
 
         {/* <Route exact path="/course-header" element={<CourseHeader />} /> */}
         {/* <Route exact path="/features" element={<Features />} /> */}
