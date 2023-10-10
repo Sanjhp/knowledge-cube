@@ -132,9 +132,14 @@ export const UploadChapterById = async (req, res) => {
 export const GetAllCourses = async (req, res) => {
   try {
     const courses = await Course.find()
-      .populate("chapters")
-      .populate("category")
-      // .populate("user")
+      .populate({
+        path: 'user',
+        populate: {
+          path: 'role',
+          model: 'Role',
+        },
+      });
+
     return res.status(StatusCodes.OK).json({
       success: true,
       courses: courses,
@@ -143,11 +148,12 @@ export const GetAllCourses = async (req, res) => {
     console.error(error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
-      message: "Failed to retrieve courses",
+      message: 'Failed to retrieve courses',
       error: error.message,
     });
   }
 };
+
 
 // API endpoint for getting a single course by ID
 export const GetCourseById = async (req, res) => {
@@ -155,7 +161,15 @@ export const GetCourseById = async (req, res) => {
     const courseId = req.params.courseId;
     const course = await Course.findById(courseId)
       .populate("chapters")
-      .populate("category") 
+      .populate("category")
+      .populate({
+        path: "user",
+        model: "User", // Ensure this matches the model name used for the User schema
+        populate: {
+          path: "role",
+          model: "Role",
+        },
+      })
       .exec();
 
     if (!course) {
@@ -178,6 +192,7 @@ export const GetCourseById = async (req, res) => {
     });
   }
 };
+
 
 // API endpoint for getting a single chapter by ID
 export const GetChapterById = async (req, res) => {
