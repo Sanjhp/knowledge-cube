@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faStar } from "@fortawesome/free-solid-svg-icons";
 import LearnerNavbar from "../components/Navbar/LearnerNavbar";
 import Rate from "../components/Rate";
+import axios from 'axios'
 
 const LearnerCourseDetailsPage = () => {
   const text = [
@@ -212,7 +213,25 @@ const LearnerCourseDetailsPage = () => {
       }
     }
   }, []);
+  const [courseDetails, setCourseDetails] = useState({})
   const [rating, setRating] = useState(0);
+  const { courseId } = useParams();
+  const GetSingleCourse = async () => {
+    try {
+      const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/course-creator/courses/${courseId}`)
+      console.log('res', res?.data?.course)
+      setCourseDetails(res?.data?.course)
+
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
+  useEffect(() => {
+    GetSingleCourse()
+  }, [])
+
+
   return (
     <div>
       <LearnerNavbar />
@@ -222,7 +241,8 @@ const LearnerCourseDetailsPage = () => {
           {text.map((element) => (
             <div className="col-span-12">
               <span className="text-5xl flex flex-cols col-span-5 my-4">
-                {element.title}
+                {/* {element.title} */}
+                {courseDetails?.title}
               </span>
               <span className="text-sm font-extralight flex flex-cols col-span-5 my-2">
                 {element.subtitle}
@@ -233,7 +253,8 @@ const LearnerCourseDetailsPage = () => {
                     <i className={insight.iconClass}></i>
                     <span className="text-sm font-extralight">
                       {insight.rating} {insight.views} {insight.duration}
-                      {insight.lessons}
+                      {/* {insight.lessons} */}
+                      {courseDetails?.chapters?.length}
                     </span>
                   </span>
                 ))}
@@ -248,8 +269,8 @@ const LearnerCourseDetailsPage = () => {
                 // style={ backgroundColor}
                 className={
                   categories[element] === "Overview" &&
-                  highlight === true &&
-                  unhighlight != true
+                    highlight === true &&
+                    unhighlight != true
                     ? "flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm hover:bg-orange-500 hover:text-white items-center bg-orange-500 text-white font-extralight focus:bg-orange-500 focus:text-white active:bg-orange-400 active:text-white"
                     : "flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm hover:bg-orange-500 hover:text-white items-center bg-gray-300 text-gray-700 font-extralight focus:bg-orange-500 focus:text-white active:bg-orange-400 active:text-white"
                 }
@@ -264,7 +285,7 @@ const LearnerCourseDetailsPage = () => {
               <div className="col-span-8 my-4">
                 <span className="text-3xl">{ele.header}</span>
                 <br />
-                
+
                 {ele.detail}
 
               </div>
