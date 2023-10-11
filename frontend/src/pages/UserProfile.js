@@ -18,7 +18,7 @@ const UserProfile = ({ user, onClose }) => {
             className="w-20 h-20 rounded-full mx-auto mb-4"
           />
           <h2 className="text-xl font-semibold">
-            {`${user.name.first} ${user.name.last}`}
+            {`${user.name.first} ${user.name.last} Community`}
           </h2>
           <p className="text-gray-600">{user.email}</p>
           <p className="text-gray-600">{user.phone}</p>

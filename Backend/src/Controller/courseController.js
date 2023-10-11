@@ -134,12 +134,21 @@ export const GetAllCourses = async (req, res) => {
   try {
     const courses = await Course.find()
       .populate("category")
+<<<<<<< HEAD
       // .populate("")
       .populate({
         path: 'user',
         populate: {
           path: 'role',
           model: 'Role',
+=======
+      .populate({
+        path: "user",
+        model: "User", // Ensure that the model name matches the registered model name in Mongoose
+        populate: {
+          path: "role",
+          model: "Role",
+>>>>>>> 0b1e0105c8c96dc7f369b172866ca30815a9813a
         },
       });
 
@@ -167,7 +176,11 @@ export const GetCourseById = async (req, res) => {
       .populate("category")
       .populate({
         path: "user",
+<<<<<<< HEAD
         model: "User",
+=======
+        model: "User", // Ensure this matches the model name used for the User schema
+>>>>>>> 0b1e0105c8c96dc7f369b172866ca30815a9813a
         populate: {
           path: "role",
           model: "Role",

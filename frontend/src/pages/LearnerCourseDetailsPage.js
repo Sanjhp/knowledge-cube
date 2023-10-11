@@ -1,8 +1,11 @@
-import { React, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faStar } from "@fortawesome/free-solid-svg-icons";
 import LearnerNavbar from "../components/Navbar/LearnerNavbar";
+import Rate from "../components/Rate";
 
-const CourseOverview = () => {
+const LearnerCourseDetailsPage = () => {
   const text = [
     {
       title: "Learn Adobe CC with our Masterclass",
@@ -96,17 +99,12 @@ const CourseOverview = () => {
         {
           header: "Course Description10",
           detail:
-            " Do esse nisi duis do reprehenderit tempor tempor veniam commodo velit.Anim non incididunt aliqua reprehenderit Lorem laboris commodo eu deserunt nulla sunt proident laboris eiusmod.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
-        },
-        {
-          header: "Course Description11",
-          detail:
-            " Dolore proident consectetur fugiat Lorem aute cupidatat non in eu Lorem ullamco sint anim.Aute sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
+            " Do esse nisi duis do reprehenderit tempor tempor veniam commodo velit.Anim non incididunt aliqua reprehenderit Lorem laboris commodo eu deserunt nulla sunt proident laboris eiusmod.sit adipisicing ",
         },
         {
           header: "Course Description12",
           detail:
-            " Et ex commodo voluptate dolore esse sunt nisi mollit reprehenderit commodo amet ea occaecat ullamco.Ex quis tempor velit id commodo eu qui deserunt nostrud ut aute magna. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
+            " Et ex commodo voluptate dolore esse sunt nisi mollit reprehenderit commodo amet ea occaecat ullamco.",
         },
       ],
     },
@@ -177,6 +175,7 @@ const CourseOverview = () => {
     },
   ];
   const [set, setSet] = useState(cards[0].details);
+  const [select, setSelect] = useState("Overview");
   const [highlight, setHighlight] = useState(true);
   const [unhighlight, setUnhighlight] = useState(false);
   function clickFunction(val) {
@@ -187,6 +186,7 @@ const CourseOverview = () => {
       setHighlight(false);
       setUnhighlight(true);
     }
+    setSelect(val);
     for (let i = 0; i < cards.length; i++) {
       if (cards[i].name === val) {
         setSet(cards[i].details);
@@ -212,10 +212,7 @@ const CourseOverview = () => {
       }
     }
   }, []);
- 
-
-
-  
+  const [rating, setRating] = useState(0);
   return (
     <div>
       <LearnerNavbar />
@@ -267,9 +264,46 @@ const CourseOverview = () => {
               <div className="col-span-8 my-4">
                 <span className="text-3xl">{ele.header}</span>
                 <br />
+                
                 {ele.detail}
+
               </div>
             ))}
+            {select === "Reviews" ? (
+              <div className="grid grid-cols-10 col-span-10 gap-2">
+                <span className="text-xl my-4 col-span-10">
+                  Send your Review
+                </span>
+                <input
+                  placeholder="Your Name"
+                  type="text"
+                  className="col-span-3 text-gray-200 p-4 rounded-sm border-[1px] border-gray-200"
+                />
+                <input
+                  placeholder="Your Email"
+                  type="text"
+                  className="col-span-3 text-gray-200 p-4 rounded-sm border-[1px] border-gray-200"
+                />
+                <div className="col-span-10">
+                  <Rate
+                    rating={rating}
+                    onRating={(rate) => setRating(rate)}
+                  />
+                  {/* <p>Rating - {rating}</p> */}
+                </div>
+                <input
+                  placeholder="Review Title"
+                  type="text"
+                  className="col-span-10 col-start-1 text-gray-200 p-4 rounded-sm border-[1px] border-gray-200"
+                />
+                <textarea
+                  placeholder="Write Feedback"
+                  className="col-span-10 col-start-1 text-gray-200 p-4 rounded-sm border-[1px] border-gray-200"
+                />
+              </div>
+            ) : (
+              <div></div>
+            )}
           </div>
         </div>
 
@@ -351,4 +385,4 @@ const CourseOverview = () => {
   );
 };
 
-export default CourseOverview;
+export default LearnerCourseDetailsPage;
