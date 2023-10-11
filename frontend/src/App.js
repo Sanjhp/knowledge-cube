@@ -24,6 +24,8 @@ import EditCourse from "./pages/EditCourse";
 import PrivateMessaging from "./pages/PrivateMessaging";
 import Chapter from "./pages/UploadCourse/UploadChapterByCourse";
 
+import LearnerCourseDetailsPage from "./pages/LearnerCourseDetailsPage";
+import CommunityChat from "./pages/CommunityChat";
 function App() {
   return (
     <BrowserRouter>
@@ -43,9 +45,8 @@ function App() {
         <Route exact path="/forget-password" element={<ForgetPassword />} />
         <Route exact path="/reset-password" element={<ResetPassword />} />
         <Route exact path="/edit-course" element={<EditCourse />} />
-        {/* <Route exact path="/messages" element={<PrivateMessaging />} /> */}
         <Route exact path="/community-chat" element={<PrivateMessaging />} />
-
+        <Route exact path="/learner-course-details-page/:courseId" element={<LearnerCourseDetailsPage />} />
 
         {/* <Route exact path="/course-header" element={<CourseHeader />} /> */}
         {/* <Route exact path="/features" element={<Features />} /> */}
@@ -58,13 +59,6 @@ function App() {
         {/* <Route exact path="/about" element={<About />} /> */}
         {/* <Route exact path="/contact" element={<Contact />} /> */}
       </Routes>
-      {/* <AllCourses/>  
-      <UploadCourse />
-      <CourseHeader />
-      <CourseCollection />
-      <CourseOverview/>
-      <LearnerDashboard/>
-      <CreaterDashboard/> */}
     </BrowserRouter>
   );
 }

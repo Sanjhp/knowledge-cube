@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import { useState } from "react";
 import { Link } from "react-router-dom";
 import LearnerNavbar from "../components/Navbar/LearnerNavbar";
 import axios from "axios";
@@ -119,7 +118,7 @@ const AllCourses = () => {
           <div className="grid grid-cols-12 col-span-12 col-start-1 justify-center gap-4 items-center my-8 mx-8">
             {courses.map((course) => (
               <Link
-                to={`/course-overview/${course?._id}`}
+                to={`/learner-course-details-page/${course?._id}`}
                 className="flex flex-col col-span-3 px-4 py-4 bg-white border-2 border-gray-100 shadow-2xl shadow-gray-400 rounded-md transition ease-in delay-0 hover:-translate-y-2 duration:1000"
                 key={course?._id}
               >
