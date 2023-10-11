@@ -90,7 +90,7 @@ export const UploadCourse = async (req, res) => {
     });
   }
 };
-// API endpoint for uploading a chapter for a specific course
+// uploading a chapter for a specific course
 export const UploadChapterById = async (req, res) => {
   try {
     const { title } = req.body;
@@ -128,13 +128,21 @@ export const UploadChapterById = async (req, res) => {
   }
 };
 
-// API endpoint for getting all courses
+
+// get all courses
 export const GetAllCourses = async (req, res) => {
   try {
     const courses = await Course.find()
-      .populate("chapters")
       .populate("category")
-      // .populate("user")
+      // .populate("")
+      .populate({
+        path: 'user',
+        populate: {
+          path: 'role',
+          model: 'Role',
+        },
+      });
+
     return res.status(StatusCodes.OK).json({
       success: true,
       courses: courses,
@@ -143,11 +151,12 @@ export const GetAllCourses = async (req, res) => {
     console.error(error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
-      message: "Failed to retrieve courses",
+      message: 'Failed to retrieve courses',
       error: error.message,
     });
   }
 };
+
 
 // API endpoint for getting a single course by ID
 export const GetCourseById = async (req, res) => {
@@ -155,8 +164,17 @@ export const GetCourseById = async (req, res) => {
     const courseId = req.params.courseId;
     const course = await Course.findById(courseId)
       .populate("chapters")
-      .populate("category") 
+      .populate("category")
+      .populate({
+        path: "user",
+        model: "User",
+        populate: {
+          path: "role",
+          model: "Role",
+        },
+      })
       .exec();
+
 
     if (!course) {
       return res.status(StatusCodes.NOT_FOUND).json({

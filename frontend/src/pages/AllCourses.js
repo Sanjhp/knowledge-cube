@@ -34,7 +34,6 @@ const AllCourses = () => {
         "http://localhost:5000/api/course-creator/courses"
       );
       console.log("Courses:", response.data);
-      console.log("creatorId :>> ", response.data);
       setCourses(response.data.courses); // Update the state with fetched courses
     } catch (error) {
       // Handle errors here
