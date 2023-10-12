@@ -1,61 +1,102 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CreatorNavbar from "../components/Navbar/CreatorNavbar";
+import Cookies from "universal-cookie";
+import axios from "axios";
 
 const CreaterDashboard = () => {
+  const [token, setToken] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [userData, setUserData] = useState(null);
+  const [userName, setUserName] = useState("");
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    const cookies = new Cookies();
+    const token = cookies.get("token");
+    const userName = cookies.get("userName");
+    console.log(token);
+    console.log(userName);
+    if (token) {
+      const parts = token.split(".");
+      const payload = JSON.parse(atob(parts[1]));
+      const userId = payload._id;
+
+      setUserId(userId);
+      setToken(token);
+      setUserName(userName);
+      console.log("User ID:", userId);
+
+      // Fetch courses here
+      axios
+        .get(`/api/course-creator/courses`)
+        .then((response) => {
+          setCourses(response.data.courses);
+          console.log(response.data.courses);
+        })
+        .catch((error) => {
+          console.error("Error fetching courses:", error);
+        });
+    } else {
+      console.log("Token not found");
+    }
+
+    console.log("this is courses which is map", courses);
+  }, [token]);
+
   const stats = [
     {
       star: "1.4k",
     },
   ];
-  const card = [
-    {
-      thumbnail:
-        "https://plus.unsplash.com/premium_photo-1668638804974-b0053235b8f7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=900&q=60",
-      course: "Inroduction to Python Programming",
-      enrollments: "124",
-      ratings: "4.50",
-    },
+  // const card = [
+  //   {
+  //     thumbnail:
+  //       "https://plus.unsplash.com/premium_photo-1668638804974-b0053235b8f7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=900&q=60",
+  //     course: "Inroduction to Python Programming",
+  //     enrollments: "124",
+  //     ratings: "4.50",
+  //   },
 
-    {
-      thumbnail:
-        "https://plus.unsplash.com/premium_photo-1668638804974-b0053235b8f7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=900&q=60",
-      course: "Introduction to Java",
-      enrollments: "124",
-      ratings: "4.50",
-    },
+  //   {
+  //     thumbnail:
+  //       "https://plus.unsplash.com/premium_photo-1668638804974-b0053235b8f7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=900&q=60",
+  //     course: "Introduction to Java",
+  //     enrollments: "124",
+  //     ratings: "4.50",
+  //   },
 
-    {
-      thumbnail:
-        "https://plus.unsplash.com/premium_photo-1668638804974-b0053235b8f7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=900&q=60",
-      course: "Introduction to C++",
-      enrollments: "124",
-      ratings: "4.50",
-    },
+  //   {
+  //     thumbnail:
+  //       "https://plus.unsplash.com/premium_photo-1668638804974-b0053235b8f7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=900&q=60",
+  //     course: "Introduction to C++",
+  //     enrollments: "124",
+  //     ratings: "4.50",
+  //   },
 
-    {
-      thumbnail:
-        "https://plus.unsplash.com/premium_photo-1668638804974-b0053235b8f7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=900&q=60",
-      course: "Data Structure and Algorithm",
-      enrollments: "124",
-      ratings: "4.50",
-    },
-  ];
+  //   {
+  //     thumbnail:
+  //       "https://plus.unsplash.com/premium_photo-1668638804974-b0053235b8f7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=900&q=60",
+  //     course: "Data Structure and Algorithm",
+  //     enrollments: "124",
+  //     ratings: "4.50",
+  //   },
+  // ];
   return (
     <div>
       <CreatorNavbar />
       <div className="min-[300px]:grid min-[300px]:grid-rows-1 min-[300px]:justify-center min-[300px]:items-center max-[639px]:grid max-[639px]:grid-rows-1 max-[639px]:justify-center max-[639px]:items-center sm:grid sm:grid-rows-1 sm:justify-center sm:items-center md:grid md:grid-rows-1 md:justify-center md:items-center lg:grid lg:grid-cols-12 lg:justify-center lg:items-center">
         <div className="min-[300px]:grid min-[300px]:grid-rows-1 min-[300px]:justify-center min-[300px]:items-center max-[639px]:grid max-[639px]:grid-rows-1 max-[639px]:justify-center max-[639px]:items-center sm:grid sm:grid-rows-1 sm:justify-center sm:items-center md:grid md:grid-rows-1 md:justify-center md:items-center lg:grid lg:grid-cols-12 lg:justify-center lg:items-center gap-8 pt-8 px-4 min-[300px]:col-start-3 lg:col-start-1 min-[300px]:col-span-4 max-[639px]:col-span-4 sm:col-span-10 md:col-span-10 lg:col-span-10">
-          <div className="grid min-[300px]:col-span-4 max-[640px]:col-span-4 sm:col-span-3 md:col-span-3 lg:col-span-2 bg-white shadow-gray-400 shadow-2xl px-2 py-2">
+          {/* <div className="grid min-[300px]:col-span-4 max-[640px]:col-span-4 sm:col-span-3 md:col-span-3 lg:col-span-2 bg-white shadow-gray-400 shadow-2xl px-2 py-2">
             <img
               src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60"
               className="w-fill"
             />
-          </div>
+          </div> */}
           <div className="grid grid-cols-12 col-span-9 justify-center items-center">
             <div className="grid grid-cols-12 col-span-12 justify-center items-center">
               <div className="grid grid-rows-2 col-start-1 col-span-10">
-                <span className="text-3xl col-span-10">Jenna Ortego</span>
+                <span className="text-3xl col-span-10">{userName}</span>
                 <span className="text-sm text-gray-300 col-span-3">
                   Art Illustrator
                 </span>
@@ -72,7 +113,7 @@ const CreaterDashboard = () => {
                 labore nulla. Magna veniam sunt nisi sint reprehenderit aute
                 quis.Qui velit irure adipisicing duis.
               </span>
-              <div className="col-span-8">
+              {/* <div className="col-span-8">
                 {stats.map((element) => (
                   <div className="grid grid-cols-12 col-span-8">
                     <span className="flex col-span-3 col-start-1">
@@ -81,7 +122,7 @@ const CreaterDashboard = () => {
                     </span>
                   </div>
                 ))}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -106,36 +147,39 @@ const CreaterDashboard = () => {
           </div>
         </div>
         <div className="min-[300px]:grid min-[639px]:grid-rows-1 lg:grid lg:grid-cols-12 col-span-12 my-4 gap-4 px-16">
-          {card.map((element) => (
-            <div className="min-[300px]:grid min-[639px]:grid-rows-1 lg:grid lg:grid-cols-12 col-span-12 shadow-gray-300 shadow-sm rounded-sm px-2 py-2 justify-center items-center gap-4">
+          {courses.map((course) => (
+            <div
+              key={course._id}
+              className="min-[300px]:grid min-[639px]:grid-rows-1 lg:grid lg:grid-cols-12 col-span-12 shadow-gray-300 shadow-sm rounded-sm px-2 py-2 justify-center items-center gap-4"
+            >
               <div className="grid min-[300px]:col-span-10 lg:col-span-1">
-                <img
-                  src={element.thumbnail}
+                {/* <img
+                  src={course.coverImage}
                   className="min-[300px]:w-fill lg:w-16 rounded-md"
-                />
+                /> */}
               </div>
               <div className="grid min-[300px]:grid-rows-1 min-[300px]:col-span-4 lg:grid-cols-12 lg:col-span-12">
                 <div className="grid min-[300px]:grid-cols-4 lg:grid-rows-2 col-span-4 items-center gap-8">
                   <span className="text-l font-semibold col-span-3">
-                    {element.course}
+                    {course.title}
                   </span>
                   <div className="grid grid-cols-4 col-span-4 gap-4 items-center">
                     <span className="bg-purple-600 text-white px-[1px] py-[1px] text-xs col-span-1 uppercase text-center rounded-full">
-                      live
+                      View Course
                     </span>
-                    <span className="col-span-3 text-base">
+                    {/* <span className="col-span-3 text-base">
                       only for your organisation
-                    </span>
+                    </span> */}
                   </div>
                 </div>
-                <div className="grid justify-center items-center col-span-2">
-                  <div className="text-4xl">{element.enrollments}</div>
+                {/* <div className="grid justify-center items-center col-span-2">
+                  <div className="text-4xl">{course.enrollments}</div>
                   <span className="text-sm font-thin">
                     enrollments this month
                   </span>
-                </div>
-                <div className="grid justify-center items-center col-span-2">
-                  <div className="text-4xl">{element.ratings}</div>
+                </div> */}
+                {/* <div className="grid justify-center items-center col-span-2">
+                  <div className="text-4xl">{course.ratings}</div>
 
                   <div className="grid grid-cols-4 col-span-4">
                     <i class="ri-star-fill text-lg text-yellow-300"></i>
@@ -144,7 +188,7 @@ const CreaterDashboard = () => {
                   </div>
 
                   <span className="text-sm font-thin">ratings</span>
-                </div>
+                </div> */}
               </div>
             </div>
           ))}

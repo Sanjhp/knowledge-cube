@@ -85,13 +85,17 @@ function LoginPage() {
       );
       console.log("res :>> ", res.data.token);
       const token = res?.data?.token;
-      Cookies.set("token",token)
+      Cookies.set("token", token);
       const roleId = res?.data?.user?.role;
       console.log(roleId);
-      Cookies.set("roleId",roleId)
+      Cookies.set("roleId", roleId);
       const roleName = await RoleFunction(roleId);
       setLoading(false);
       Cookies.set("roleName", roleName);
+      const userName = res?.data?.user?.name;
+      console.log("userName", userName);
+      Cookies.set("userName", userName);
+
       toast.success(res?.data?.message);
       if (roleName === "Learner") {
         navigate("/learner-dashboard");
