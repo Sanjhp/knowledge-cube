@@ -128,12 +128,15 @@ export const UploadChapterById = async (req, res) => {
   }
 };
 
-
 // get all courses
 export const GetAllCourses = async (req, res) => {
   try {
     const courses = await Course.find()
       .populate("category")
+      .populate({
+        path: "chapters",
+        model: "Chapter", // Specify the fields you want to populate
+      })
       .populate({
         path: "user",
         model: "User", // Ensure that the model name matches the registered model name in Mongoose
@@ -151,19 +154,21 @@ export const GetAllCourses = async (req, res) => {
     console.error(error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
-      message: 'Failed to retrieve courses',
+      message: "Failed to retrieve courses",
       error: error.message,
     });
   }
 };
-
 
 // API endpoint for getting a single course by ID
 export const GetCourseById = async (req, res) => {
   try {
     const courseId = req.params.courseId;
     const course = await Course.findById(courseId)
-      .populate("chapters")
+      .populate({
+        path: "chapters",
+        model: "Chapter", // Specify the fields you want to populate
+      })
       .populate("category")
       .populate({
         path: "user",
@@ -175,6 +180,7 @@ export const GetCourseById = async (req, res) => {
       })
       .exec();
 
+      console.log('course :>> ', course);
 
     if (!course) {
       return res.status(StatusCodes.NOT_FOUND).json({
@@ -187,6 +193,7 @@ export const GetCourseById = async (req, res) => {
       success: true,
       course: course,
     });
+   
   } catch (error) {
     console.error(error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

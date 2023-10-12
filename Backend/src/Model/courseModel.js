@@ -23,19 +23,24 @@ const courseSchema = mongoose.Schema(
       ref: "Category", // Reference to the Category model
       required: true,
     },
-
     chapters: [
       {
-        title: {
-          type: String,
-          required: true,
-        },
-        videoUrl: {
-          type: String,
-          required: true,
-        },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Chapter",
       },
     ],
+    // chapters: [
+    //   {
+    //     title: {
+    //       type: String,
+    //       required: true,
+    //     },
+    //     videoUrl: {
+    //       type: String,
+    //       required: true,
+    //     },
+    //   },
+    // ],
     price: {
       type: Number,
       required: true,

@@ -51,7 +51,7 @@ const AllCourses = () => {
         "http://localhost:5000/api/course-creator/courses"
       );
       console.log("Courses:", response.data);
-      setCourses(response.data.courses); // Update the state with fetched courses
+      setCourses(response?.data?.courses); // Update the state with fetched courses
     } catch (error) {
       // Handle errors here
       console.error("Error fetching courses:", error);
@@ -104,9 +104,9 @@ const AllCourses = () => {
           >
             <option>select a category</option>
 
-            {category.map((cats) => (
+            {category?.map((cats) => (
               <option selected value={cats._id} className="text-gray">
-                {cats.name}
+                {cats?.name}
               </option>
             ))}
           </select>
@@ -115,7 +115,7 @@ const AllCourses = () => {
 
         <div className="grid grid-cols-12 col-span-12 col-start-1 col-end-13 justify-center items-center px-2 py-2 gap-4 my-8">
           <div className="grid grid-cols-12 col-span-12 col-start-1 justify-center gap-4 items-center my-8 mx-8">
-            {courses.map((course) => (
+            {courses?.map((course) => (
               <Link
                 to={`/learner-course-details-page/${course?._id}`}
                 className="flex flex-col col-span-3 px-4 py-4 bg-white border-2 border-gray-100 shadow-2xl shadow-gray-400 rounded-md transition ease-in delay-0 hover:-translate-y-2 duration:1000"
@@ -147,14 +147,14 @@ const AllCourses = () => {
                     </span>
                   </div>
                   <span className="flex text-xl text-black leading-6 my-4">
-                    {course.title} {/* {ele.courseName} */}
+                    {course?.title} {/* {ele.courseName} */}
                   </span>
                   <div className="flex justify-between items-center ">
                     {/* {ele.info.map((e) => ( */}
                     {/* className={e.class} */}
                     <span>
                       {course?.user?.name}
-                      Rs. {course.price}
+                      Rs. {course?.price}
                     </span>
                   </div>
                 </div>
