@@ -2,6 +2,7 @@ import Review from "../Model/reviewModel.js";
 import User from "../Model/userModel.js";
 import Role from "../Model/roleModel.js";
 import { StatusCodes } from "http-status-codes";
+import Course from "../Model/courseModel.js";
 
 export const CreateReview = async (req, res) => {
   try {
@@ -43,9 +44,8 @@ export const CreateReview = async (req, res) => {
       });
     }
 
-    const parsedRating = parseInt(rating, 10); // Radix 10 indicates decimal numeral system
+    const parsedRating = parseInt(rating, 10); 
 
-    // Check if parsing was successful
     if (isNaN(parsedRating) || parsedRating < 0 || parsedRating > 5) {
       return res
         .status(StatusCodes.BAD_REQUEST)
@@ -59,7 +59,10 @@ export const CreateReview = async (req, res) => {
     });
 
     await review.save();
-
+    const course = await Course.findById(courseId);
+    course.reviews.push(userId);
+    await course.save();
+  
     res
       .status(StatusCodes.OK)
       .json({ success: true, message: "Review added successfully", review });

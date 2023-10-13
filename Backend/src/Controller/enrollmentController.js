@@ -44,7 +44,7 @@ export const enrollUserInCourse = async (req, res) => {
 
     await enrollment.save();
     const course = await Course.findById(courseId);
-    course.enrolledUsers.push(userId);
+    course.enrollments.push(userId);
     await course.save();
 
     res.status(StatusCodes.OK).json({
