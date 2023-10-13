@@ -197,17 +197,20 @@ const LearnerCourseDetailsPage = () => {
   }, []);
   const [courseDetails, setCourseDetails] = useState({});
   const [rating, setRating] = useState(0);
+  console.log('rating', rating)
   const [reviews, setReviews] = useState([]);
+  console.log('reviews', reviews)
   const [averageRating, setAverageRating] = useState("");
   const [totalReviews, setTotalReviews] = useState("");
   console.log("reviews :>> ", reviews);
   const { courseId } = useParams();
+
   const GetReviewsFunction = async () => {
     try {
       const res = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/review/get-reviews?courseId=${courseId}`
       );
-      console.log("res :>> ", res);
+      console.log("response :>> ", res);
       setReviews(res?.data?.reviews);
       setAverageRating(res?.data?.averageRating);
       const totalReviews = res?.data?.reviews?.length || 0;
@@ -404,7 +407,7 @@ const LearnerCourseDetailsPage = () => {
 
                 <button
                   onClick={postReviewFunction}
-                  className="btn btn-primary mt-2"
+                  className="btn btn-primary mt-2 bg-blue-500 text-white p-2 rounded-lg"
                 >
                   Submit Review
                 </button>

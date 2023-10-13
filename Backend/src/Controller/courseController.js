@@ -18,6 +18,7 @@ export const UploadCourse = async (req, res) => {
       creatorId,
       categoryId,
     } = req.body;
+    const date = new Date()
     console.log("req.body :>> ", req.body);
     const coverImage = req.files["coverImage"]
       ? req.files["coverImage"][0].path
@@ -28,7 +29,11 @@ export const UploadCourse = async (req, res) => {
     const assessmentPdf = req.files["assessmentPdf"]
       ? req.files["assessmentPdf"][0].path
       : null;
-
+    console.log('originalName', req.files["coverImage"][0].originalname)
+    const originalName = req.files["coverImage"][0].originalname.split(' ').join('-')
+    console.log('originalName', originalName)
+    const newFilename = `${date.getTime()}${originalName}`
+    const newFilename1=  `/public/course-images/${newFilename}`
     if (
       !coverImage ||
       !creatorId ||
@@ -62,7 +67,7 @@ export const UploadCourse = async (req, res) => {
 
     const course = await Course.create({
       title,
-      coverImage,
+      coverImage: newFilename1,
       language,
       skillLevel,
       price,
@@ -138,7 +143,7 @@ export const GetAllCourses = async (req, res) => {
         path: "chapters",
         model: "Chapter",
       })
-   
+
       .populate({
         path: "reviews",
         model: "Review",
@@ -177,7 +182,7 @@ export const GetCourseById = async (req, res) => {
     const course = await Course.findById(courseId)
       .populate({
         path: "chapters",
-        model: "Chapter", 
+        model: "Chapter",
       })
       .populate({
         path: "enrollments",

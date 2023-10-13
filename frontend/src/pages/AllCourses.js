@@ -125,8 +125,8 @@ const AllCourses = () => {
                 <div className="flex flex-col">
                   <img
                     alt="image"
-                    src="https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60"
-                    // src={`http://localhost:5000/${course.coverImage.replace()}`}
+                    // src="https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60"
+                    src={`http://localhost:5000/${course.coverImage}`}
 
                     
                     // src={`http://localhost:5000/${course?.coverImage.replace("public\\public\\course-images\\", "")}`}
