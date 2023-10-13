@@ -1,0 +1,46 @@
+/* VideoEditor.css */
+
+/* Container styles */
+div {
+    text-align: center;
+    padding: 20px;
+}
+
+/* Title styles */
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* File input styles */
+input[type="file"] {
+    display: none;
+}
+
+label {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Video styles */
+video {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+}
+
+/* Volume control styles */
+label {
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+input[type="range"] {
+    width: 100%;
+    max-width: 400px;
+    margin: 10px auto;
+}
