@@ -32,6 +32,12 @@ const userSchema = mongoose.Schema(
       value: { type: String },
       expire: { type: Date },
     },
+    enrollments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Enrollment',
+      },
+    ],
   },
   { timestamps: true }
 );

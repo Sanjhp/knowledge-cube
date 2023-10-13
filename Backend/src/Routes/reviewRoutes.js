@@ -1,11 +1,11 @@
 
 import express from 'express'
-import { CreateReview, GetReviewsByCourse } from "../Controller/reviewController.js";
+import { CreateReview, GetReviewsByCourseId } from "../Controller/reviewController.js";
 
 
 const router = express.Router();
 
-router.get('/get-reviews/:courseId',CreateReview);
+router.get('/get-reviews',GetReviewsByCourseId);
 router.post('/create-review',CreateReview);
 
 export default router;

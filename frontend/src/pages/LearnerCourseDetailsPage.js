@@ -197,7 +197,41 @@ const LearnerCourseDetailsPage = () => {
   }, []);
   const [courseDetails, setCourseDetails] = useState({});
   const [rating, setRating] = useState(0);
+  const [reviews, setReviews] = useState([]);
+  const [averageRating, setAverageRating] = useState("");
+  const [totalReviews, setTotalReviews] = useState("");
+  console.log("reviews :>> ", reviews);
   const { courseId } = useParams();
+  const GetReviewsFunction = async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/review/get-reviews?courseId=${courseId}`
+      );
+      console.log("res :>> ", res);
+      setReviews(res?.data?.reviews);
+      setAverageRating(res?.data?.averageRating);
+      const totalReviews = res?.data?.reviews?.length || 0;
+      setTotalReviews(totalReviews);
+    } catch (error) {
+      console.log("error :>> ", error);
+    }
+  };
+
+  const postReviewFunction = async (data) => {
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/review/create-review`,
+        data
+      );
+      console.log("res :>> ", res);
+
+      // After posting the review, fetch the updated reviews
+      GetReviewsFunction();
+    } catch (error) {
+      console.log("error :>> ", error);
+    }
+  };
+
   const GetSingleCourse = async () => {
     try {
       const res = await axios.get(
@@ -212,6 +246,7 @@ const LearnerCourseDetailsPage = () => {
 
   useEffect(() => {
     GetSingleCourse();
+    GetReviewsFunction();
   }, []);
   const [selectedButton, setSelectedButton] = useState(null);
 
@@ -234,7 +269,7 @@ const LearnerCourseDetailsPage = () => {
               <span className="flex flex-rows mx-2 col-span-4 justify-center items-center">
                 <i className="ri-star-fill text-orange-400"></i>
                 <span className="text-sm font-extralight">
-                  4.5 (1,348 ratings)
+                  {averageRating} ({totalReviews} reviews)
                 </span>
               </span>
 
@@ -350,32 +385,42 @@ const LearnerCourseDetailsPage = () => {
                   <span className="text-xl my-4 col-span-10">
                     Send your Review
                   </span>
-                  <input
-                    placeholder="Your Name"
-                    type="text"
-                    className="col-span-3 text-gray-200 p-4 rounded-sm border-[1px] border-gray-200"
-                  />
-                  <input
-                    placeholder="Your Email"
-                    type="text"
-                    className="col-span-3 text-gray-200 p-4 rounded-sm border-[1px] border-gray-200"
-                  />
+
+                  <div className="col-span-10">
+                    <Rate
+                      rating={rating}
+                      onRating={(rate) => setRating(rate)}
+                    />
+                  </div>
                   <div className="col-span-10"></div>
-                  <input
-                    placeholder="Review Title"
-                    type="text"
-                    className="col-span-10 col-start-1 text-gray-200 p-4 rounded-sm border-[1px] border-gray-200"
-                  />
+
                   <textarea
-                    placeholder="Write Feedback"
+                    placeholder="Write something"
+                    name="comment"
+                    onChange={(e) => postReviewFunction(e.target.value)}
                     className="col-span-10 col-start-1 text-gray-200 p-4 rounded-sm border-[1px] border-gray-200"
                   />
                 </div>
-                {/* Reviews content goes here */}
+
+                <button
+                  onClick={postReviewFunction}
+                  className="btn btn-primary mt-2"
+                >
+                  Submit Review
+                </button>
+
+                {reviews.map((review) => (
+                  <div>
+                    <p>{review.rating}</p>
+                    <p>{review.comment}</p>
+                    <p>
+                      {review.userId.name} at{" "}
+                      {new Date(review.createdAt).toLocaleString()}
+                    </p>
+                  </div>
+                ))}
               </div>
             )}
-
-            {/* Add your review form or other content here */}
           </div>
         </div>
 
@@ -399,10 +444,7 @@ const LearnerCourseDetailsPage = () => {
                 </span>
                 {/* ))} */}
               </div>
-              {/* <span className="flex justify-center items-center text-center text-orange-400 leading-6 mb-4">
-                    <i class="ri-time-line text-orange-400"></i>
-                    {elements.dealLeft}
-                  </span> */}
+
               <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid">
                 <Link
                   to="/new-course"
@@ -450,21 +492,7 @@ const LearnerCourseDetailsPage = () => {
                   </span>
                 </div>
               </div>
-              {/* <span className="text-xl font-semibold mt-4">
-                    Training 5 or more people?
-                  </span>
-                  <div className="flex flex-col border-b-[1px] border-gray-200">
-                    {elements.dealForTeams.map((ele) => (
-                      <div className="flex flex-cols items-center">
-                        <span className="font-extralight my-2">
-                          {ele.deal1}
-                          <Link to={ele.to} className="text-orange-400">
-                            {ele.cta}
-                          </Link>
-                        </span>
-                      </div>
-                    ))}
-                  </div> */}
+
               <span className="text-xl font-semibold mt-4">
                 Share this course
               </span>
@@ -483,9 +511,7 @@ const LearnerCourseDetailsPage = () => {
                 </Link>
               </div>
             </div>
-            {/* ))} */}
           </div>
-          {/* ))} */}
         </div>
       </div>
     </div>
