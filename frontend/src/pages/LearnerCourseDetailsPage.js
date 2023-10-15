@@ -6,9 +6,7 @@ import Rate from "../components/Rate";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-
 const LearnerCourseDetailsPage = () => {
-
   const [highlight, setHighlight] = useState(true);
   const [unhighlight, setUnhighlight] = useState(false);
 
@@ -29,8 +27,8 @@ const LearnerCourseDetailsPage = () => {
   const { courseId } = useParams();
 
   const [showVideo, setShowVideo] = useState(false);
-  const Id= Cookies.get("userId")
-  console.log('Id :>> ',Id );
+  const Id = Cookies.get("userId");
+  console.log("Id :>> ", Id);
 
   const createReviewFunction = async (data) => {
     try {
@@ -75,6 +73,7 @@ const LearnerCourseDetailsPage = () => {
 
   const handleButtonClick = (buttonIndex) => {
     setSelectedButton(buttonIndex);
+    setHighlight(false);
   };
 
   return (
@@ -82,7 +81,7 @@ const LearnerCourseDetailsPage = () => {
       <LearnerNavbar />
       <div className="grid grid-cols-12 gap-2">
         {/* HEADER AND INSIGHTS */}
-        <div className="grid grid-cols-12 col-span-8 gap-4 px-12 py-12">
+        <div className="col-span-8 gap-4 px-12 py-12">
           <div className="col-span-12">
             <span className="text-5xl flex flex-cols col-span-5 my-4">
               {courseDetails?.title}
@@ -116,10 +115,10 @@ const LearnerCourseDetailsPage = () => {
 
           {/* FILTER AND DESCRIPTION */}
 
-          <div className="grid grid-cols-12 justify-center items-center col-span-12 col-start-1">
+          <div className="grid grid-cols-12 justify-center items-center col-span-12 col-start-1 mt-8">
             <button
-              className={`flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm hover:bg-orange-500 hover:text-white items-center ${
-                selectedButton === 0
+              className={`flex col-span-2 justify-center mx-[3px] px-2 py-2 rounded-sm hover:bg-orange-500 hover:text-white items-center ${
+                selectedButton === 0 || highlight === true
                   ? "bg-orange-500 text-white"
                   : "bg-gray-300 text-gray-700"
               } font-extralight focus:bg-orange-500 focus:text-white active:bg-orange-400 active:text-white`}
@@ -129,8 +128,8 @@ const LearnerCourseDetailsPage = () => {
             </button>
 
             <button
-              className={`flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm hover:bg-orange-500 hover:text-white items-center ${
-                selectedButton === 1
+              className={`flex col-span-2 justify-center mx-[3px] px-2 py-2 rounded-sm hover:bg-orange-500 hover:text-white items-center ${
+                selectedButton === 1 
                   ? "bg-orange-500 text-white"
                   : "bg-gray-300 text-gray-700"
               } font-extralight focus:bg-orange-500 focus:text-white active:bg-orange-400 active:text-white`}
@@ -140,7 +139,7 @@ const LearnerCourseDetailsPage = () => {
             </button>
 
             <button
-              className={`flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm hover:bg-orange-500 hover:text-white items-center ${
+              className={`flex col-span-2 justify-center mx-[3px] px-2 py-2 rounded-sm hover:bg-orange-500 hover:text-white items-center ${
                 selectedButton === 2
                   ? "bg-orange-500 text-white"
                   : "bg-gray-300 text-gray-700"
@@ -151,7 +150,7 @@ const LearnerCourseDetailsPage = () => {
             </button>
 
             <button
-              className={`flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm hover:bg-orange-500 hover:text-white items-center ${
+              className={`flex col-span-2 justify-center mx-[3px] px-2 py-2 rounded-sm hover:bg-orange-500 hover:text-white items-center ${
                 selectedButton === 3
                   ? "bg-orange-500 text-white"
                   : "bg-gray-300 text-gray-700"
@@ -178,13 +177,20 @@ const LearnerCourseDetailsPage = () => {
                 <br />
                 <br />
                 {courseDetails?.chapters?.map((chapter, index) => (
-                  <li key={chapter?._id} className="list-none flex gap-3">
-                    <span>{index + 1}</span>
-                    <span className="font-bold">{chapter.title}</span> -{" "}
-                    <i
-                      className="ri-instagram-fill hover:text-pink-500"
+                  <li
+                    key={chapter?._id}
+                    className="list-none flex gap-3 justify-between items-center p-4 border-[1px] border-gray-200"
+                  >
+                    <div>
+                      <span>{index + 1}</span>
+                      <span className="font-bold mx-2">{chapter.title}</span>
+                    </div>
+                    <img
+                      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAABcUlEQVR4nO2Yu0oDQRSGPyysbSRFYqkg6ENoJ7G19TV8ABs7bX0C0eAFEm3ESnwAG8FHEIxo0ggpjgzMhFE3sLuMm+PmfHBgGeby/5yZ3dkDhmEYhpGeFtABBoAoiQFwDiwXMdFXIFwmhNPWzGOk4wd08w6oiCbQ89pO8wwI20mTicCS1/ZODkIKtSJ59ZmROmXkFlinBkYEGAHHwGLJOdQYCfEG7AHzJedSYeQqen4CtkrON3Ujjg3gMWpLdX6kaiOOOWAXeEl4fmQaRgILwAHwmeD8yDSNBFaAs6jfM7CTeI3KjHR/GNlOvMYY21rU9LBvZrx+10rOG2MfxJm9oozqcGm8AVb5W8T+EJUhM5eRvu/oCnVay0GveTqf+M49ZWZawLXX5jRm8pCwpFl13MdGNBWrpWB8xEbufOMF/4dLr9lpH9OOHB4CDfTSAI4ivU77N/YVbBMpGE5zJm2fqqECkTIhhl7jr0wYhmEYBiX5AmT1wprACIzgAAAAAElFTkSuQmCC"
+                      className="hover:scale-110 w-4 cursor-pointer"
                       onClick={() => setShowVideo(index)}
                     />
+
                     {showVideo === index && (
                       <video width="400" height="350" controls>
                         <source
@@ -209,47 +215,63 @@ const LearnerCourseDetailsPage = () => {
             )}
 
             {selectedButton === 3 && (
-              <div className="col-span-8 my-4">
+              <div className="col-span-8 my-8">
                 <span className="text-3xl">Reviews</span>
                 <br />
                 <br />
                 <div className="grid grid-cols-10 col-span-10 gap-2">
-                  <span className="text-xl my-4 col-span-10">
-                    Send your Review
-                  </span>
+                  <form className="grid grid-cols-10 col-span-10 gap-2 py-4 px-8 border-[1px] border-r-[1px] border-b-[1px] border-gray-200 rounded-sm">
+                    <span className="text-xl font-extralight uppercase col-span-10 border-b-[1px] border-gray-100">
+                      Send your Review
+                    </span>
+                    <div className="col-span-10 my-4">
+                      <Rate
+                        rating={rating}
+                        onRating={(rate) => setRating(rate)}
+                      />
+                    </div>
+                    {/* CONSOLE.LOG rating TO VIEW DYNAMIC RATING COUNT */}
+                    <span className="col-span-10 text-sm text-gray-300">
+                      {rating} stars
+                    </span>
 
-                  <div className="col-span-10">
-                    <Rate
-                      rating={rating}
-                      onRating={(rate) => setRating(rate)}
+                    <textarea
+                      placeholder="Write something"
+                      name="comment"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                      className="col-span-10 col-start-1 text-gray-200 p-4 rounded-sm border-[1px] border-gray-200"
                     />
-                  </div>
-                  <div className="col-span-10"></div>
-
-                  <textarea
-                    placeholder="Write something"
-                    name="comment"
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                    className="col-span-10 col-start-1 text-gray-200 p-4 rounded-sm border-[1px] border-gray-200"
-                  />
+                    <button
+                      onClick={createReviewFunction}
+                      className="btn btn-primary mt-2 bg-black text-white p-2 rounded-sm col-span-2"
+                    >
+                      Submit Review
+                    </button>
+                  </form>
                 </div>
 
-                <button
-                  onClick={createReviewFunction}
-                  className="btn btn-primary mt-2 bg-blue-500 text-white p-2 rounded-lg"
-                >
-                  Submit Review
-                </button>
 
+                {/* <span className="col-span-10 text-3xl font-semibold my-16">Featured Reviews</span> */}
                 {reviews?.map((review) => (
-                  <div>
-                    <p>{review.rating}</p>
-                    <p>{review.comment}</p>
-                    <p>
-                      {review.userId.name} at{" "}
-                      {new Date(review.createdAt).toLocaleString()}
+                  <div className="grid grid-cols-10 col-span-10 gap-2 py-4 px-4 border-[1px] border-gray-100 justify-center items-center my-2">
+                    <div className="flex col-span-1">
+                      <img
+                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60"
+                        className="w-[50px] h-[50px] object-cover rounded-[25px] ml-[12px]"
+                      />
+                    </div>
+                    <p className="grid grid-cols-10 text-xs text-gray-400 col-span-3">
+                      <span className="text-base text-gray-500 col-span-10">
+                        Jessica Patel
+                      {review.userId.name}
+                      </span>
+                      <span className="col-span-10">
+                        {new Date(review.createdAt).toLocaleString()}
+                      </span>
                     </p>
+                    <p className="col-span-7">{review.rating}</p>
+                    <p className="col-span-10 border-[1px] border-gray-100 py-4 px-2">{review.comment}</p>
                   </div>
                 ))}
               </div>
