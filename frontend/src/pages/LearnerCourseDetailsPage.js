@@ -1,38 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faStar } from "@fortawesome/free-solid-svg-icons";
 import LearnerNavbar from "../components/Navbar/LearnerNavbar";
 import Rate from "../components/Rate";
 import axios from "axios";
 
 const LearnerCourseDetailsPage = () => {
-  const text = [
-    {
-      title: "Learn Adobe CC with our Masterclass",
-      subtitle:
-        "In this Adobe CC Masterclass, you will learn Photoshop, Illustrator, Adobe XD, InDesign & more. Register now.",
-      insights: [
-        {
-          rating: "4.5 (1,348 ratings)",
-          iconClass: "ri-star-fill text-orange-400",
-        },
-        {
-          views: "Enrolled 45 students",
-          iconClass: "ri-eye-line text-green-500",
-        },
-        {
-          duration: "Duration 10 week",
-          iconClass: "ri-time-line text-gray-500",
-        },
-        {
-          lessons: "36 Lessons",
-          iconClass: "ri-play-circle-line text-violet-500",
-        },
-      ],
-    },
-  ];
-  const categories = ["Overview", "Curriculum", "Instructor", "Reviews"];
   const cards = [
     {
       name: "Overview",
@@ -110,115 +83,39 @@ const LearnerCourseDetailsPage = () => {
       ],
     },
   ];
-  const coursePricecard = [
-    {
-      index: "0",
-      courseName: "Introduction to Python Programming",
-      courseCard: [
-        {
-          img: "https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
-          insights: [
-            {
-              disPrice: "$100",
-              class: "text-4xl font-semibold text-black",
-            },
-            {
-              actPrice: "$456",
-              class: "text-gray-400 text-xl font-extralight line-through",
-            },
-          ],
-          dealLeft: "11 Hours left at this price",
-          info: [
-            {
-              language: "English",
-              img: "http://skilify.theuxuidesigner.com/images/svg/language.svg",
-            },
-            {
-              requisites: "Use of desktop, tablet and mobile",
-              img: "http://skilify.theuxuidesigner.com/images/svg/monitor-icon.svg",
-            },
-            {
-              access: "Full time access",
-              img: "http://skilify.theuxuidesigner.com/images/svg/timer.svg",
-            },
-            {
-              perks: "Certificate of completion",
-              img: "http://skilify.theuxuidesigner.com/images/svg/certificate.svg",
-            },
-          ],
-          dealForTeams: [
-            {
-              deal1: "Get you team access to 3500+ top courses anytime.",
-              cta: "Contact our sale",
-              to: "",
-            },
-          ],
-        },
-      ],
-    },
-  ];
+
   const [set, setSet] = useState(cards[0].details);
   const [select, setSelect] = useState("Overview");
   const [highlight, setHighlight] = useState(true);
   const [unhighlight, setUnhighlight] = useState(false);
-  function clickFunction(val) {
-    if (
-      val != "Overview" &&
-      (val === "Curriculum" || val === "Instructor" || val === "Reviews")
-    ) {
-      setHighlight(false);
-      setUnhighlight(true);
-    }
-    setSelect(val);
-    for (let i = 0; i < cards.length; i++) {
-      if (cards[i].name === val) {
-        setSet(cards[i].details);
-        break;
-      }
-    }
-  }
+
   useEffect(() => {
     setHighlight(true);
     setUnhighlight(false);
-    function clickFunction(val) {
-      if (
-        val != "Overview" &&
-        (val === "Curriculum" || val === "Instructor" || val === "Reviews")
-      ) {
-        setHighlight(false);
-      }
-      for (let i = 0; i < cards.length; i++) {
-        if (cards[i].name === val) {
-          setSet(cards[i].details);
-          break;
-        }
-      }
-    }
   }, []);
   const [courseDetails, setCourseDetails] = useState({});
   const [rating, setRating] = useState(0);
-  console.log('rating', rating)
+  console.log("rating", rating);
   const [reviews, setReviews] = useState([]);
-  console.log('reviews', reviews)
+  console.log("reviews", reviews);
   const [averageRating, setAverageRating] = useState("");
   const [totalReviews, setTotalReviews] = useState("");
+  const [enrollments, setEnrollments] = useState("");
+  console.log(' enrollments:>> ', enrollments);
   console.log("reviews :>> ", reviews);
   const { courseId } = useParams();
 
-  const GetReviewsFunction = async () => {
-    try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/review/get-reviews?courseId=${courseId}`
-      );
-      console.log("response :>> ", res);
-      setReviews(res?.data?.reviews);
-      setAverageRating(res?.data?.averageRating);
-      const totalReviews = res?.data?.reviews?.length || 0;
-      setTotalReviews(totalReviews);
-    } catch (error) {
-      console.log("error :>> ", error);
-    }
-  };
+  // const GetReviewsFunction = async () => {
+  //   try {
+  //     const res = await axios.get(
+  //       `${process.env.REACT_APP_BASE_URL}/review/get-reviews?courseId=${courseId}`
+  //     );
+  //     console.log("response :>> ", res);
+  //
+  //   } catch (error) {
+  //     console.log("error :>> ", error);
+  //   }
+  // };
 
   const postReviewFunction = async (data) => {
     try {
@@ -229,7 +126,7 @@ const LearnerCourseDetailsPage = () => {
       console.log("res :>> ", res);
 
       // After posting the review, fetch the updated reviews
-      GetReviewsFunction();
+      // GetReviewsFunction();
     } catch (error) {
       console.log("error :>> ", error);
     }
@@ -240,8 +137,15 @@ const LearnerCourseDetailsPage = () => {
       const res = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/course-creator/courses/${courseId}`
       );
-      console.log("res", res?.data?.course);
+      console.log("res=>>>", res?.data?.course);
       setCourseDetails(res?.data?.course);
+      setReviews(res?.data?.reviews);
+      setAverageRating(res?.data?.averageRating);
+      const totalReviews = res?.data?.reviews?.length || 0;
+      setTotalReviews(totalReviews);
+
+      const totalEnrollments = res.data.enrollments.length || 0;
+      setEnrollments(totalEnrollments);
     } catch (error) {
       console.log("error", error);
     }
@@ -249,7 +153,7 @@ const LearnerCourseDetailsPage = () => {
 
   useEffect(() => {
     GetSingleCourse();
-    GetReviewsFunction();
+    // GetReviewsFunction();
   }, []);
   const [selectedButton, setSelectedButton] = useState(null);
 
@@ -272,14 +176,16 @@ const LearnerCourseDetailsPage = () => {
               <span className="flex flex-rows mx-2 col-span-4 justify-center items-center">
                 <i className="ri-star-fill text-orange-400"></i>
                 <span className="text-sm font-extralight">
-                  {averageRating} ({totalReviews} reviews)
+                  {averageRating} ({totalReviews} rating
+                  {totalReviews !== 1 ? "s" : ""})
                 </span>
               </span>
 
               <span className="flex flex-rows mx-2 col-span-4 justify-center items-center">
                 <i className="ri-eye-line text-green-500"></i>
                 <span className="text-sm font-extralight">
-                  Enrolled 45 students
+                  {/* Enrolled 45 students */}
+                  {enrollments}
                 </span>
               </span>
 
@@ -406,13 +312,13 @@ const LearnerCourseDetailsPage = () => {
                 </div>
 
                 <button
-                  onClick={postReviewFunction}
+                  onClick={""}
                   className="btn btn-primary mt-2 bg-blue-500 text-white p-2 rounded-lg"
                 >
                   Submit Review
                 </button>
 
-                {reviews.map((review) => (
+                {/* {reviews.map((review) => (
                   <div>
                     <p>{review.rating}</p>
                     <p>{review.comment}</p>
@@ -421,7 +327,7 @@ const LearnerCourseDetailsPage = () => {
                       {new Date(review.createdAt).toLocaleString()}
                     </p>
                   </div>
-                ))}
+                ))} */}
               </div>
             )}
           </div>
@@ -434,7 +340,8 @@ const LearnerCourseDetailsPage = () => {
             {/* {element.courseCard.map((elements) => ( */}
             <div className="flex flex-col">
               <img
-                src="https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&amp;auto=format&am"
+                src={`http://localhost:5000/${courseDetails?.coverImage}`}
+                // src="https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y29kaW5nfGVufDB8fDB8fHww&amp;auto=format&am"
                 className="w-fill rounded-md z-10"
               />
               <div className="flex flex-row justify-center items-center my-4">

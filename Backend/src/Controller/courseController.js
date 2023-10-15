@@ -31,9 +31,9 @@ export const UploadCourse = async (req, res) => {
       : null;
     console.log('originalName', req.files["coverImage"][0].originalname)
     const originalName = req.files["coverImage"][0].originalname.split(' ').join('-')
-    console.log('originalName', originalName)
-    const newFilename = `${date.getTime()}${originalName}`
-    const newFilename1=  `/public/course-images/${newFilename}`
+    console.log('originalName :>> ', originalName);
+    
+
     if (
       !coverImage ||
       !creatorId ||
@@ -67,7 +67,7 @@ export const UploadCourse = async (req, res) => {
 
     const course = await Course.create({
       title,
-      coverImage: newFilename1,
+      coverImage,
       language,
       skillLevel,
       price,
