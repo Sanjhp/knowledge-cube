@@ -210,7 +210,7 @@ const LearnerDashboard = () => {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="black"
-                    class="w-6 h-6"
+                    className="w-6 h-6"
                   >
                     <path
                       stroke-linecap="round"
@@ -224,11 +224,11 @@ const LearnerDashboard = () => {
                   </span>
                   <div className="flex justify-between items-center my-2">
                     <span className="flex items-center">
-                      <i class="ri-book-line text-orange-500 text-[25px] mr-2"></i>{" "}
+                      <i className="ri-book-line text-orange-500 text-[25px] mr-2"></i>{" "}
                       {element.insights.lessons} lessons
                     </span>
                     <span className="flex items-center">
-                      <i class="ri-time-line  text-violet-500 mx-2 text-[25px]"></i>
+                      <i className="ri-time-line  text-violet-500 mx-2 text-[25px]"></i>
                       {element.insights.minutes} minutes
                     </span>
                   </div>

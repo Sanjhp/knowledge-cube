@@ -93,7 +93,7 @@ const CreaterDashboard = () => {
               placeholder="search here..."
               className="min-[300px]:hidden max-[639px]:hidden sm:flex md:flex lg:flex bg-white text-gray-500 font-thin px-2 py-2 hover:shadow-[0_0px_12px_12px_rgba(0,0,0,0.2)] rounded-md border-gray-100 shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] text-xs w-[300px]"
             />
-            <i class="ri-search-line min-[300px]:-ml-8 lg:-ml-2 bg-black px-4 py-2 min-[300px]:rounded-sm max-[639px]:rounded-sm sm:rounded-tr-md md:rounded-tr-md lg:rounded-tr-md sm:rounded-br-md md:rounded-br-md lg:rounded-br-md text-white shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] hover:bg-gray-400 hover:text-black text-xs"></i>
+            <i className="ri-search-line min-[300px]:-ml-8 lg:-ml-2 bg-black px-4 py-2 min-[300px]:rounded-sm max-[639px]:rounded-sm sm:rounded-tr-md md:rounded-tr-md lg:rounded-tr-md sm:rounded-br-md md:rounded-br-md lg:rounded-br-md text-white shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] hover:bg-gray-400 hover:text-black text-xs"></i>
           </span>
 
           <div className="bg-black border-black border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-black hover:border-black hover:border-2 hover:border-solid w-32 min-[300px]:-ml-8 sm:ml-0">
@@ -138,9 +138,9 @@ const CreaterDashboard = () => {
                   <div className="text-4xl">{element.ratings}</div>
 
                   <div className="grid grid-cols-4 col-span-4">
-                    <i class="ri-star-fill text-lg text-yellow-300"></i>
-                    <i class="ri-star-fill text-lg text-yellow-300"></i>
-                    <i class="ri-star-fill text-lg text-yellow-300"></i>
+                    <i className="ri-star-fill text-lg text-yellow-300"></i>
+                    <i className="ri-star-fill text-lg text-yellow-300"></i>
+                    <i className="ri-star-fill text-lg text-yellow-300"></i>
                   </div>
 
                   <span className="text-sm font-thin">ratings</span>
