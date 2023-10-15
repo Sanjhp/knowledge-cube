@@ -111,16 +111,16 @@ const CreaterDashboard = () => {
               <div className="grid min-[300px]:col-span-10 lg:col-span-1">
                 <img
                   src={element.thumbnail}
-                  className="min-[300px]:w-fill lg:w-16 rounded-md"
+                  className="min-[300px]:w-fill lg:w-fill rounded-md"
                 />
               </div>
               <div className="grid min-[300px]:grid-rows-1 min-[300px]:col-span-4 lg:grid-cols-12 lg:col-span-12">
                 <div className="grid min-[300px]:grid-cols-4 lg:grid-rows-2 col-span-4 items-center gap-8">
-                  <span className="text-l font-semibold col-span-6">
+                  <span className="text-xl font-semibold col-span-6">
                     {element.course}
                   </span>
                   <div className="grid grid-cols-4 col-span-4 gap-4 items-center">
-                    <span className="bg-purple-600 text-white px-[1px] py-[1px] text-xs col-span-1 uppercase text-center rounded-full min-[300px]:col-span-3">
+                    <span className="bg-purple-600 text-white px-[1px] py-[1px] text-xs col-span-1 uppercase text-center rounded-full min-[300px]:col-span-3 sm:col-span-1">
                       live
                     </span>
                     <span className="col-span-3 text-base min-[300px]:hidden">
