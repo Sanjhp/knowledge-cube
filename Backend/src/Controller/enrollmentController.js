@@ -65,7 +65,7 @@ export const getEnrolledCoursesByUserId = async (req, res) => {
     const { userId } = req.params;
 
     const enrollments = await Enrollment.find({ userId }).populate("courseId");
-    console.log("enrollments :>> ", enrollments);
+
     const enrolledCourses = enrollments.map(
       (enrollment) => enrollment.courseId
     );

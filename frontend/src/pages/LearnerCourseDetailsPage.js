@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LearnerNavbar from "../components/Navbar/LearnerNavbar";
 import Rate from "../components/Rate";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LearnerCourseDetailsPage = () => {
+  const navigate = useNavigate();
   const [highlight, setHighlight] = useState(true);
   const [unhighlight, setUnhighlight] = useState(false);
 
@@ -23,12 +26,32 @@ const LearnerCourseDetailsPage = () => {
   console.log("reviews :>> ", reviews);
   const [averageRating, setAverageRating] = useState("");
   const [totalReviews, setTotalReviews] = useState("");
-  const [enrollments, setEnrollments] = useState("");
+  const [enrollments, setEnrollments] = useState([]);
+
   const { courseId } = useParams();
 
   const [showVideo, setShowVideo] = useState(false);
   const Id = Cookies.get("userId");
   console.log("Id :>> ", Id);
+
+  const CreateEnrollment = async () => {
+    try {
+      const enrollmentdata = {
+        userId: Id,
+        courseId: courseId,
+      };
+      const res = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/enroll/add-enrollment`,
+        enrollmentdata
+      );
+      toast.success(res?.data?.message);
+      console.log("res.data :>> ", res.data);
+    } catch (err) {
+      // toast.success("error")
+      toast.success(err.response.data.message);
+      console.log("err :>> ", err);
+    }
+  };
 
   const createReviewFunction = async (data) => {
     try {
@@ -43,7 +66,10 @@ const LearnerCourseDetailsPage = () => {
         data
       );
       console.log("res :>> ", res);
+      toast.success(res.data.message);
+      navigate("/learner-dashboard");
     } catch (error) {
+      toast.error(error.response.data.message);
       console.log("error :>> ", error);
     }
   };
@@ -53,13 +79,13 @@ const LearnerCourseDetailsPage = () => {
       const res = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/course-creator/courses/${courseId}`
       );
-      console.log("res=>>>", res.data.course);
+
       setCourseDetails(res?.data?.course);
       setReviews(res?.data.course.reviews);
       setAverageRating(res?.data?.averageRating);
       const totalReviews = res?.data?.reviews?.length || 0;
       setTotalReviews(totalReviews);
-      const totalEnrollments = res.data.enrollments.length || 0;
+      const totalEnrollments = res?.data?.enrollments?.length || 0;
       setEnrollments(totalEnrollments);
     } catch (error) {
       console.log("error", error);
@@ -91,16 +117,25 @@ const LearnerCourseDetailsPage = () => {
               <span className="flex flex-rows mx-2 col-span-4 justify-center items-center">
                 <i className="ri-star-fill text-orange-400"></i>
                 <span className="text-sm font-extralight">
-                  {averageRating} ({totalReviews} rating
-                  {totalReviews !== 1 ? "s" : ""})
+                  {reviews === 0 ? (
+                    "No ratings"
+                  ) : (
+                    <>
+                      {averageRating} ({totalReviews} rating
+                      {totalReviews !== 1 ? "s" : ""})
+                    </>
+                  )}
                 </span>
               </span>
 
               <span className="flex flex-rows mx-2 col-span-4 justify-center items-center">
                 <i className="ri-eye-line text-green-500"></i>
                 <span className="text-sm font-extralight">
-                  {/* Enrolled 45 students */}
-                  {enrollments}
+                  {enrollments === 0 ? (
+                    "No enrollments"
+                  ) : (
+                    <>{enrollments} Enrolled Students</>
+                  )}
                 </span>
               </span>
 
@@ -129,7 +164,7 @@ const LearnerCourseDetailsPage = () => {
 
             <button
               className={`flex col-span-2 justify-center mx-[3px] px-2 py-2 rounded-sm hover:bg-orange-500 hover:text-white items-center ${
-                selectedButton === 1 
+                selectedButton === 1
                   ? "bg-orange-500 text-white"
                   : "bg-gray-300 text-gray-700"
               } font-extralight focus:bg-orange-500 focus:text-white active:bg-orange-400 active:text-white`}
@@ -251,7 +286,6 @@ const LearnerCourseDetailsPage = () => {
                   </form>
                 </div>
 
-
                 {/* <span className="col-span-10 text-3xl font-semibold my-16">Featured Reviews</span> */}
                 {reviews?.map((review) => (
                   <div className="grid grid-cols-10 col-span-10 gap-2 py-4 px-4 border-[1px] border-gray-100 justify-center items-center my-2">
@@ -264,14 +298,16 @@ const LearnerCourseDetailsPage = () => {
                     <p className="grid grid-cols-10 text-xs text-gray-400 col-span-3">
                       <span className="text-base text-gray-500 col-span-10">
                         Jessica Patel
-                      {review.userId.name}
+                        {review.userId.name}
                       </span>
                       <span className="col-span-10">
                         {new Date(review.createdAt).toLocaleString()}
                       </span>
                     </p>
                     <p className="col-span-7">{review.rating}</p>
-                    <p className="col-span-10 border-[1px] border-gray-100 py-4 px-2">{review.comment}</p>
+                    <p className="col-span-10 border-[1px] border-gray-100 py-4 px-2">
+                      {review.comment}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -302,12 +338,12 @@ const LearnerCourseDetailsPage = () => {
               </div>
 
               <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid">
-                <Link
-                  to="/new-course"
+                <button
+                  onClick={() => CreateEnrollment(Id, courseId)}
                   className="flex flex-row justify-center items-center"
                 >
                   Buy Now
-                </Link>
+                </button>
               </div>
               <span className="text-xl font-semibold mt-4">
                 This course includes
@@ -370,6 +406,7 @@ const LearnerCourseDetailsPage = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
