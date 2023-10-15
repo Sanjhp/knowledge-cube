@@ -197,7 +197,7 @@ const LearnerCourseDetailsPage = () => {
           </div>
 
           <div className="col-span-12 col-start-1">
-            {(selectedButton === 0 || highlight===true) && (
+            {(selectedButton === 0 || highlight === true) && (
               <div className="col-span-8 my-4">
                 <span className="text-3xl">Course Description</span>
                 <br />
@@ -337,13 +337,11 @@ const LearnerCourseDetailsPage = () => {
                 {/* ))} */}
               </div>
 
-              <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid">
-                <button
-                  onClick={() => CreateEnrollment(Id, courseId)}
-                  className="flex flex-row justify-center items-center"
-                >
-                  Buy Now
-                </button>
+              <div
+                className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid"
+                onClick={() => CreateEnrollment(Id, courseId)}
+              >
+                Buy Now
               </div>
               <span className="text-xl font-semibold mt-4">
                 This course includes
