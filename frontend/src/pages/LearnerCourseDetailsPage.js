@@ -95,38 +95,31 @@ const LearnerCourseDetailsPage = () => {
   }, []);
   const [courseDetails, setCourseDetails] = useState({});
   const [rating, setRating] = useState(0);
-  console.log("rating", rating);
+  const [comment, setComment] = useState("");
+
+  console.log("rating :>> ", rating);
   const [reviews, setReviews] = useState([]);
-  console.log("reviews", reviews);
+  console.log("reviews :>> ", reviews);
   const [averageRating, setAverageRating] = useState("");
   const [totalReviews, setTotalReviews] = useState("");
   const [enrollments, setEnrollments] = useState("");
-  console.log(' enrollments:>> ', enrollments);
-  console.log("reviews :>> ", reviews);
   const { courseId } = useParams();
 
-  // const GetReviewsFunction = async () => {
-  //   try {
-  //     const res = await axios.get(
-  //       `${process.env.REACT_APP_BASE_URL}/review/get-reviews?courseId=${courseId}`
-  //     );
-  //     console.log("response :>> ", res);
-  //
-  //   } catch (error) {
-  //     console.log("error :>> ", error);
-  //   }
-  // };
+  const [showVideo, setShowVideo] = useState(false);
 
-  const postReviewFunction = async (data) => {
+  const createReviewFunction = async (data) => {
     try {
+      const data = {
+        courseId: courseId,
+        userId: "",
+        rating: rating,
+        comment: comment,
+      };
       const res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/review/create-review`,
         data
       );
       console.log("res :>> ", res);
-
-      // After posting the review, fetch the updated reviews
-      // GetReviewsFunction();
     } catch (error) {
       console.log("error :>> ", error);
     }
@@ -137,13 +130,12 @@ const LearnerCourseDetailsPage = () => {
       const res = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/course-creator/courses/${courseId}`
       );
-      console.log("res=>>>", res?.data?.course);
+      console.log("res=>>>", res.data.course);
       setCourseDetails(res?.data?.course);
-      setReviews(res?.data?.reviews);
+      setReviews(res?.data.course.reviews);
       setAverageRating(res?.data?.averageRating);
       const totalReviews = res?.data?.reviews?.length || 0;
       setTotalReviews(totalReviews);
-
       const totalEnrollments = res.data.enrollments.length || 0;
       setEnrollments(totalEnrollments);
     } catch (error) {
@@ -153,7 +145,6 @@ const LearnerCourseDetailsPage = () => {
 
   useEffect(() => {
     GetSingleCourse();
-    // GetReviewsFunction();
   }, []);
   const [selectedButton, setSelectedButton] = useState(null);
 
@@ -262,15 +253,22 @@ const LearnerCourseDetailsPage = () => {
                 <br />
                 <br />
                 {courseDetails?.chapters?.map((chapter, index) => (
-                  <li key={chapter?._id} className="list-none	">
+                  <li key={chapter?._id} className="list-none flex gap-3">
+                    <span>{index + 1}</span>
                     <span className="font-bold">{chapter.title}</span> -{" "}
-                    <video width="400" height="350" controls>
-                      <source
-                        src={`http://localhost:5000/${chapter?.videoUrl}`}
-                        type="video/mp4"
-                      />
-                      Your browser does not support the video tag.
-                    </video>
+                    <i
+                      className="ri-instagram-fill hover:text-pink-500"
+                      onClick={() => setShowVideo(index)}
+                    />
+                    {showVideo === index && (
+                      <video width="400" height="350" controls>
+                        <source
+                          src={`http://localhost:5000/${chapter?.videoUrl}`}
+                          type="video/mp4"
+                        />
+                        Your browser does not support the video tag.
+                      </video>
+                    )}
                   </li>
                 ))}
               </div>
@@ -306,19 +304,20 @@ const LearnerCourseDetailsPage = () => {
                   <textarea
                     placeholder="Write something"
                     name="comment"
-                    onChange={(e) => postReviewFunction(e.target.value)}
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
                     className="col-span-10 col-start-1 text-gray-200 p-4 rounded-sm border-[1px] border-gray-200"
                   />
                 </div>
 
                 <button
-                  onClick={""}
+                  onClick={createReviewFunction}
                   className="btn btn-primary mt-2 bg-blue-500 text-white p-2 rounded-lg"
                 >
                   Submit Review
                 </button>
 
-                {/* {reviews.map((review) => (
+                {reviews?.map((review) => (
                   <div>
                     <p>{review.rating}</p>
                     <p>{review.comment}</p>
@@ -327,7 +326,7 @@ const LearnerCourseDetailsPage = () => {
                       {new Date(review.createdAt).toLocaleString()}
                     </p>
                   </div>
-                ))} */}
+                ))}
               </div>
             )}
           </div>

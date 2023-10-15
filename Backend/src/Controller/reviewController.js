@@ -44,7 +44,7 @@ export const CreateReview = async (req, res) => {
       });
     }
 
-    const parsedRating = parseInt(rating, 10); 
+    const parsedRating = parseInt(rating, 10);
 
     if (isNaN(parsedRating) || parsedRating < 0 || parsedRating > 5) {
       return res
@@ -60,9 +60,9 @@ export const CreateReview = async (req, res) => {
 
     await review.save();
     const course = await Course.findById(courseId);
-    course.reviews.push(userId);
+    course.reviews.push(review._id);
     await course.save();
-  
+
     res
       .status(StatusCodes.OK)
       .json({ success: true, message: "Review added successfully", review });
@@ -86,16 +86,21 @@ export const GetReviewsByCourseId = async (req, res) => {
     }
 
     // Fetch reviews by courseId
-    const reviews = await Review.find({ courseId }).populate("userId");
-    console.log('reviews :>> ', reviews);
+    const reviews = await Review.find({ courseId }).populate({
+      path: "user",
+      model: "User",
+      populate: {
+        path: "role",
+        model: "Role",
+      },
+    });
+    console.log("reviews :>> ", reviews);
 
     if (!reviews || reviews.length === 0) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({
-          success: false,
-          message: "No reviews found for the given course",
-        });
+      return res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        message: "No reviews found for the given course",
+      });
     }
 
     // Calculate the average rating

@@ -75,7 +75,7 @@ const AllCourses = () => {
               placeholder="search here..."
               className="flex bg-white text-gray-500 font-thin px-2 py-2 hover:shadow-[0_0px_12px_12px_rgba(0,0,0,0.2)] rounded-md border-gray-100 shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] text-xs w-[300px]"
             />
-            <i class="ri-search-line -ml-2 bg-black px-4 py-2 rounded-tr-md rounded-br-md text-white shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] hover:bg-gray-400 hover:text-black text-sm"></i>
+            <i className="ri-search-line -ml-2 bg-black px-4 py-2 rounded-tr-md rounded-br-md text-white shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] hover:bg-gray-400 hover:text-black text-sm"></i>
           </span>
         </div>
         <div className="grid grid-cols-10 justify-center items-center col-span-10 col-start-4 px-8 py-8">
@@ -138,7 +138,7 @@ const AllCourses = () => {
                 
 
                   <i
-                    class="ri-heart-line absolute z-20 text-white my-2 mx-2"
+                    className="ri-heart-line absolute z-20 text-white my-2 mx-2"
                   ></i>
                   <div className="flex flex-row justify-between items-center my-2 border-b-[1px] border-gray-200">
                     <span className="flex text-[15px] font-extralight text-gray-400">
@@ -1189,7 +1189,7 @@ export default AllCourses;
 //               placeholder="search here..."
 //               className="flex bg-white text-gray-500 font-thin px-2 py-2 hover:shadow-[0_0px_12px_12px_rgba(0,0,0,0.2)] rounded-md border-gray-100 shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] text-xs w-[300px]"
 //             />
-//             <i class="ri-search-line -ml-2 bg-black px-4 py-2 rounded-tr-md rounded-br-md text-white shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] hover:bg-gray-400 hover:text-black text-sm"></i>
+//             <i className="ri-search-line -ml-2 bg-black px-4 py-2 rounded-tr-md rounded-br-md text-white shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] hover:bg-gray-400 hover:text-black text-sm"></i>
 //           </span>
 //         </div>
 //         <div className="grid grid-cols-10 justify-center items-center col-span-10 col-start-4 px-8 py-8">
@@ -1234,7 +1234,7 @@ export default AllCourses;
 //                   <div className="flex flex-col">
 //                     <img src={ele.img} className="w-fill rounded-md z-10" />
 //                     <i
-//                       class="ri-heart-line absolute z-20 text-white my-2 mx-2"
+//                       className="ri-heart-line absolute z-20 text-white my-2 mx-2"
 //                       onClick={() => setFavorite(ele.fav)}
 //                     ></i>
 //                     <div className="flex flex-row justify-between items-center my-2 border-b-[1px] border-gray-200">

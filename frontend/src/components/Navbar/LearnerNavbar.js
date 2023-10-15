@@ -43,7 +43,7 @@ const LearnerNavbar = () => {
             to="/update-profile"
             className="flex flex-row justify-center items-center text-xs "
           >
-            <i class="ri-user-line text-black text-xs mr-4"></i>
+            <i className="ri-user-line text-black text-xs mr-4"></i>
             Profile
 
           </Link>

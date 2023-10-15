@@ -289,7 +289,7 @@ const CourseOverview = () => {
                     ))}
                   </div>
                   <span className="flex justify-center items-center text-center text-orange-400 leading-6 mb-4">
-                    <i class="ri-time-line text-orange-400"></i>
+                    <i className="ri-time-line text-orange-400"></i>
                     {elements.dealLeft}
                   </span>
                   <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid">
