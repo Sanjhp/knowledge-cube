@@ -1,51 +1,199 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import CreatorNavbar from "../../components/Navbar/CreatorNavbar";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import Cookies from "js-cookie";
+// import Category from "../../../../Backend/src/Model/categoryModel";
+
+const validateSchema = yup.object().shape({
+  title: yup.string().required("Title is required"),
+  description: yup.string().required("Description is required"),
+  price: yup.string().required("price is required"),
+});
 
 const UploadCourse = () => {
-  const list = [
-    { name: "Dashbaord", to: "/creator-dashboard", icon: "ri-profile-fill mx-2" },
-    { name: "About", to: "/about", icon: "ri-user-3-line mx-2" },
-    { name: "Comments", to: "/comments", icon: "ri-chat-1-line mx-2" },
-    { name: "Messages", to: "/messages", icon: "ri-message-3-line mx-2" },
-    { name: "Logout", to: "/logout", icon: "ri-logout-circle-r-line mx-2" },
-  ];
-  const username = "Samantha";
-  const LanguageOptions = [
-    { key: "English", element: "English" },
-    { key: "Hindi", element: "Hindi" },
-    { key: "Telugu", element: "Telugu" },
-  ];
-  const SkillOptions = [
-    { key: "English", element: "English" },
-    { key: "Hindi", element: "Hindi" },
-    { key: "Telugu", element: "Telugu" },
-  ];
-  // const [count, setCount] = useState([1]);
+  const navigate = useNavigate();
+  const [isNewCourse, setIsNewCourse] = useState(true);
+  const [certificateFile, setCertificateFile] = useState(null);
+  const [assessmentFile, setAssessmentFile] = useState(null);
+  const [selectedImage, setSelectedImage] = useState();
+  const [selectedCategoryId, setSelectedCategoryId] = useState("");
+  console.log('selectedCategoryId :>> ', selectedCategoryId);
+  const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState(null);
+  const accessToken = Cookies.get("token");
+  const [id, setId] = useState(null);
+  console.log("id :>> ", id);
+
+  useEffect(() => {
+    if (accessToken) {
+      const parts = accessToken.split(".");
+      const payload = JSON.parse(atob(parts[1]));
+      const userId = payload._id;
+      setId(userId);
+      setToken(accessToken);
+      console.log("User ID:", userId);
+    } else {
+      console.log("Token not found");
+    }
+  }, [accessToken]);
+
+  const handleImageUpload = (event) => {
+    const coverImage = event.target.files[0];
+    if (coverImage && coverImage.type.startsWith("image/")) {
+      console.log("Selected Cover Image:", coverImage);
+      setSelectedImage(coverImage);
+    } else {
+      console.error("Invalid Image Format");
+    }
+  };
+
+  useEffect(() => {
+    if (selectedImage) {
+      setFormData({ ...formData, coverImage: selectedImage });
+    }
+  }, [selectedImage]);
+
   const [val, setVal] = useState([]);
-  var count = 1 ;
+  var count = 1;
+
   function handleAdd() {
-    count=count+1;
+    count = count + 1;
     const abc = [...val, []];
     setVal(abc);
     // const count2 = count[count.length - 1] + 1;
     // setCount(count2);
   }
-  function handleChange() {}
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(validateSchema),
+  });
+  console.log("errors :>> ", errors);
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    language: "",
+    skillLevel: "",
+    coverImage: null,
+    assessmentPdf: null,
+    certificate: null,
+  });
+  console.log("formData :>> ", formData);
+
+  const [chapters, setChapters] = useState([{ title: "", video: null }]);
+
+  const handleChapterFileChange = (event, index) => {
+    const updatedChapters = [...chapters];
+    updatedChapters[index].video = event.target.files[0];
+    setChapters(updatedChapters);
+  };
+
+  const username = "Samantha";
+  const [category, setCateogy] = useState([]);
+  const getCategories = async () => {
+    try {
+      const categoryRes = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/category/get-categories`
+      );
+      console.log("categoryRes :>> ", categoryRes.data.data);
+      setCateogy(categoryRes.data.data);
+    } catch (error) {
+      console.log("error :>> ", error);
+    }
+  };
+  useEffect(() => {
+    getCategories();
+  }, []);
+  const uploadCourseFunction = async (data) => {
+    try {
+      const formData = new FormData();
+      formData.append("title", data.title);
+      formData.append("description", data.description);
+      formData.append("price", data.price);
+      formData.append("language", data.language);
+      formData.append("coverImage", selectedImage);
+      formData.append("skillLevel", data.skillLevel);
+      formData.append("categoryId", selectedCategoryId);
+      formData.append("assessmentPdf", assessmentFile);
+      formData.append("certificate", certificateFile);
+      formData.append("creatorId", id);     
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/course-creator/create-course`,
+        formData
+      );
+      setLoading(false);
+      console.log("response :>> ", response);
+      toast.success(response.data.message);
+      const courseId = response.data.course._id;
+      navigate(`/chapter-upload/${courseId}`);
+    } catch (error) {
+      setLoading(false);
+      console.error("Error uploading course: ", error);
+      if (error?.response?.data?.message === "unAuthorized") {
+        Cookies.remove("token");
+        Cookies.remove("roleName");
+        Cookies.remove("roleId");
+        navigate("/login");
+      } else if (error?.response?.data?.message) {
+        toast.error(error?.response?.data?.message);
+        navigate("/login");
+      } else {
+        toast.error("unsuccess");
+        navigate("/login");
+      }
+    }
+  };
+ 
+  // const uploadChapters = async (courseId, chapters) => {
+  //   try {
+  //     const chapterIds = [];
+
+  //     for (const chapter of chapters) {
+  //       const chapterFormData = new FormData();
+  //       chapterFormData.append("title", chapter.title);
+  //       chapterFormData.append("video", chapter.video);
+
+  //       const chapterResponse = await axios.post(
+  //         `${process.env.REACT_APP_BASE_URL}/course-creator/courses/${courseId}/chapters`,
+  //         chapterFormData
+  //       );
+
+  //       if (chapterResponse.status === 200) {
+  //         chapterIds.push(chapterResponse.data.chapterId);
+  //       } else {
+  //         console.error("Error uploading chapter:", chapter.title);
+  //         return null;
+  //       }
+  //     }
+
+  //     return chapterIds;
+  //   } catch (error) {
+  //     console.error("Error uploading chapters: ", error);
+  //     return null;
+  //   }
+  // };
 
   return (
     <div>
       <CreatorNavbar />
       <div className="grid grid-cols-6 mb-8">
-        <div className="col-span-6 flex flex-col">
+        <form
+          onSubmit={handleSubmit(uploadCourseFunction)}
+          className="col-span-6 flex flex-col"
+        >
           <div className="flex flex-row justify-between items-center px-8 py-8 bg-slate-200 bg-opacity-30">
             <div className="flex flex-row items-center">
               <span className="text-xl font-thin text-gray-600">
                 Good Morning
-                <span className="font-semibold text-[#3484B4]">
-                  {" "}
-                  {username}
-                </span>
+                <span className="font-semibold text-[#3484B4]">{username}</span>
               </span>
             </div>
             <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-[150px]">
@@ -57,12 +205,12 @@ const UploadCourse = () => {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   stroke="currentColor"
                   className="w-6 h-6 mx-4"
                 >
                   <path
-                    stroke-linecap="round"
+                    strokeLinecap="round"
                     d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"
                   />
                 </svg>
@@ -79,8 +227,10 @@ const UploadCourse = () => {
                 <span className="text-gray-500 text-sm">Title</span>
                 <input
                   type="text"
+                  name="title"
                   placeholder="type here"
                   className="px-4 py-4 border-2 border-gray-200 rounded-xl bg-gray-200"
+                  {...register("title")}
                 />
               </div>
               <div className="grid grid-cols-1 gap-2">
@@ -89,7 +239,9 @@ const UploadCourse = () => {
                   cols="10"
                   type="text"
                   placeholder="type here"
+                  name="description"
                   className="px-4 py-4 border-2 border-gray-200 rounded-xl bg-gray-200"
+                  {...register("description")}
                 />
               </div>
             </div>
@@ -100,108 +252,86 @@ const UploadCourse = () => {
                 </span>
                 <input
                   type="file"
-                  placeholder="type here"
                   className="px-4 py-4 border-2 border-gray-200 rounded-xl bg-gray-200 text-gray-400"
+                  placeholder="type here"
+                  name="coverImage"
+                  onChange={handleImageUpload}
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
                   <span className="text-gray-500 text-sm">Select language</span>
-                  <select className="px-4 py-4 text-gray-400 bg-gray-200 rounded-xl">
-                    <option selected className="text-gray">
+                  <select
+                    {...register("language")}
+                    value={formData.language}
+                    onChange={(e) =>
+                      setFormData({ ...formData, language: e.target.value })
+                    }
+                    className="px-4 py-4 text-gray-400 bg-gray-200 rounded-xl"
+                  >
+                    <option value="" disabled className="text-gray">
                       Language is...
                     </option>
-                    {LanguageOptions.map((elements) => (
-                      <option key={elements.key}>{elements.element}</option>
-                    ))}
+                    <option selected value="English" className="text-gray">
+                      English
+                    </option>
+                    <option selected value="Hindi" className="text-gray">
+                      Hindi
+                    </option>
+                    <option value="Telugu" selected className="text-gray">
+                      Telugu
+                    </option>
                   </select>
                 </div>
                 <div className="grid gap-2">
                   <span className="text-gray-500 text-sm">
                     Select skill level
                   </span>
-                  <select className="px-4 py-4 text-gray-400 bg-gray-200 rounded-xl">
-                    <option selected className="text-gray">
+                  <select
+                    {...register("skillLevel")}
+                    value={formData.skillLevel}
+                    onChange={(e) =>
+                      setFormData({ ...formData, skillLevel: e.target.value })
+                    }
+                    className="px-4 py-4 text-gray-400 bg-gray-200 rounded-xl"
+                  >
+                    <option selected value="" disabled className="text-gray">
                       Skill level is...
                     </option>
-                    {SkillOptions.map((elements) => (
-                      <option key={elements.key}>{elements.element}</option>
+                    <option selected value="Beginner" className="text-gray">
+                      Beginner
+                    </option>
+                    <option selected value="Intermediate" className="text-gray">
+                      Intermediate
+                    </option>
+                    <option selected value="Advance" className="text-gray">
+                      Advance
+                    </option>
+                  </select>
+                </div>
+                <div className="grid gap-2">
+                  <span className="text-gray-500 text-sm">select Category</span>
+                  <select
+                    value={selectedCategoryId}
+                    onChange={(e) => setSelectedCategoryId(e.target.value)}
+                    className="px-4 py-4 text-gray-400 bg-gray-200 rounded-xl"
+                  >
+                    {category.map((cats) => (
+                      <option selected value={cats._id} className="text-gray">
+                        {cats.name}
+                      </option>
                     ))}
+                    {/* <option selected value="Intermediate" className="text-gray">
+                      Intermediate
+                    </option>
+                    <option selected value="Advance" className="text-gray">
+                      Advance
+                    </option> */}
                   </select>
                 </div>
               </div>
             </div>
           </div>
-
-          <span className="text-l font-semibold my-8 px-4">Course Content</span>
-          <div className="grid grid-rows-2 gap-2 px-4 items-center">
-            <div className="grid grid-cols-8 gap-8 rounded-lg shadow-md justify-center items-center px-6 py-6">
-              <div className="grid col-span-1">Chapter - 1</div>
-              <div className="grid col-span-2 ">
-                <span className="text-gray-500">Title</span>
-                <input
-                  type="text"
-                  className="bg-gray-200 px-2 py-2 rounded-xl"
-                  placeholder="type here"
-                />
-              </div>
-              <div className="grid col-span-5 ">
-                {/* <span className="text-gray-500">Title</span> */}
-                <input
-                  type="file"
-                  className="bg-gray-200 px-2 py-2 rounded-xl"
-                  placeholder="type here"
-                />
-              </div>
-            </div>
-
-            {val.map((data, i) => {
-              return (
-                <div className="grid grid-cols-8 gap-8 rounded-lg shadow-md justify-center items-center px-6 py-6">
-                  <div className="grid col-span-1">Chapter - {count}</div>
-                  <div className="grid col-span-2 ">
-                    <span className="text-gray-500">Title</span>
-                    <input
-                      type="text"
-                      className="bg-gray-200 px-2 py-2 rounded-xl"
-                      placeholder="type here"
-                    />
-                  </div>
-                  <div className="grid col-span-5 ">
-                    {/* <span className="text-gray-500">Title</span> */}
-                    <input
-                      type="file"
-                      className="bg-gray-200 px-2 py-2 rounded-xl"
-                      placeholder="type here"
-                    />
-                  </div>
-                </div>
-              );
-            })}
-            <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 my-6 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-[200px]">
-              <button
-                onClick={() => handleAdd()}
-                className="flex flex-row justify-center items-center"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                Add Chapter
-              </button>
-            </div>
-          </div>
-
           <span className="text-l font-semibold my-8 px-4">
             Other Information
           </span>
@@ -211,16 +341,18 @@ const UploadCourse = () => {
               <input
                 type="decimal"
                 placeholder="$|0.0"
+                name="price"
                 className="bg-gray-200 px-2 py-2 rounded-xl "
+                {...register("price")}
               />
             </div>
-
             <div className="grid grid-rows-2 justify-center items-center">
               <span className="text-gray-500"> Certificate </span>
               <input
                 type="file"
-                placeholder="$|0.0"
-                className="bg-gray-200 px-2 py-2 rounded-xl "
+                placeholder="pdf"
+                className="bg-gray-200 px-2 py-2 rounded-xl"
+                onChange={(e) => setCertificateFile(e.target.files[0])}
               />
             </div>
 
@@ -228,22 +360,24 @@ const UploadCourse = () => {
               <span className="text-gray-500"> Assessment </span>
               <input
                 type="file"
-                placeholder="$|0.0"
-                className="bg-gray-200 px-2 py-2 rounded-xl "
+                placeholder="pdf"
+                className="bg-gray-200 px-2 py-2 rounded-xl"
+                onChange={(e) => setAssessmentFile(e.target.files[0])}
               />
             </div>
+
             <div className="grid justify-center items-end mt-8">
               <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-[200px]">
-                <Link
-                  to="/new-course"
+                <button
+                  type="submit"
                   className="flex flex-row justify-center items-center"
                 >
                   Submit
-                </Link>
+                </button>
               </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

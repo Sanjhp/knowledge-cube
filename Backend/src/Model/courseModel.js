@@ -8,7 +8,7 @@ const courseSchema = mongoose.Schema(
     },
     coverImage: {
       type: String,
-      required: true,
+      required: false,
     },
     language: {
       type: String,
@@ -18,13 +18,18 @@ const courseSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+      required: true,
+    },
     chapters: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Chapter",
-        required: false,
       },
     ],
+
     price: {
       type: Number,
       required: true,
@@ -35,8 +40,34 @@ const courseSchema = mongoose.Schema(
     },
     creatorId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Creator",
+      ref: "Role",
+      index: true,
     },
+    reviews: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Review",
+      },
+    ],
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      index: true,
+    },
+    certificate: {
+      type: String,
+      required: false,
+    },
+    assessmentPdf: {
+      type: String,
+      required: false,
+    },
+    enrollments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Enrollment',
+      },
+    ],
   },
   {
     timestamps: true,

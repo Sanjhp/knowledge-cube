@@ -212,10 +212,10 @@ const CourseOverview = () => {
       }
     }
   }, []);
-  // const style = {
-  //   color: highlight ? "white" : "black",
-  //   backgroundColor: highlight ? "black" : "gray",
-  // };
+ 
+
+
+  
   return (
     <div>
       <LearnerNavbar />
