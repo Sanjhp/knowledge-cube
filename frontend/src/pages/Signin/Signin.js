@@ -86,8 +86,12 @@ function LoginPage() {
       console.log("res :>> ", res.data.token);
       const token = res?.data?.token;
       Cookies.set("token",token)
+      const id= res?.data.user?._id
+      console.log('id :>> ', id);
+      Cookies.set("userId",id)
       const roleId = res?.data?.user?.role;
-      console.log(roleId);
+      console.log('roleId :>> ', roleId);
+     
       Cookies.set("roleId",roleId)
       const roleName = await RoleFunction(roleId);
       setLoading(false);

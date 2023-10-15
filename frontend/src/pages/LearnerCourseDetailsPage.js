@@ -4,88 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LearnerNavbar from "../components/Navbar/LearnerNavbar";
 import Rate from "../components/Rate";
 import axios from "axios";
+import Cookies from "js-cookie";
+
 
 const LearnerCourseDetailsPage = () => {
-  const cards = [
-    {
-      name: "Overview",
-      details: [
-        {
-          header: "Course Description1",
-          detail:
-            " Do esse nisi duis do reprehenderit tempor tempor veniam commodo velit.Anim non incididunt aliqua reprehenderit Lorem laboris commodo eu deserunt nulla sunt proident laboris eiusmod.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
-        },
-        {
-          header: "Course Description2",
-          detail:
-            " Dolore proident consectetur fugiat Lorem aute cupidatat non in eu Lorem ullamco sint anim.Aute sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
-        },
-        {
-          header: "Course Description3",
-          detail:
-            " Et ex commodo voluptate dolore esse sunt nisi mollit reprehenderit commodo amet ea occaecat ullamco.Ex quis tempor velit id commodo eu qui deserunt nostrud ut aute magna. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
-        },
-      ],
-    },
-    {
-      name: "Curriculum",
-      details: [
-        {
-          header: "Course Description4",
-          detail:
-            " Do esse nisi duis do reprehenderit tempor tempor veniam commodo velit.Anim non incididunt aliqua reprehenderit Lorem laboris commodo eu deserunt nulla sunt proident laboris eiusmod.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
-        },
-        {
-          header: "Course Description5",
-          detail:
-            " Dolore proident consectetur fugiat Lorem aute cupidatat non in eu Lorem ullamco sint anim.Aute sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
-        },
-        {
-          header: "Course Description6",
-          detail:
-            " Et ex commodo voluptate dolore esse sunt nisi mollit reprehenderit commodo amet ea occaecat ullamco.Ex quis tempor velit id commodo eu qui deserunt nostrud ut aute magna. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
-        },
-      ],
-    },
-    {
-      name: "Instructor",
-      details: [
-        {
-          header: "Course Description7",
-          detail:
-            " Do esse nisi duis do reprehenderit tempor tempor veniam commodo velit.Anim non incididunt aliqua reprehenderit Lorem laboris commodo eu deserunt nulla sunt proident laboris eiusmod.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
-        },
-        {
-          header: "Course Description8",
-          detail:
-            " Dolore proident consectetur fugiat Lorem aute cupidatat non in eu Lorem ullamco sint anim.Aute sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
-        },
-        {
-          header: "Course Description9",
-          detail:
-            " Et ex commodo voluptate dolore esse sunt nisi mollit reprehenderit commodo amet ea occaecat ullamco.Ex quis tempor velit id commodo eu qui deserunt nostrud ut aute magna. sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.sit adipisicing adipisicing anim irure aliqua nulla ad commodo qui.",
-        },
-      ],
-    },
-    {
-      name: "Reviews",
-      details: [
-        {
-          header: "Course Description10",
-          detail:
-            " Do esse nisi duis do reprehenderit tempor tempor veniam commodo velit.Anim non incididunt aliqua reprehenderit Lorem laboris commodo eu deserunt nulla sunt proident laboris eiusmod.sit adipisicing ",
-        },
-        {
-          header: "Course Description12",
-          detail:
-            " Et ex commodo voluptate dolore esse sunt nisi mollit reprehenderit commodo amet ea occaecat ullamco.",
-        },
-      ],
-    },
-  ];
 
-  const [set, setSet] = useState(cards[0].details);
-  const [select, setSelect] = useState("Overview");
   const [highlight, setHighlight] = useState(true);
   const [unhighlight, setUnhighlight] = useState(false);
 
@@ -106,12 +29,14 @@ const LearnerCourseDetailsPage = () => {
   const { courseId } = useParams();
 
   const [showVideo, setShowVideo] = useState(false);
+  const Id= Cookies.get("userId")
+  console.log('Id :>> ',Id );
 
   const createReviewFunction = async (data) => {
     try {
       const data = {
         courseId: courseId,
-        userId: "",
+        userId: Id,
         rating: rating,
         comment: comment,
       };
