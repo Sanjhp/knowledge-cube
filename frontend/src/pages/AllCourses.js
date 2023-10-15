@@ -78,10 +78,10 @@ const AllCourses = () => {
             <i class="ri-search-line -ml-2 bg-black px-4 py-2 rounded-tr-md rounded-br-md text-white shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] hover:bg-gray-400 hover:text-black text-sm"></i>
           </span>
         </div>
-        <div className="grid grid-cols-10 justify-center items-center col-span-10 col-start-4 px-8 py-8">
+        <div className="grid grid-cols-10 justify-center items-center col-span-10 col-start-4 px-8 py-8 gap-4">
           {/* {categories.map((element) => ( */}
           <button
-            className="flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm active:bg-black active:text-white hover:bg-gray-700 hover:text-white items-center bg-black text-white font-extralight text-sm focus:bg-black focus:text-white w-16"
+            className="flex col-span-2 justify-center px-2 py-2 rounded-sm active:bg-black active:text-white hover:bg-gray-700 hover:text-white items-center bg-black text-white font-extralight text-sm focus:bg-black focus:text-white"
             //     :
             // "flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm active:bg-black active:text-white hover:bg-gray-700 hover:text-white items-center bg-gray-200 text-gray-700 font-extralight text-sm focus:bg-black focus:text-white w-16"
             // //
@@ -90,17 +90,17 @@ const AllCourses = () => {
             All courses
           </button>
 
-          <select className="ml-[-80px] flex col-span-2 justify-center mx-2 px-2 py-2 rounded-sm  items-center bg-gray-300 text-black font-extralight text-sm w-[200px]">
+          <select className="flex col-span-2 px-2 py-2 rounded-sm  items-center bg-gray-300 text-black font-extralight text-sm">
             <option>Select Price</option>
-            <option>$300</option>
-            <option>$300</option>
-            <option>$300</option>
+            <option>Rs.300</option>
+            <option>Rs.300</option>
+            <option>Rs.300</option>
           </select>
 
           <select
             value={selectedCategoryId}
             onChange={(e) => setSelectedCategoryId(e.target.value)}
-            className="ml-[-30px] flex col-span-2 justify-center mx-8 px-2 py-2 rounded-sm  items-center bg-gray-300 text-black font-extralight text-sm w-[200px]"
+            className="flex col-span-2 px-2 py-2 rounded-sm  items-center bg-gray-300 text-black font-extralight text-sm"
           >
             <option>select a category</option>
 
