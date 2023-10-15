@@ -107,7 +107,7 @@ const LearnerCourseDetailsPage = () => {
       <LearnerNavbar />
       <div className="grid grid-cols-12 gap-2">
         {/* HEADER AND INSIGHTS */}
-        <div className="col-span-8 gap-4 px-12 py-12">
+        <div className="col-span-8 gap-4 px-12 py-12 ">
           <div className="col-span-12">
             <span className="text-5xl flex flex-cols col-span-5 my-4">
               {courseDetails?.title}
@@ -197,7 +197,7 @@ const LearnerCourseDetailsPage = () => {
           </div>
 
           <div className="col-span-12 col-start-1">
-            {selectedButton === 0 && (
+            {(selectedButton === 0 || highlight===true) && (
               <div className="col-span-8 my-4">
                 <span className="text-3xl">Course Description</span>
                 <br />
@@ -316,7 +316,7 @@ const LearnerCourseDetailsPage = () => {
         </div>
 
         {/* COURSE PRICE CARD */}
-        <div className="grid grid-cols-4 col-span-4 col-start-9 items-center my-8 mx-8">
+        <div className="absolute left-[780px] grid grid-cols-4 col-span-4 col-start-9 items-center my-8 mx-8">
           {/* {coursePricecard.map((element) => ( */}
           <div className="flex flex-col col-span-4 px-4 py-4 bg-white border-2 border-gray-100 shadow-2xl shadow-gray-400 rounded-md transition ease-in delay-0 hover:-translate-y-2 duration:1000">
             {/* {element.courseCard.map((elements) => ( */}
