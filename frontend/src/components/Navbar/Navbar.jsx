@@ -5,7 +5,6 @@ import logo from "../../assets/navbar-logo.png";
 import Cookies from "js-cookie";
 import LearnerNavbar from "./LearnerNavbar";
 import CreatorNavbar from "./CreatorNavbar";
-import handleLogout from "./Logout";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -37,7 +36,6 @@ function Navbar() {
     }
   }, []);
 
- 
   if (!accessToken) {
     return (
       <>
@@ -62,13 +60,7 @@ function Navbar() {
   }
 
   return (
-    <div>
-      {roleName === "Learner" ? (
-        <LearnerNavbar handleLogout={handleLogout} />
-      ) : (
-        <CreatorNavbar handleLogout={handleLogout} />
-      )}
-    </div>
+    <div>{roleName === "Learner" ? <LearnerNavbar /> : <CreatorNavbar />}</div>
   );
 }
 
