@@ -9,6 +9,7 @@ const CreatorNavbar = () => {
   console.log("Id", id);
   const token = Cookies.get("token");
   const roleName = Cookies.get("roleName");
+  
   useEffect(() => {
     if (accessToken) {
       const parts = accessToken.split(".");
@@ -35,6 +36,9 @@ const CreatorNavbar = () => {
     Cookies.remove("token");
     Cookies.remove("roleId");
     Cookies.remove("roleName");
+    Cookies.remove("userNamme")
+    Cookies.remove("userId")
+    window.location.reload()
   }
  
   return (
