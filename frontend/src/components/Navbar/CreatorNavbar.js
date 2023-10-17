@@ -6,11 +6,6 @@ const CreatorNavbar = () => {
   const navigate = useNavigate();
   const [accessToken, setAccessToken] = useState("");
   const [id, setId] = useState("");
-<<<<<<< HEAD
-
-=======
-  console.log("Id", id);
->>>>>>> a2b0bfa77a906214eb77b8830675640ca8dea810
   const token = Cookies.get("token");
   const roleName = Cookies.get("roleName");
   useEffect(() => {
@@ -33,7 +28,6 @@ const CreatorNavbar = () => {
     } else {
       navigate("/login");
     }
-<<<<<<< HEAD
   }, [token, navigate]);
 
   const handleLogout = () => {
@@ -46,15 +40,6 @@ const CreatorNavbar = () => {
     console.log("Logout button clicked");
   };
 
-=======
-  }, []);
-
-  const handleLogout = () => {
-    Cookies.remove("token");
-    Cookies.remove("roleId");
-    Cookies.remove("roleName");
-  }
->>>>>>> a2b0bfa77a906214eb77b8830675640ca8dea810
  
   return (
     <div className="grid grid-cols-12 px-4 justify-between items-center">
@@ -78,31 +63,18 @@ const CreatorNavbar = () => {
           >
             Upload Course
           </Link>
-<<<<<<< HEAD
           {/* <Link
-=======
-          <Link
->>>>>>> a2b0bfa77a906214eb77b8830675640ca8dea810
             to="/edit-course"
             className="mx-4 py-4 text-sm text-gray-600 hover:text-gray-500 hover:underline"
           >
             Edit Course
-<<<<<<< HEAD
           </Link> */}
           {/* <Link
-=======
-          </Link>
-          <Link
->>>>>>> a2b0bfa77a906214eb77b8830675640ca8dea810
             to="/community-chat"
             className="mx-4 py-4 text-sm text-gray-600 hover:text-gray-500 hover:underline"
           >
             Community Chat
-<<<<<<< HEAD
           </Link> */}
-=======
-          </Link>
->>>>>>> a2b0bfa77a906214eb77b8830675640ca8dea810
         </div>
         <div className="bg-transparent border-gray-700 border-2 border-solid rounded-sm px-2 py-2 text-center text-black hover:text-white hover:bg-gray-700  hover:border-gray-700 hover:border-2 hover:border-solid w-[90px] col-span-1">
           <Link

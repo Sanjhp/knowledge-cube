@@ -20,7 +20,6 @@ const courseSchema = mongoose.Schema(
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,
-<<<<<<< HEAD
       ref: "Category",
       required: true,
     },
@@ -28,22 +27,6 @@ const courseSchema = mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Chapter",
-=======
-      ref: "Category", // Reference to the Category model
-      required: true,
-    },
-
-    chapters: [
-      {
-        title: {
-          type: String,
-          required: true,
-        },
-        videoUrl: {
-          type: String,
-          required: true,
-        },
->>>>>>> a2b0bfa77a906214eb77b8830675640ca8dea810
       },
     ],
 
@@ -59,22 +42,6 @@ const courseSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Role",
       index: true,
-<<<<<<< HEAD
-=======
-    },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User", // Reference to the User model
-      index: true,
-    },
-    certificate: {
-      type: String,
-      required: false,
-    },
-    assessmentPdf: {
-      type: String,
-      required: false,
->>>>>>> a2b0bfa77a906214eb77b8830675640ca8dea810
     },
     reviews: [
       {
