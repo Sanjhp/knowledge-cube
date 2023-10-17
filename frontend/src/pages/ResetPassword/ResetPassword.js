@@ -56,6 +56,7 @@ const ResetPassword = () => {
   return (
     <div>
       <div className={styles.background}></div>
+      <h1 className="text-3xl text-center font-extralight my-4 capitalize">Reset password</h1>
       <div className={styles.signupCard}>
         <form onSubmit={handleSubmit(handleResetPassword)}>
           <div className={styles.inputContainer}>
@@ -108,10 +109,10 @@ const ResetPassword = () => {
 
           {error && <p className={styles.error}>{error}</p>}
 
-          <button className={styles.button} type="submit" disabled={loading}>
+          <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-128 cursor-pointer" type="submit" disabled={loading}>
             {loading && <div className="loader"></div>}
             Reset Password
-          </button>
+          </div>
         </form>
       </div>
       <ToastContainer />

@@ -32,6 +32,12 @@ const userSchema = mongoose.Schema(
       value: { type: String },
       expire: { type: Date },
     },
+    enrollments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Enrollment',
+      },
+    ],
   },
   { timestamps: true }
 );
@@ -47,6 +53,6 @@ userSchema.methods.generateAuthToken = async function () {
   }
 };
 
-const UserModel = mongoose.model("user-details", userSchema);
+const UserModel = mongoose.model("User", userSchema);
 
 export default UserModel;

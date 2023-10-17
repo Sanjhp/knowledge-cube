@@ -132,7 +132,7 @@ export const UpdateProfile = async (req, res) => {
         .json({ success: false, message: "User not found!" });
     }
     
-    const allowedUpdates = ["name", "phone", "dob"]; // Define allowed updates here
+    const allowedUpdates = ["name", "phone", "dob"]; 
     
     const isValidUpdates = Object.keys(req.body).every((update) => {
       return allowedUpdates.includes(update);

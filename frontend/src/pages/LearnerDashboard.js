@@ -1,47 +1,14 @@
 import { React, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import LearnerNavbar from "../components/Navbar/LearnerNavbar";
-// import { ChevronLeft, ChevronRight } from "react-feather";
 import Carousal from "../components/Carousal";
+import Cookies from "js-cookie";
+import axios from "axios";
+import { Document, Page } from "react-pdf";
 
 const LearnerDashboard = () => {
   const greeting = "Good Morning";
   const user = "James";
-
-  const list = [
-    {
-      index: "0",
-      icon: "",
-      courseName: "Introduction to Python Programming",
-      insights: { lessons: "35", minutes: "240" },
-      instructor: "Dr. Hemant Sharma",
-      coursePrice: "$850",
-    },
-    {
-      index: "0",
-      icon: "",
-      courseName: "Introduction to Python Programming",
-      insights: { lessons: "35", minutes: "240" },
-      instructor: "Dr. Hemant Sharma",
-      coursePrice: "$850",
-    },
-    {
-      index: "0",
-      icon: "",
-      courseName: "Introduction to Python Programming",
-      insights: { lessons: "35", minutes: "240" },
-      instructor: "Dr. Hemant Sharma",
-      coursePrice: "$850",
-    },
-    {
-      index: "0",
-      icon: "",
-      courseName: "Introduction to Python Programming",
-      insights: { lessons: "35", minutes: "240" },
-      instructor: "Dr. Hemant Sharma",
-      coursePrice: "$850",
-    },
-  ];
 
   const lessonSchedule = [
     {
@@ -186,7 +153,44 @@ const LearnerDashboard = () => {
       setTimeout(() => setFilled((prev) => (prev += 1)), 50);
     }
   }, [filled, isRunning]);
+  const [enrolledCourses, setEnrolledCourses] = useState([]);
 
+  const getEnrolledCourses = async () => {
+    try {
+      const userId = Cookies.get("userId");
+      const res = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/enroll/user-enrolled-courses/${userId}`
+      );
+      console.log("res :>> ", res);
+      console.log(
+        "res.data.enrolledCourses._id :>> ",
+        res.data.enrolledCourses[0]._id
+      );
+      setEnrolledCourses(res.data.enrolledCourses);
+    } catch (err) {
+      console.log("Error: ", err);
+    }
+  };
+  const [pdfUrl, setPdfUrl] = useState("");
+
+  const handleViewCertificate = (certificateUrl) => {
+    setPdfUrl(certificateUrl);
+  };
+
+  useEffect(() => {
+    getEnrolledCourses();
+  }, []);
+
+  const downloadCertificate = (certificateUrl) => {
+    // Construct the full URL to the certificate file
+    const fullUrl = `http://localhost:5000/${certificateUrl}`;
+
+    // Trigger the download
+    const link = document.createElement("a");
+    link.href = fullUrl;
+    link.download = "certificate.pdf"; // specify the file name here
+    link.click();
+  };
   return (
     <div>
       <LearnerNavbar />
@@ -200,17 +204,20 @@ const LearnerDashboard = () => {
           </span>
         </div>
         <div className="grid grid-cols-12 col-span-12 col-start-1 justify-center gap-4 items-center my-4 mx-4">
-          <div className="col-span-12 z-10">
+          <div className="col-span-12 z-10 ">
             <Carousal>
-              {list.map((element) => (
-                <div className="flex flex-col col-span-6 px-4 mx-4 my-8 py-4 bg-white border-2 border-gray-100 shadow-2xl shadow-gray-400 rounded-md transition ease-in delay-0 hover:-translate-y-2 duration:1000 z-50">
+              {enrolledCourses.map((course) => (
+                <div
+                  key={course._id}
+                  className="flex flex-col col-span-6 px-4 mx-4 my-8 py-4 bg-white border-2 border-gray-100 shadow-2xl shadow-gray-400 rounded-md transition ease-in delay-0 hover:-translate-y-2 duration:1000 z-50"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="black"
-                    class="w-6 h-6"
+                    className="w-6 h-6"
                   >
                     <path
                       stroke-linecap="round"
@@ -220,28 +227,26 @@ const LearnerDashboard = () => {
                   </svg>
 
                   <span className="flex text-xl text-black leading-6 my-4">
-                    {element.courseName}
+                    {course?.title}
                   </span>
                   <div className="flex justify-between items-center my-2">
                     <span className="flex items-center">
-                      <i class="ri-book-line text-orange-500 text-[25px] mr-2"></i>{" "}
-                      {element.insights.lessons} lessons
+                      <i className="ri-book-line text-orange-500 text-[25px] mr-2"></i>{" "}
+                      {course?.chapters?.length} lessons
                     </span>
                     <span className="flex items-center">
-                      <i class="ri-time-line  text-violet-500 mx-2 text-[25px]"></i>
-                      {element.insights.minutes} minutes
+                      <i className="ri-time-line  text-violet-500 mx-2 text-[25px]"></i>
+                      {course?.language}
                     </span>
                   </div>
-                  <span className="text-l font-extralight my-2">
-                    {element.instructor}
-                  </span>
+                  <span className="text-l font-extralight my-2">creator</span>
                   <span className="border-b-[1px] border-gray-200 my-4"></span>
                   <div className="flex justify-between items-center">
-                    <span className="flex">{element.coursePrice}</span>
-                    <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-32">
+                    <span className="flex">Rs. {course.price}</span>
+                    <div className="cursor-pointer bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-32">
                       <Link
-                        to="/new-course"
-                        className="flex flex-row justify-center items-center text-xs"
+                        to={`/learner-course-details-page/${course?._id}`}
+                        className="flex flex-row justify-center items-center text-xs cursor-pointer"
                       >
                         Watch now
                       </Link>
@@ -255,11 +260,13 @@ const LearnerDashboard = () => {
           <div className="grid grid-cols-12 col-span-12 gap-8">
             <div className="grid grid-cols-6 col-span-6 justify-between items-center px-8">
               <span className="col-span-5 col-start-1 text-2xl font-bold">
-                Lesson Schedule
+                Your Progress
               </span>
             </div>
             <div className="grid grid-cols-6 col-span-5 justify-between items-center col-start-7 px-8">
-              {/* <span className="col-span-5 text-2xl font-bold">Lesson Schedule</span> */}
+              <span className="col-span-5 text-2xl font-bold">
+                Download your Certificate
+              </span>
             </div>
           </div>
           <div className="grid grid-cols-12 justify-between items-center col-span-12 gap-4 px-4 py-4">
@@ -269,15 +276,12 @@ const LearnerDashboard = () => {
                   {/* <span className="text-xl font-semibold mb-4">{element.date}</span> */}
                   <div className="grid grid-cols-6 col-span-6">
                     {element.lessons.map((key, index) => (
-                      <div
-                        key={key}
-                        className="grid grid-cols-12 col-span-6 shadow-[#3484B4] shadow-sm transition delay-50 hover:-translate-y-2 duration-500 rounded-md px-4 py-4 mb-4"
-                      >
+                      <div className="grid grid-cols-12 col-span-6 shadow-[#3484B4] shadow-sm transition delay-50 hover:-translate-y-2 duration-500 rounded-md px-4 py-4 mb-4">
                         {element.lessons[index].map((elements) => (
                           // <div className="grid">
                           <div className="grid grid-cols-12 col-span-12">
                             <span className="font-semibold col-span-6">
-                              {elements.courseName}
+                              course name {elements.courseName}
                             </span>
                             <span className="text-l font-semibold col-span-4 col-start-7">
                               <div className="relative overflow-hidden w-[200px] h-[25px] rounded-[5px] bg-slate-300">
@@ -301,24 +305,8 @@ const LearnerDashboard = () => {
                                   {filled}%
                                 </span>
                               </div>
-                              {/* <button className="btn" onClick={()=>setIsRunning(true)}>Run</button> */}
-
-                              {/* transform(translate(-50% , -50%)) */}
                             </span>
                           </div>
-
-                          // <div className="grid">
-                          //   <div className="grid"></div>
-
-                          //   <span className="text-sm font-extralight">
-                          //     {elements.lecturer} {elements.time}
-                          //   </span>
-
-                          //   <span className="font-extralight text-sm">
-                          //     {elements.length}
-                          //   </span>
-                          // </div>
-                          // </div>
                         ))}
                       </div>
                     ))}
@@ -328,42 +316,28 @@ const LearnerDashboard = () => {
             </div>
 
             <div className="grid grid-cols-4 justify-between items-center col-span-6 h-[40vh] px-2 py-2 overflow-y-scroll overscroll-contain">
-              {lessonSchedule.map((element) => (
-                <div className="grid grid-cols-4 justify-between items-center col-span-4">
-                  {/* <span className="text-xl font-semibold mb-4">{element.date}</span> */}
+              {enrolledCourses.map((course) => (
+                <div
+                  key={course._id}
+                  className="grid grid-cols-4 justify-between items-center col-span-4"
+                >
                   <div className="grid grid-cols-6 col-span-6">
-                    {element.lessons.map((key, index) => (
-                      <div
-                        key={key}
-                        className="grid grid-cols-12 col-span-6 shadow-[#3484B4] shadow-sm transition delay-50 hover:-translate-y-2 duration-500 rounded-md px-4 py-4 mb-4 bg-[#3484B4]"
-                      >
-                        {element.lessons[index].map((elements) => (
-                          <div className="grid grid-cols-12 col-span-12">
-                            <span className="font-semibold text-white col-span-9">
-                              Certificate
-                            </span>
-                            <Link
-                              to="/"
-                              className="text-sm font-extralight text-white col-span-4 col-start-10 hover:text-gray-200 hover:underline"
-                            >
-                              View Certificate
-                            </Link>
-                          </div>
-
-                          // {/* <div className="grid">
-                          //   <div className="grid"></div>
-
-                          //   <span className="text-sm font-extralight text-white">
-                          //     View Certificate {elements.time}
-                          //   </span>
-
-                          //   <span className="font-extralight text-sm text-white">
-                          //     {elements.length}
-                          //   </span>
-                          // </div> */}
-                        ))}
+                    <div className="grid grid-cols-12 col-span-6 shadow-[#3484B4] shadow-sm transition delay-50 hover:-translate-y-2 duration-500 rounded-md px-4 py-4 mb-4 bg-[#3484B4]">
+                      <div className="grid grid-cols-12 col-span-12">
+                        <span className="font-semibold text-white col-span-9">
+                          Certificate
+                        </span>
+                        <Link
+                          to=""
+                          onClick={() =>
+                            downloadCertificate(course?.certificate)
+                          }
+                          className="text-sm font-extralight text-white col-span-4 col-start-10 hover:text-gray-200 hover:underline"
+                        >
+                          View Certificate
+                        </Link>
                       </div>
-                    ))}
+                    </div>
                   </div>
                 </div>
               ))}
