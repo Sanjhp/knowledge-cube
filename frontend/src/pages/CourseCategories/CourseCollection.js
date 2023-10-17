@@ -1,6 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
+
 const CourseCollection = () => {
+  const [categories,setCategories]=useState([]);
+
+  const handleGetCategories= async()=>{
+    try{
+      const res=await axios.get(`${process.env.REACT_APP_BASE_URL}/category/get-categories`)
+      console.log('res :>> ', res?.data?.data);
+      setCategories(res?.data?.data)
+    }catch(error){
+      console.log('error :>> ', error);
+    }
+  }
+
+  useEffect(()=>{
+    handleGetCategories()
+  },[])
   const courseCollection = [
     {
       property: "w-[40px] transition delay-150 hover:translate-y-1",
@@ -77,18 +95,19 @@ const CourseCollection = () => {
         </div>
       </div>
       <div className="grid grid-cols-12 col-span-8 col-start-2 col-end-12 gap-4 justify-center items-center">
-        {courseCollection.map((element) => (
+        {categories.map((category) => (
           <div className="h-[300px] flex col-span-3 rounded-xl bg-gradient-to-br from-blue-100 to-blue-50 hover:bg-gradient-to-tr  hover:from-blue-200 hover:to-blue-50 transition delay-150 hover:translate-y-2 duration-700">
             <Link
-              to={element.to}
+              to={""}
               className="flex flex-col justify-center items-center px-8 py-8"
             >
-              <img src={element.icon} className={element.property} />
+             
               <span className="text-gray-900 font-semibold text-xl text-center my-2">
-                {element.category}
+                {/* {element.category} */}
+                {category.name}
               </span>
               <span className="text-gray-500 font-thin text-sm text-center my-2">
-                {element.desc}
+                {category?.description}
               </span>
             </Link>
           </div>
