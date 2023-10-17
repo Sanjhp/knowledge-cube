@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 
 export const createCategory = async (req, res) => {
   try {
+<<<<<<< HEAD
     const { name, description } = req.body;
 
     if (!name || !description) {
@@ -20,6 +21,17 @@ export const createCategory = async (req, res) => {
     }
 
     const newCategory = new Category({ name, description });
+=======
+    const { name } = req.body;
+
+    if (!name) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ success: false, message: "Category name not found" });
+    }
+
+    const newCategory = new Category({ name });
+>>>>>>> a2b0bfa77a906214eb77b8830675640ca8dea810
     const categoryData = await newCategory.save();
 
     return res.status(StatusCodes.CREATED).json({
@@ -35,6 +47,7 @@ export const createCategory = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 // export const createCategory = async (req, res) => {
 //   try {
 //     const { name, description} = req.body;
@@ -71,6 +84,8 @@ export const createCategory = async (req, res) => {
 // };
 
 
+=======
+>>>>>>> a2b0bfa77a906214eb77b8830675640ca8dea810
 export const getAllCategories = async (req, res) => {
   try {
     const categories = await Category.find({});

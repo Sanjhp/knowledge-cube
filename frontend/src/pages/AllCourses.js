@@ -33,7 +33,6 @@ const AllCourses = () => {
   }, []);
 
   const [courses, setCourses] = useState([]);
-
   const getAllCourses = async () => {
     try {
       const response = await axios.get(
@@ -135,5 +134,4 @@ const AllCourses = () => {
 };
 
 export default AllCourses;
-
 

@@ -81,9 +81,14 @@ function LoginPage() {
       console.log("id :>> ", id);
       Cookies.set("userId", id);
       const roleId = res?.data?.user?.role;
+<<<<<<< HEAD
       console.log("roleId :>> ", roleId);
 
       Cookies.set("roleId", roleId);
+=======
+      console.log(roleId);
+      Cookies.set("roleId",roleId)
+>>>>>>> a2b0bfa77a906214eb77b8830675640ca8dea810
       const roleName = await RoleFunction(roleId);
       setLoading(false);
       Cookies.set("roleName", roleName);
