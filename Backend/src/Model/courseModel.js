@@ -20,20 +20,13 @@ const courseSchema = mongoose.Schema(
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Category", // Reference to the Category model
+      ref: "Category",
       required: true,
     },
-
     chapters: [
       {
-        title: {
-          type: String,
-          required: true,
-        },
-        videoUrl: {
-          type: String,
-          required: true,
-        },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Chapter",
       },
     ],
 
@@ -50,9 +43,15 @@ const courseSchema = mongoose.Schema(
       ref: "Role",
       index: true,
     },
+    reviews: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Review",
+      },
+    ],
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User", // Reference to the User model
+      ref: "User",
       index: true,
     },
     certificate: {

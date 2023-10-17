@@ -169,23 +169,7 @@ const CreaterDashboard = () => {
                     </span>
                   </div>
                 </div>
-                {/* <div className="grid justify-center items-center col-span-2">
-                  <div className="text-4xl">{course.enrollments}</div>
-                  <span className="text-sm font-thin">
-                    enrollments this month
-                  </span>
-                </div> */}
-                {/* <div className="grid justify-center items-center col-span-2">
-                  <div className="text-4xl">{course.ratings}</div>
-
-                  <div className="grid grid-cols-4 col-span-4">
-                    <i className="ri-star-fill text-lg text-yellow-300"></i>
-                    <i className="ri-star-fill text-lg text-yellow-300"></i>
-                    <i className="ri-star-fill text-lg text-yellow-300"></i>
-                  </div>
-
-                  <span className="text-sm font-thin">ratings</span>
-                </div> */}
+               
               </div>
             </div>
           ))}

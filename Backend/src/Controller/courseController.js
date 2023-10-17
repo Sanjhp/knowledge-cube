@@ -2,6 +2,8 @@ import Chapter from "../Model/chapterModel.js";
 import User from "../Model/userModel.js";
 import Course from "../Model/courseModel.js";
 import Category from "../Model/categoryModel.js";
+import Review from "../Model/reviewModel.js";
+import Enrollment from "../Model/enrollmentModel.js";
 import { StatusCodes } from "http-status-codes";
 
 // API endpoint for uploading a course
@@ -16,6 +18,7 @@ export const UploadCourse = async (req, res) => {
       creatorId,
       categoryId,
     } = req.body;
+    const date = new Date()
     console.log("req.body :>> ", req.body);
     const coverImage = req.files["coverImage"]
       ? req.files["coverImage"][0].path
@@ -26,6 +29,10 @@ export const UploadCourse = async (req, res) => {
     const assessmentPdf = req.files["assessmentPdf"]
       ? req.files["assessmentPdf"][0].path
       : null;
+    console.log('originalName', req.files["coverImage"][0].originalname)
+    const originalName = req.files["coverImage"][0].originalname.split(' ').join('-')
+    console.log('originalName :>> ', originalName);
+    
 
     if (
       !coverImage ||
@@ -57,8 +64,7 @@ export const UploadCourse = async (req, res) => {
         message: "Only creators are allowed to upload courses.",
       });
     }
-    // const populatedUser = await user.populate("creatorId").execPopulate();
-    // console.log("populatedUser :>> ", populatedUser);
+
     const course = await Course.create({
       title,
       coverImage,
@@ -134,8 +140,21 @@ export const GetAllCourses = async (req, res) => {
     const courses = await Course.find()
       .populate("category")
       .populate({
+        path: "chapters",
+        model: "Chapter",
+      })
+
+      .populate({
+        path: "reviews",
+        model: "Review",
+      })
+      .populate({
+        path: "enrollments", // Make sure this path matches your Course schema
+        model: "Enrollment",
+      })
+      .populate({
         path: "user",
-        model: "User", // Ensure that the model name matches the registered model name in Mongoose
+        model: "User",
         populate: {
           path: "role",
           model: "Role",
@@ -150,12 +169,11 @@ export const GetAllCourses = async (req, res) => {
     console.error(error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
-      message: 'Failed to retrieve courses',
+      message: "Failed to retrieve courses",
       error: error.message,
     });
   }
 };
-
 
 // API endpoint for getting a single course by ID
 export const GetCourseById = async (req, res) => {
