@@ -8,7 +8,8 @@ import { Document, Page } from "react-pdf";
 
 const LearnerDashboard = () => {
   const greeting = "Good Morning";
-  const user = "James";
+  const name = Cookies.get("userName")
+  const user = name;
 
   const lessonSchedule = [
     {

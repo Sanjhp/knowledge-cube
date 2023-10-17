@@ -63,7 +63,7 @@ const CreatorNavbar = () => {
           >
             Upload Course
           </Link>
-          <Link
+          {/* <Link
             to="/edit-course"
             className="mx-4 py-4 text-sm text-gray-600 hover:text-gray-500 hover:underline"
           >
@@ -74,7 +74,7 @@ const CreatorNavbar = () => {
             className="mx-4 py-4 text-sm text-gray-600 hover:text-gray-500 hover:underline"
           >
             Community Chat
-          </Link>
+          </Link> */}
         </div>
         <div className="bg-transparent border-gray-700 border-2 border-solid rounded-sm px-2 py-2 text-center text-black hover:text-white hover:bg-gray-700  hover:border-gray-700 hover:border-2 hover:border-solid w-[90px] col-span-1">
           <Link

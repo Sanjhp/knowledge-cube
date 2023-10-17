@@ -95,8 +95,10 @@ const UploadCourse = () => {
     updatedChapters[index].video = event.target.files[0];
     setChapters(updatedChapters);
   };
+  const name= Cookies.get("userName")
 
-  const username = "Samantha";
+
+  const username = name;
   const [category, setCateogy] = useState([]);
   const getCategories = async () => {
     try {

@@ -135,7 +135,7 @@ const UpdateUser = () => {
   };
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <div className={styles.container}>
         <div className={styles.signupCard}>
           <form onSubmit={handleSubmit(handleProfileUpdate)}>
@@ -242,7 +242,7 @@ const UpdateUser = () => {
                 <p className={styles.errorMessage}>{errors.password.message}</p>
               )}
             </div>
-          
+
             <button
               className=" w-[335px]  bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solidcursor-pointer"
               type="submit"
