@@ -3,25 +3,6 @@ import { StatusCodes } from "http-status-codes";
 
 export const createCategory = async (req, res) => {
   try {
-<<<<<<< HEAD
-    const { name, description } = req.body;
-
-    if (!name || !description) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ success: false, message: "Category name and description are required" });
-    }
-
-    const existingCategory = await Category.findOne({ name });
-
-    if (existingCategory) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ success: false, message: "Category already exists" });
-    }
-
-    const newCategory = new Category({ name, description });
-=======
     const { name } = req.body;
 
     if (!name) {
@@ -31,7 +12,6 @@ export const createCategory = async (req, res) => {
     }
 
     const newCategory = new Category({ name });
->>>>>>> a2b0bfa77a906214eb77b8830675640ca8dea810
     const categoryData = await newCategory.save();
 
     return res.status(StatusCodes.CREATED).json({
@@ -47,45 +27,6 @@ export const createCategory = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
-// export const createCategory = async (req, res) => {
-//   try {
-//     const { name, description} = req.body;
-
-//     if (!name) {
-//       return res
-//         .status(StatusCodes.BAD_REQUEST)
-//         .json({ success: false, message: "Category name not found" });
-//     }
-
-//     // Check if the category with the same name already exists
-//     const existingCategory = await Category.findOne({ name });
-
-//     if (existingCategory) {
-//       return res
-//         .status(StatusCodes.BAD_REQUEST)
-//         .json({ success: false, message: "Category already exists" });
-//     }
-
-//     const newCategory = new Category({ name });
-//     const categoryData = await newCategory.save();
-
-//     return res.status(StatusCodes.CREATED).json({
-//       success: true,
-//       message: "Category created successfully",
-//       data: categoryData,
-//     });
-//   } catch (error) {
-//     console.error("error :>> ", error);
-//     return res
-//       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-//       .json({ success: false, error: error.message });
-//   }
-// };
-
-
-=======
->>>>>>> a2b0bfa77a906214eb77b8830675640ca8dea810
 export const getAllCategories = async (req, res) => {
   try {
     const categories = await Category.find({});
