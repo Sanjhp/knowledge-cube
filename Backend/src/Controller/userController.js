@@ -5,7 +5,6 @@ import { validationResult } from "express-validator";
 import errorHandler from "../middleware/ErrHandler.js";
 import sendMail from "../utils/sendMail.js";
 
-
 export const UserRegistration = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -17,7 +16,7 @@ export const UserRegistration = async (req, res) => {
       });
     }
 
-    const { name, email, phone, dob,  password ,role} = req.body;
+    const { name, email, phone, dob, password, role } = req.body;
 
     const userExists = await UserModel.findOne({ email });
     if (userExists) {
@@ -26,7 +25,7 @@ export const UserRegistration = async (req, res) => {
         .json({ success: false, message: "Email already exists" });
     }
 
-      // Generate a salt and hash the password
+    // Generate a salt and hash the password
     const salt = await bcrypt.genSalt(10);
     const encryptPassword = await bcrypt.hash(password, salt);
 
@@ -36,7 +35,7 @@ export const UserRegistration = async (req, res) => {
       phone,
       dob,
       password: encryptPassword,
-      role
+      role,
     });
     await user.save();
 
@@ -131,9 +130,9 @@ export const UpdateProfile = async (req, res) => {
         .status(StatusCodes.NOT_FOUND)
         .json({ success: false, message: "User not found!" });
     }
-    
-    const allowedUpdates = ["name", "phone", "dob"]; // Define allowed updates here
-    
+
+    const allowedUpdates = ["name", "phone", "dob"];
+
     const isValidUpdates = Object.keys(req.body).every((update) => {
       return allowedUpdates.includes(update);
     });
@@ -141,7 +140,7 @@ export const UpdateProfile = async (req, res) => {
     if (!isValidUpdates) {
       throw new Error("Not allowed to update");
     }
-    
+
     Object.keys(req.body).forEach((update) => {
       user[update] = req.body[update];
     });
@@ -154,10 +153,30 @@ export const UpdateProfile = async (req, res) => {
       data: user,
     });
   } catch (error) {
-    console.log('error', error);
+    console.log("error", error);
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ success: false, message: "Failed to update user!" });
+  }
+};
+
+//update bio for course-creator
+
+export const updateBio = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { bio } = req.body;
+
+    await UserModel.findByIdAndUpdate(userId, { bio });
+
+    return res
+      .status(200)
+      .json({ success: true, message: "Bio updated successfully", bio: bio });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Failed to update bio" });
   }
 };
 
@@ -165,62 +184,60 @@ export const UpdateProfile = async (req, res) => {
 
 export const forgotPassword = async (req, res) => {
   const errors = validationResult(req);
-    const errMessages = errorHandler(errors);
+  const errMessages = errorHandler(errors);
 
-    if (errMessages && errMessages.length) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ success: false, message: errMessages });
-    }
+  if (errMessages && errMessages.length) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ success: false, message: errMessages });
+  }
   try {
-    const email = req.body.email
-    const user = await UserModel.findOne({ email })
+    const email = req.body.email;
+    const user = await UserModel.findOne({ email });
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: 'User does not exist',
-      })
+        message: "User does not exist",
+      });
     }
 
     if (user) {
-      const otp = Math.random().toString().substring(2, 8)
-      const currentDate = new Date()
-      const expire = currentDate.setMinutes(currentDate.getMinutes() + 5)
+      const otp = Math.random().toString().substring(2, 8);
+      const currentDate = new Date();
+      const expire = currentDate.setMinutes(currentDate.getMinutes() + 5);
 
       user.otp = {
         value: otp,
         expire,
-      }
+      };
 
       const mail = await sendMail({
         from: `"KnowledgeCube " <${process.env.SMTP_EMAIL}>`,
         to: email,
-        subject: 'Forgot Password',
+        subject: "Forgot Password",
         text: `Your OTP is ${otp} valid for 5 minutes`,
         html: `<p>Your OTP <strong>${otp}</strong> valid for 5 minutes</p>`,
-      })
-      if (mail === 'success') {
-        await user.save()
+      });
+      if (mail === "success") {
+        await user.save();
         return res.json({
           success: true,
-           message: 'OTP sent!',
+          message: "OTP sent!",
           email,
-        })
+        });
       }
-      if (mail === 'error') {
-        throw new Error(
-          'OTP not sent'
-        )
+      if (mail === "error") {
+        throw new Error("OTP not sent");
       }
     }
   } catch (error) {
-    console.log('Error while forgot-password : ', error)
+    console.log("Error while forgot-password : ", error);
     return res.status(400).json({
       success: false,
       message: error.message,
-    })
+    });
   }
-}
+};
 
 // Reset Password
 
