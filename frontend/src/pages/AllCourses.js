@@ -33,8 +33,10 @@ const AllCourses = () => {
   }, []);
 
   const [courses, setCourses] = useState([]);
+
   const getAllCourses = async () => {
     try {
+
       const response = await axios.get(
         "http://localhost:5000/api/course-creator/courses"
       );
@@ -72,9 +74,10 @@ const AllCourses = () => {
 
           <select className="flex col-span-2 px-2 py-2 rounded-sm  items-center bg-gray-300 text-black font-extralight text-sm">
             <option>Select Price</option>
-            <option>Rs.300</option>
-            <option>Rs.300</option>
-            <option>Rs.300</option>
+            <option>0-500</option>
+            <option>500-1000</option>
+            <option>1000-1500</option>
+            <option>1500-2000</option>
           </select>
 
           <select
@@ -108,14 +111,14 @@ const AllCourses = () => {
                     className="w-fill h-[200px] rounded-md z-10"
                   />
 
-                  <i className="ri-heart-line absolute z-20 text-white my-2 mx-2"></i>
+                  {/* <i className="ri-heart-line absolute z-20 text-white my-2 mx-2"></i> */}
                   <div className="flex flex-row justify-between items-center my-2 border-b-[1px] border-gray-200">
                     <span className="flex text-[15px] font-extralight text-gray-400">
-                      ratings
+                      {course?.reviews?.length} reviews & ratings
                     </span>
                   </div>
                   <span className="flex text-xl text-black leading-6 my-4">
-                    {course?.title} 
+                    {course?.title}
                   </span>
                   <div className="flex justify-between items-center ">
                     <span>

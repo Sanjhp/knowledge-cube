@@ -29,6 +29,8 @@ const LearnerNavbar = () => {
     Cookies.remove("userId");
     Cookies.remove("userName");
     console.log("Logout button clicked");
+    window.location.reload()
+    navigate("/login")
   };
 
   return (
