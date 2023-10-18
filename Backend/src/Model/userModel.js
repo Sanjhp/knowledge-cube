@@ -15,6 +15,10 @@ const userSchema = mongoose.Schema(
       type: String,
       required: false,
     },
+    bio: {
+      type: String,
+      default: '',
+    },
     dob: {
       type: String,
       required: false,

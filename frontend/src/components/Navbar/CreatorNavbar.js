@@ -38,13 +38,14 @@ const CreatorNavbar = () => {
     Cookies.remove("userId");
     Cookies.remove("userName");
     console.log("Logout button clicked");
+    window.location.reload()
   };
 
  
   return (
     <div className="grid grid-cols-12 px-4 justify-between items-center">
       <div className="grid grid-cols-12 col-span-12 col-start-1 px-4 py-4 justify-between items-center">
-        <div className="flex flex-col mr-4">
+        <div onClick={()=>navigate("/")} className="flex flex-col mr-4 cursor-pointer">
           <img
             src="https://i.ibb.co/5MXSrg8/cropped-logo.png"
             className="w-16"
@@ -63,6 +64,7 @@ const CreatorNavbar = () => {
           >
             Upload Course
           </Link>
+          
           {/* <Link
             to="/edit-course"
             className="mx-4 py-4 text-sm text-gray-600 hover:text-gray-500 hover:underline"
