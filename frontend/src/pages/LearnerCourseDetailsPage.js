@@ -261,9 +261,9 @@ const LearnerCourseDetailsPage = () => {
                       key={chapter?._id}
                       className={showVideo ? "list-none flex-col gap-3 justify-between items-center p-4 border-[1px] border-gray-200":"list-none flex gap-3 justify-between items-center p-4 border-[1px] border-gray-200"}
                     >
-                      <div className={showVideo?"flex flex-col justify-end items-end":"flex flex-col justify-center items-center"}>
+                      <div className={showVideo?"flex flex-col justify-end items-end":"flex  justify-center items-center"}>
                         <span>{index + 1}</span>
-                        <span className="font-bold mx-2">{chapter.title}</span>
+                        <span className={showVideo?"hidden font-bold mx-2":"font-bold mx-2"}>{chapter.title}</span>
                       </div>
                       {isEnrolled && (
                         <img
