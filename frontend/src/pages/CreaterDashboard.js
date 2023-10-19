@@ -138,12 +138,12 @@ const CreaterDashboard = () => {
         <div className="min-[300px]:grid min-[300px]:grid-rows-1 min-[300px]:justify-center min-[300px]:items-center max-[639px]:grid max-[639px]:grid-rows-1 max-[639px]:justify-center max-[639px]:items-center sm:grid sm:grid-rows-1 sm:justify-center sm:items-center md:grid md:grid-rows-1 md:justify-center md:items-center lg:grid lg:grid-cols-12 lg:justify-center lg:items-center gap-8 pt-8 px-4 min-[300px]:col-start-3 lg:col-start-1 min-[300px]:col-span-4 max-[639px]:col-span-4 sm:col-span-10 md:col-span-10 lg:col-span-10">
           <div className="grid grid-cols-12 col-span-9 justify-center items-center">
             <div className="grid grid-cols-12 col-span-12 justify-center items-center">
-              <div className="grid grid-rows-2 col-start-1 col-span-10">
+              <div className="grid grid-rows-2 col-start-2 col-span-10">
                 <span className="text-3xl col-span-10">{userName}</span>
               </div>
             </div>
 
-            <div className="grid grid-cols-12 col-span-12">
+            <div className="grid grid-cols-12 col-span-12 col-start-2">
               <span className="text-sm text-gray-400 col-span-12">
                 {userDetails?.bio === "" ? (
                   <h2> Update Your Bio...</h2>
@@ -156,10 +156,10 @@ const CreaterDashboard = () => {
         </div>
         <div>
           <button
-            className="bg-blue-500 text-white p-2 rounded"
+            className="bg-black text-white p-2 rounded col-span-3 col-start-6"
             onClick={openModal}
           >
-            Update Your Bio
+            Update Bio
           </button>
         </div>
         <div className="grid grid-cols-12 col-span-12 mt-16 px-16 py-8 border-t-[1px] border-gray-100">
@@ -195,16 +195,16 @@ const CreaterDashboard = () => {
             courses?.map((course) => (
               <div
                 key={course._id}
-                className="min-[300px]:grid min-[639px]:grid-rows-1 lg:grid lg:grid-cols-12 col-span-12 shadow-gray-300 shadow-sm rounded-sm px-2 py-2 justify-center items-center gap-4"
+                className="grid grid-cols-12 col-span-12 shadow-gray-300 shadow-sm rounded-sm px-2 py-2 justify-center items-center gap-4 my-2"
               >
-                <div className="grid min-[300px]:col-span-10 lg:col-span-1">
+                <div className="col-span-2">
                   <img
                     src={`http://localhost:5000/${course.coverImage}`}
                     className="min-[300px]:w-fill lg:w-fill rounded-md"
                   />
                 </div>
-                <div className="grid min-[300px]:grid-rows-1 min-[300px]:col-span-4 lg:grid-cols-12 lg:col-span-12">
-                  <div className="grid min-[300px]:grid-cols-4 lg:grid-rows-2 col-span-4 items-center gap-8">
+                <div className="grid grid-cols-12 col-span-12">
+                  <div className="grid grid-rows-2 col-span-4 items-center gap-8">
                     <span className="text-xl font-semibold col-span-6">
                       {course?.title}
                     </span>
@@ -214,7 +214,7 @@ const CreaterDashboard = () => {
                     <span>Rs. {course.price}</span>
                     <span>{course.language}</span>
                     <div className="grid grid-cols-4 col-span-4 gap-4 items-center">
-                      <span className="bg-purple-600 text-white px-[1px] py-[1px] text-xs col-span-1 uppercase text-center rounded-full min-[300px]:col-span-3 sm:col-span-1">
+                      <span className="bg-purple-600 text-white px-[1px] py-[1px] text-xs col-span-1 uppercase text-center rounded-full">
                         live
                       </span>
                     </div>
