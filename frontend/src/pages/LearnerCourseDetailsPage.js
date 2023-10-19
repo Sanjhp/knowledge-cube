@@ -7,7 +7,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import dummyuser from "../assets/user.webp"
 const LearnerCourseDetailsPage = () => {
   const navigate = useNavigate();
   const [highlight, setHighlight] = useState(true);
@@ -16,6 +16,17 @@ const LearnerCourseDetailsPage = () => {
   const [isLoading, setLoading] = useState(false);
   const userId = Cookies.get("userId");
   const [isEnrolled, setIsEnrolled] = useState(false);
+  
+
+  const userDetails= async (userId)=>{
+    try{
+      const user= `${process.env.REACT_APP_BASE_URL}/users/user-details`
+      console.log('user :>> ', user);
+
+    }catch(error){
+      console.log('error :>> ', error);
+    }
+  }
 
   const getEnrolledCourses = async () => {
     try {
@@ -54,9 +65,9 @@ const LearnerCourseDetailsPage = () => {
   const [reviews, setReviews] = useState([]);
   console.log("reviews :>> ", reviews);
   const [averageRating, setAverageRating] = useState("");
+  console.log('averageRating :>> ', averageRating);
   const [totalReviews, setTotalReviews] = useState("");
   const [enrollments, setEnrollments] = useState([]);
-  // console.log('enrollments :>> ', enrollments);
 
   const { courseId } = useParams();
 
@@ -108,12 +119,12 @@ const LearnerCourseDetailsPage = () => {
       const res = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/course-creator/courses/${courseId}`
       );
-      console.log("res :>> ", res);
+      console.log("res ====:>> ", res);
 
       setCourseDetails(res?.data?.course);
       setReviews(res?.data.course.reviews);
-      setAverageRating(res?.data?.averageRating);
-      const totalReviews = res?.data?.reviews?.length  || 0;
+      // setAverageRating(res?.data?.averageRating);
+      const totalReviews = res?.data?.reviews?.length || 0;
       setTotalReviews(totalReviews);
       const totalEnrollments = res?.data?.enrollments?.length || 0;
       setEnrollments(totalEnrollments);
@@ -147,12 +158,14 @@ const LearnerCourseDetailsPage = () => {
               <span className="flex flex-rows mx-2 col-span-4 justify-center items-center">
                 <i className="ri-star-fill text-orange-400"></i>
                 <span className="text-sm font-extralight">
-                  {reviews?.length === 0 ? (
+                {/* {averageRating} */}
+                  {totalReviews === 0 ? (
                     "No ratings"
                   ) : (
                     <>
-                      {averageRating} ({totalReviews} rating
-                      {totalReviews !== 1 ? "s" : ""})
+                    {totalReviews} reviews and ratings
+                      {/* {averageRating} ({totalReviews} rating
+                      {totalReviews !== 1 ? "s" : ""}) */}
                     </>
                   )}
                 </span>
@@ -161,11 +174,12 @@ const LearnerCourseDetailsPage = () => {
               <span className="flex flex-rows mx-2 col-span-4 justify-center items-center">
                 <i className="ri-eye-line text-green-500"></i>
                 <span className="text-sm font-extralight">
-                  {enrollments?.length === 0 ? (
+                {enrollments} Enrolled Students
+                  {/* {enrollments?.length === 0 ? (
                     "No enrollments"
                   ) : (
                     <>{enrollments} Enrolled Students</>
-                  )}
+                  )} */}
                 </span>
               </span>
 
@@ -242,7 +256,6 @@ const LearnerCourseDetailsPage = () => {
                 <br />
                 <br />
                 {courseDetails?.chapters?.map((chapter, index) => {
-               
                   return (
                     <li
                       key={chapter?._id}
@@ -253,11 +266,11 @@ const LearnerCourseDetailsPage = () => {
                         <span className="font-bold mx-2">{chapter.title}</span>
                       </div>
                       {isEnrolled && (
-                      <img
-                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAABcUlEQVR4nO2Yu0oDQRSGPyysbSRFYqkg6ENoJ7G19TV8ABs7bX0C0eAFEm3ESnwAG8FHEIxo0ggpjgzMhFE3sLuMm+PmfHBgGeby/5yZ3dkDhmEYhpGeFtABBoAoiQFwDiwXMdFXIFwmhNPWzGOk4wd08w6oiCbQ89pO8wwI20mTicCS1/ZODkIKtSJ59ZmROmXkFlinBkYEGAHHwGLJOdQYCfEG7AHzJedSYeQqen4CtkrON3Ujjg3gMWpLdX6kaiOOOWAXeEl4fmQaRgILwAHwmeD8yDSNBFaAs6jfM7CTeI3KjHR/GNlOvMYY21rU9LBvZrx+10rOG2MfxJm9oozqcGm8AVb5W8T+EJUhM5eRvu/oCnVay0GveTqf+M49ZWZawLXX5jRm8pCwpFl13MdGNBWrpWB8xEbufOMF/4dLr9lpH9OOHB4CDfTSAI4ivU77N/YVbBMpGE5zJm2fqqECkTIhhl7jr0wYhmEYBiX5AmT1wprACIzgAAAAAElFTkSuQmCC"
-                        className="hover:scale-110 w-4 cursor-pointer"
-                        onClick={() => setShowVideo(index)}
-                      />
+                        <img
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAABcUlEQVR4nO2Yu0oDQRSGPyysbSRFYqkg6ENoJ7G19TV8ABs7bX0C0eAFEm3ESnwAG8FHEIxo0ggpjgzMhFE3sLuMm+PmfHBgGeby/5yZ3dkDhmEYhpGeFtABBoAoiQFwDiwXMdFXIFwmhNPWzGOk4wd08w6oiCbQ89pO8wwI20mTicCS1/ZODkIKtSJ59ZmROmXkFlinBkYEGAHHwGLJOdQYCfEG7AHzJedSYeQqen4CtkrON3Ujjg3gMWpLdX6kaiOOOWAXeEl4fmQaRgILwAHwmeD8yDSNBFaAs6jfM7CTeI3KjHR/GNlOvMYY21rU9LBvZrx+10rOG2MfxJm9oozqcGm8AVb5W8T+EJUhM5eRvu/oCnVay0GveTqf+M49ZWZawLXX5jRm8pCwpFl13MdGNBWrpWB8xEbufOMF/4dLr9lpH9OOHB4CDfTSAI4ivU77N/YVbBMpGE5zJm2fqqECkTIhhl7jr0wYhmEYBiX5AmT1wprACIzgAAAAAElFTkSuQmCC"
+                          className="hover:scale-110 w-4 cursor-pointer"
+                          onClick={() => setShowVideo(index)}
+                        />
                       )}
 
                       {showVideo === index && (
@@ -280,7 +293,7 @@ const LearnerCourseDetailsPage = () => {
                 <span className="text-3xl">Instructor</span>
                 <br />
                 <br />
-                Bio
+              {courseDetails?.user?.bio}
               </div>
             )}
 
@@ -325,20 +338,21 @@ const LearnerCourseDetailsPage = () => {
                   <div className="grid grid-cols-10 col-span-10 gap-2 py-4 px-4 border-[1px] border-gray-100 justify-center items-center my-2">
                     <div className="flex col-span-1">
                       <img
-                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60"
+                      src={dummyuser}
+                        // src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60"
                         className="w-[50px] h-[50px] object-cover rounded-[25px] ml-[12px]"
                       />
                     </div>
                     <p className="grid grid-cols-10 text-xs text-gray-400 col-span-3">
                       <span className="text-base text-gray-500 col-span-10">
-                        Jessica Patel
+                       Unknown User
                         {review.userId.name}
                       </span>
                       <span className="col-span-10">
                         {new Date(review.createdAt).toLocaleString()}
                       </span>
                     </p>
-                    <p className="col-span-7">{review.rating}</p>
+                    <p className="col-span-7 ml-4">{review.rating} stars</p>
                     <p className="col-span-10 border-[1px] border-gray-100 py-4 px-2">
                       {review.comment}
                     </p>
