@@ -259,9 +259,9 @@ const LearnerCourseDetailsPage = () => {
                   return (
                     <li
                       key={chapter?._id}
-                      className="list-none flex gap-3 justify-between items-center p-4 border-[1px] border-gray-200"
+                      className={showVideo ? "list-none flex-col gap-3 justify-between items-center p-4 border-[1px] border-gray-200":"list-none flex gap-3 justify-between items-center p-4 border-[1px] border-gray-200"}
                     >
-                      <div>
+                      <div className={showVideo?"flex flex-col justify-end items-end":"flex flex-col justify-center items-center"}>
                         <span>{index + 1}</span>
                         <span className="font-bold mx-2">{chapter.title}</span>
                       </div>
@@ -364,7 +364,7 @@ const LearnerCourseDetailsPage = () => {
         </div>
 
         {/* COURSE PRICE CARD */}
-        <div className="absolute left-[1100px] grid grid-cols-4 col-span-4 col-start-9 items-center my-8 mx-8">
+        <div className="absolute sm:left-[800px] md:left-[800px] grid grid-cols-4 col-span-4 col-start-9 items-center my-8 mx-8">
           <div className="flex flex-col col-span-4 px-4 py-4 bg-white border-2 border-gray-100 shadow-2xl shadow-gray-400 rounded-md transition ease-in delay-0 hover:-translate-y-2 duration:1000">
             <div className="flex flex-col">
               <img
@@ -376,7 +376,7 @@ const LearnerCourseDetailsPage = () => {
               </div>
 
               <div
-                className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid"
+                className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid cursor-pointer"
                 onClick={() => CreateEnrollment(Id, courseId)}
               >
                 Buy Now
