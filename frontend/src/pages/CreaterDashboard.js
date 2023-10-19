@@ -156,7 +156,7 @@ const CreaterDashboard = () => {
         </div>
         <div>
           <button
-            className="bg-black text-white p-2 rounded col-span-3 col-start-6"
+            className="bg-black text-white p-4 rounded col-span-3 col-start-6 text-xs hover:bg-gray-900"
             onClick={openModal}
           >
             Update Bio

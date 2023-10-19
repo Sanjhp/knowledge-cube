@@ -43,7 +43,7 @@ const CreatorNavbar = ({backgroundColor , yes}) => {
 
   backgroundColor = yes==="false"? "transparent":backgroundColor;
   return (
-    <div className="grid grid-cols-12 px-4 justify-between items-center" style={{backgroundColor}}>
+    <div className="relative grid grid-cols-12 px-4 justify-between items-center z-30" style={{backgroundColor}}>
       <div className="grid grid-cols-12 col-span-12 col-start-1 px-4 py-4 justify-between items-center">
         <div onClick={()=>navigate("/")} className="flex flex-col mr-4 cursor-pointer">
           <img
