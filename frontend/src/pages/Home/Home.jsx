@@ -13,8 +13,8 @@ const Home = () => {
     <div>
       <div className={styles.container}>
         <div className={styles.cover}>
-          <div className={styles.coverOverlay}></div>
           <Navbar />
+          <div className={styles.coverOverlay}></div>
           <HeroSection />
         </div>
       </div>

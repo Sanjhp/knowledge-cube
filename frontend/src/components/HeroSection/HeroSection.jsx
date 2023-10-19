@@ -5,7 +5,7 @@ import courses from '../../assets/courses.svg';
 import expert from '../../assets/expert.svg';
 function HeroSection() {
   return (
-    <div className={HSstyles.herosection}>
+    <div className="text-align z-0">
 
       <section className={HSstyles.hero}>
         <h1 className={HSstyles.heading}>To expand your career, get in touch with us.</h1>
