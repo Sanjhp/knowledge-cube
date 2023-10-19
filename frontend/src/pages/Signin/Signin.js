@@ -16,12 +16,11 @@ const validateSchema = yup.object().shape({
     .required("Email is required"),
   password: yup
     .string()
-    .min(8, "Password should be a minimum of 8 characters")
+    .min(6, "Password should be a minimum of 6 characters")
     .required("Password is required"),
 });
 
 function LoginPage() {
-  const [roleName, setRoleName] = useState("");
   const navigate = useNavigate();
   const {
     register,
@@ -39,21 +38,16 @@ function LoginPage() {
     rightContainer,
     rightContainerContent,
     loginCard,
-    errorMessage,
     signupLink,
     forgotPasswordLink,
     button,
     inputContainer,
     label,
     input,
-    rememberMe,
-    rememberMeLabel,
-    rememberMeCheckbox,
     loginOptions,
   } = styles;
 
   const [loading, setLoading] = useState(false);
-  const [role, setRole] = useState("");
 
   const getRoleNameFromId = (roleId) => {
     const roleMappings = {
@@ -67,8 +61,6 @@ function LoginPage() {
   const RoleFunction = async (roleId) => {
     try {
       const roleName = getRoleNameFromId(roleId);
-      console.log("Role Name:", roleName);
-
       return roleName;
     } catch (error) {
       console.log("error :>> ", error);
@@ -83,7 +75,6 @@ function LoginPage() {
         `${process.env.REACT_APP_BASE_URL}/users/login`,
         data
       );
-      console.log("res :>> ", res.data.token);
       const token = res?.data?.token;
       Cookies.set("token", token);
       const id = res?.data.user?._id;
@@ -110,10 +101,8 @@ function LoginPage() {
       setLoading(false);
       if (error?.response?.data?.message) {
         toast.error(error?.response?.data?.message);
-        console.log("err :>> ", error);
       } else {
         toast.error("An error occured!");
-        console.log("err :>> ", error);
       }
     }
   };
@@ -189,9 +178,6 @@ function LoginPage() {
             </form>
             <div className={loginOptions} style={{ color: "#000000" }}>
               <p>
-                {/* {!forgotPasswordMode ? (
-                  "Don't have an account? "
-                ) : ( */}
                 <span>
                   <Link
                     className={signupLink}
@@ -202,7 +188,7 @@ function LoginPage() {
                   <br />
                   <br />
                 </span>
-                {/* )} */}
+
                 <Link to="/register" className={signupLink}>
                   Sign up
                 </Link>

@@ -7,6 +7,7 @@ import {
   UserRegistration,
   forgotPassword,
   resetPassword,
+  updateBio,
 } from "../Controller/userController.js";
 import {
   validateForgotPassword,
@@ -30,5 +31,5 @@ router.post("/forgot-password", validateForgotPassword, forgotPassword);
 
 router.post("/reset-password", validateResetPassword, resetPassword);
 
-
+router.put("/update-bio",auth, updateBio)
 export default router;

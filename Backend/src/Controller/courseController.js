@@ -4,6 +4,7 @@ import Course from "../Model/courseModel.js";
 import Category from "../Model/categoryModel.js";
 import Review from "../Model/reviewModel.js";
 import Enrollment from "../Model/enrollmentModel.js";
+import CourseFilter from "../Model/courseFilterModel.js";
 import { StatusCodes } from "http-status-codes";
 
 // API endpoint for uploading a course
@@ -18,7 +19,7 @@ export const UploadCourse = async (req, res) => {
       creatorId,
       categoryId,
     } = req.body;
-    const date = new Date()
+    const date = new Date();
     console.log("req.body :>> ", req.body);
     const coverImage = req.files["coverImage"]
       ? req.files["coverImage"][0].path
@@ -29,10 +30,11 @@ export const UploadCourse = async (req, res) => {
     const assessmentPdf = req.files["assessmentPdf"]
       ? req.files["assessmentPdf"][0].path
       : null;
-    console.log('originalName', req.files["coverImage"][0].originalname)
-    const originalName = req.files["coverImage"][0].originalname.split(' ').join('-')
-    console.log('originalName :>> ', originalName);
-    
+    console.log("originalName", req.files["coverImage"][0].originalname);
+    const originalName = req.files["coverImage"][0].originalname
+      .split(" ")
+      .join("-");
+    console.log("originalName :>> ", originalName);
 
     if (
       !coverImage ||
@@ -64,7 +66,6 @@ export const UploadCourse = async (req, res) => {
         message: "Only creators are allowed to upload courses.",
       });
     }
-
     const course = await Course.create({
       title,
       coverImage,
@@ -137,7 +138,29 @@ export const UploadChapterById = async (req, res) => {
 // get all courses
 export const GetAllCourses = async (req, res) => {
   try {
-    const courses = await Course.find()
+    const { searchQuery, priceRange, category } = req.query;
+
+    let filters = {};
+
+    if (searchQuery) {
+      filters.title = { $regex: searchQuery, $options: "i" };
+    }
+
+    if (req.query.priceRange) {
+      const [minPrice, maxPrice] = priceRange.split("-");
+
+      if (minPrice && maxPrice) {
+        filters.price = { $gte: parseInt(minPrice), $lte: parseInt(maxPrice) };
+      } else if (minPrice) {
+        filters.price = { $gte: parseInt(minPrice) };
+      } else if (maxPrice) {
+        filters.price = { $lte: parseInt(maxPrice) };
+      }
+    }
+    if (req.query.category) {
+      filters.category = req.query.category;
+    }
+    const courses = await Course.find(filters)
       .populate("category")
       .populate({
         path: "chapters",
@@ -221,6 +244,58 @@ export const GetCourseById = async (req, res) => {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
       message: "Failed to retrieve the course",
+      error: error.message,
+    });
+  }
+};
+
+export const GetCoursesByCreator = async (req, res) => {
+  try {
+    const creatorId = req.params.creatorId;
+    const searchQuery = req.query.searchQuery;
+    let courses;
+    if (searchQuery) {
+      // If search query is provided, filter courses based on the query
+      courses = await Course.find({
+        creatorId,
+        $or: [
+          { title: { $regex: searchQuery, $options: "i" } }, // Case-insensitive search for course title
+          { description: { $regex: searchQuery, $options: "i" } }, // Case-insensitive search for course description
+        ],
+      });
+    } else {
+      courses = await Course.find({ creatorId })
+        .populate({
+          path: "chapters",
+          model: "Chapter",
+        })
+        .populate({
+          path: "enrollments",
+          model: "Enrollment",
+        })
+        .populate({
+          path: "reviews",
+          model: "Review",
+        })
+        .populate("category")
+        .populate({
+          path: "user",
+          model: "User",
+          populate: {
+            path: "role",
+            model: "Role",
+          },
+        });
+    }
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      courses: courses,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: "Failed to retrieve courses by creator",
       error: error.message,
     });
   }
