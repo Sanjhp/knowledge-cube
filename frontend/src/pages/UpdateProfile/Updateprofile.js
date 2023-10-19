@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState, useEffect } from "react";
 import styles from "./Updateprofile.module.css";
 import axios from "axios";
@@ -10,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
+import Navbar from "../../components/Navbar/Navbar";
 
 const UpdateUser = () => {
   const validateSchema = yup.object().shape({
@@ -56,7 +55,6 @@ const UpdateUser = () => {
   }, [accessToken]);
 
   const handleGetUser = async (e) => {
-    // e.preventDefault();
     if (id) {
       try {
         setLoading(true);
@@ -98,6 +96,7 @@ const UpdateUser = () => {
   }, [id]);
 
   const handleProfileUpdate = async (value) => {
+    console.log('hello :>> ');
     console.log("value :>> ", value);
     try {
       setLoading(true);
@@ -136,6 +135,7 @@ const UpdateUser = () => {
   };
   return (
     <>
+    <Navbar/>
       <div className={styles.container}>
         <div className={styles.signupCard}>
           <form onSubmit={handleSubmit(handleProfileUpdate)}>
@@ -242,15 +242,15 @@ const UpdateUser = () => {
                 <p className={styles.errorMessage}>{errors.password.message}</p>
               )}
             </div>
-            {/* Error message */}
-            {error && <p className={styles.error}>{error}</p>}
-            <div
-              className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-128 cursor-pointer"
+          
+            <button
+              className=" w-[335px]  bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solidcursor-pointer"
               type="submit"
             >
               {loading && <div className="loader"></div>}
               Update
-            </div>
+            </button>
+
           </form>
         </div>
 

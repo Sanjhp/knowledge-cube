@@ -7,6 +7,7 @@ import {
   UploadChapterById,
   GetCourseById,
   GetChapterById,
+  GetCoursesByCreator
 } from "../Controller/courseController.js";
 
 const router = express.Router();
@@ -20,6 +21,8 @@ router.get("/courses", GetAllCourses);
 router.get("/courses/:courseId", GetCourseById);
 //get single chapter by id 
 router.get("/chapters/:chapterId", GetChapterById);
+//get course by creatorId
+router.get('/courses/creator/:creatorId', GetCoursesByCreator);
 
 
 

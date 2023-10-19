@@ -1,89 +1,168 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CreatorNavbar from "../components/Navbar/CreatorNavbar";
+import Cookies from "universal-cookie";
+import axios from "axios";
+import Modal from "react-modal";
+import "./global.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CreaterDashboard = () => {
-  const stats = [
-    {
-      star: "1.4k",
-    },
-  ];
-  const card = [
-    {
-      thumbnail:
-        "https://plus.unsplash.com/premium_photo-1668638804974-b0053235b8f7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=900&q=60",
-      course: "Inroduction to Python Programming",
-      enrollments: "124",
-      ratings: "4.50",
-    },
+  const [token, setToken] = useState(null);
+  const [userId, setUserId] = useState(null);
+  console.log("userId :>> ", userId);
+  const [userName, setUserName] = useState("");
+  const [courses, setCourses] = useState([]);
+  const [userDetails, setUserDetails] = useState({});
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [bio, setBio] = useState("");
+  const [isLoading, setLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
-    {
-      thumbnail:
-        "https://plus.unsplash.com/premium_photo-1668638804974-b0053235b8f7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=900&q=60",
-      course: "Introduction to Java",
-      enrollments: "124",
-      ratings: "4.50",
-    },
+  useEffect(() => {
+    const cookies = new Cookies();
+    const token = cookies.get("token");
+    const userName = cookies.get("userName");
 
-    {
-      thumbnail:
-        "https://plus.unsplash.com/premium_photo-1668638804974-b0053235b8f7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=900&q=60",
-      course: "Introduction to C++",
-      enrollments: "124",
-      ratings: "4.50",
-    },
+    if (token) {
+      const parts = token.split(".");
+      const payload = JSON.parse(atob(parts[1]));
+      const userId = payload._id;
+      setUserId(userId);
+      setToken(token);
+      setUserName(userName);
+    }
+  }, [token]);
 
-    {
-      thumbnail:
-        "https://plus.unsplash.com/premium_photo-1668638804974-b0053235b8f7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=900&q=60",
-      course: "Data Structure and Algorithm",
-      enrollments: "124",
-      ratings: "4.50",
+  const getAllCreatorCourses = async () => {
+  if (userId) {
+    try {
+      setLoading(true);
+      let url;
+      if (searchQuery) {
+        url = `${process.env.REACT_APP_BASE_URL}/course-creator/courses/creator/${userId}?searchQuery=${searchQuery}`;
+      } else {
+        url = `${process.env.REACT_APP_BASE_URL}/course-creator/courses/creator/${userId}`;
+      }
+      let res = await axios.get(url);
+      setCourses(res?.data?.courses);
+      setLoading(false);
+      console.log("res :>> ", res?.data);
+    } catch (error) {
+      setLoading(false);
+      console.log("error :>> ", error);
+    }
+  }
+};
+
+
+  const filterCourses = () => {
+    const filteredCourses = courses.filter((course) =>
+      course.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setCourses(filteredCourses);
+  };
+
+  useEffect(() => {
+    filterCourses();
+  }, [searchQuery]);
+
+  const getUser = async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/users/get-user/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("user :>> ", res?.data?.data);
+      setUserDetails(res?.data?.data);
+    } catch (error) {
+      console.log("error :>> ", error);
+    }
+  };
+
+  const updateBioFunction = async (data) => {
+    try {
+      const res = await axios.put(
+        `${process.env.REACT_APP_BASE_URL}/users/update-bio`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("res++ :>> ", res);
+      closeModal();
+      getUser()
+      toast.success(res.data.message)
+    
+    } catch (error) {
+      console.log("error :>> ", error);
+    }
+  };
+
+  useEffect(() => {
+    if (userId) {
+      getAllCreatorCourses();
+      getUser();
+    }
+  }, [userId]);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      width: "30%",
+      height: "300px",
+      padding: "10px",
     },
-  ];
+  };
   return (
     <div>
       <CreatorNavbar />
       <div className="min-[300px]:grid min-[300px]:grid-rows-1 min-[300px]:justify-center min-[300px]:items-center max-[639px]:grid max-[639px]:grid-rows-1 max-[639px]:justify-center max-[639px]:items-center sm:grid sm:grid-rows-1 sm:justify-center sm:items-center md:grid md:grid-rows-1 md:justify-center md:items-center lg:grid lg:grid-cols-12 lg:justify-center lg:items-center">
         <div className="min-[300px]:grid min-[300px]:grid-rows-1 min-[300px]:justify-center min-[300px]:items-center max-[639px]:grid max-[639px]:grid-rows-1 max-[639px]:justify-center max-[639px]:items-center sm:grid sm:grid-rows-1 sm:justify-center sm:items-center md:grid md:grid-rows-1 md:justify-center md:items-center lg:grid lg:grid-cols-12 lg:justify-center lg:items-center gap-8 pt-8 px-4 min-[300px]:col-start-3 lg:col-start-1 min-[300px]:col-span-4 max-[639px]:col-span-4 sm:col-span-10 md:col-span-10 lg:col-span-10">
-          <div className="grid min-[300px]:col-span-4 max-[640px]:col-span-4 sm:col-span-3 md:col-span-3 lg:col-span-2 bg-white shadow-gray-400 shadow-2xl px-2 py-2">
-            <img
-              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60"
-              className="w-fill"
-            />
-          </div>
           <div className="grid grid-cols-12 col-span-9 justify-center items-center">
             <div className="grid grid-cols-12 col-span-12 justify-center items-center">
               <div className="grid grid-rows-2 col-start-1 col-span-10">
-                <span className="text-3xl col-span-10">Jenna Ortego</span>
-                <span className="text-sm text-gray-300 col-span-3">
-                  Art Illustrator
-                </span>
+                <span className="text-3xl col-span-10">{userName}</span>
               </div>
             </div>
 
             <div className="grid grid-cols-12 col-span-12">
               <span className="text-sm text-gray-400 col-span-12">
-                Exercitation est consectetur amet Lorem adipisicing mollit
-                reprehenderit excepteur culpa voluptate labore nulla. Magna
-                veniam sunt nisi sint reprehenderit aute quis.Qui velit irure
-                adipisicing duis. Exercitation est consectetur amet Lorem
-                adipisicing mollit reprehenderit excepteur culpa voluptate
-                labore nulla. Magna veniam sunt nisi sint reprehenderit aute
-                quis.Qui velit irure adipisicing duis.
+                {userDetails?.bio === "" ? (
+                  <h2> Update Your Bio...</h2>
+                ) : (
+                  userDetails?.bio
+                )}
               </span>
-              <div className="col-span-8">
-                {stats.map((element) => (
-                  <div className="grid grid-cols-12 col-span-8">
-                    <span className="flex col-span-3 col-start-1">
-                      <i className="ri-star-line text-yellow-500 text-xl"></i>{" "}
-                      {element.star}
-                    </span>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
+        </div>
+        <div>
+          <button
+            className="bg-blue-500 text-white p-2 rounded"
+            onClick={openModal}
+          >
+            Update Your Bio
+          </button>
         </div>
         <div className="grid grid-cols-12 col-span-12 mt-16 px-16 py-8 border-t-[1px] border-gray-100">
           <span className="flex col-span-10 col-start-1">
@@ -91,9 +170,14 @@ const CreaterDashboard = () => {
               id="search"
               type="search"
               placeholder="search here..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="min-[300px]:hidden max-[639px]:hidden sm:flex md:flex lg:flex bg-white text-gray-500 font-thin px-2 py-2 hover:shadow-[0_0px_12px_12px_rgba(0,0,0,0.2)] rounded-md border-gray-100 shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] text-xs w-[300px]"
             />
-            <i className="ri-search-line min-[300px]:-ml-8 lg:-ml-2 bg-black px-4 py-2 min-[300px]:rounded-sm max-[639px]:rounded-sm sm:rounded-tr-md md:rounded-tr-md lg:rounded-tr-md sm:rounded-br-md md:rounded-br-md lg:rounded-br-md text-white shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] hover:bg-gray-400 hover:text-black text-xs"></i>
+            <i
+              onClick={getAllCreatorCourses}
+              className="ri-search-line min-[300px]:-ml-8 lg:-ml-2 bg-black px-4 py-2 min-[300px]:rounded-sm max-[639px]:rounded-sm sm:rounded-tr-md md:rounded-tr-md lg:rounded-tr-md sm:rounded-br-md md:rounded-br-md lg:rounded-br-md text-white shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] hover:bg-gray-400 hover:text-black text-xs"
+            ></i>
           </span>
 
           <div className="bg-black border-black border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-black hover:border-black hover:border-2 hover:border-solid w-32 min-[300px]:-ml-8 sm:ml-0">
@@ -106,51 +190,90 @@ const CreaterDashboard = () => {
           </div>
         </div>
         <div className="min-[300px]:grid min-[639px]:grid-rows-1 lg:grid lg:grid-cols-12 col-span-12 my-4 gap-4 px-16">
-          {card.map((element) => (
-            <div className="min-[300px]:grid min-[639px]:grid-rows-1 lg:grid lg:grid-cols-12 col-span-12 shadow-gray-300 shadow-sm rounded-sm px-2 py-2 justify-center items-center gap-4">
-              <div className="grid min-[300px]:col-span-10 lg:col-span-1">
-                <img
-                  src={element.thumbnail}
-                  className="min-[300px]:w-fill lg:w-fill rounded-md"
-                />
-              </div>
-              <div className="grid min-[300px]:grid-rows-1 min-[300px]:col-span-4 lg:grid-cols-12 lg:col-span-12">
-                <div className="grid min-[300px]:grid-cols-4 lg:grid-rows-2 col-span-4 items-center gap-8">
-                  <span className="text-xl font-semibold col-span-6">
-                    {element.course}
-                  </span>
-                  <div className="grid grid-cols-4 col-span-4 gap-4 items-center">
-                    <span className="bg-purple-600 text-white px-[1px] py-[1px] text-xs col-span-1 uppercase text-center rounded-full min-[300px]:col-span-3 sm:col-span-1">
-                      live
+          {isLoading && <div class="loading">Loading&#8230;</div>}
+
+          {courses &&
+            courses.length > 0 &&
+            courses?.map((course) => (
+              <div
+                key={course._id}
+                className="min-[300px]:grid min-[639px]:grid-rows-1 lg:grid lg:grid-cols-12 col-span-12 shadow-gray-300 shadow-sm rounded-sm px-2 py-2 justify-center items-center gap-4"
+              >
+                <div className="grid min-[300px]:col-span-10 lg:col-span-1">
+                  <img
+                    src={`http://localhost:5000/${course.coverImage}`}
+                    className="min-[300px]:w-fill lg:w-fill rounded-md"
+                  />
+                </div>
+                <div className="grid min-[300px]:grid-rows-1 min-[300px]:col-span-4 lg:grid-cols-12 lg:col-span-12">
+                  <div className="grid min-[300px]:grid-cols-4 lg:grid-rows-2 col-span-4 items-center gap-8">
+                    <span className="text-xl font-semibold col-span-6">
+                      {course?.title}
                     </span>
-                    <span className="col-span-3 text-base min-[300px]:hidden">
-                      only for your organisation
+                    <span className="text-md col-span-6">
+                      {course?.category?.name}
                     </span>
+                    <span>Rs. {course.price}</span>
+                    <span>{course.language}</span>
+                    <div className="grid grid-cols-4 col-span-4 gap-4 items-center">
+                      <span className="bg-purple-600 text-white px-[1px] py-[1px] text-xs col-span-1 uppercase text-center rounded-full min-[300px]:col-span-3 sm:col-span-1">
+                        live
+                      </span>
+                    </div>
                   </div>
                 </div>
-                <div className="grid justify-center items-center col-span-2">
-                  <div className="text-4xl">{element.enrollments}</div>
-                  <span className="text-sm font-thin">
-                    enrollments this month
-                  </span>
-                </div>
-                <div className="grid justify-center items-center col-span-2">
-                  <div className="text-4xl">{element.ratings}</div>
-
-                  <div className="grid grid-cols-4 col-span-4">
-                    <i className="ri-star-fill text-lg text-yellow-300"></i>
-                    <i className="ri-star-fill text-lg text-yellow-300"></i>
-                    <i className="ri-star-fill text-lg text-yellow-300"></i>
-                  </div>
-
-                  <span className="text-sm font-thin">ratings</span>
-                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
+
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Buy Stock Modal"
+        ariaHideApp={false}
+      >
+        <div className="">
+          <div className="bg-blue-500">
+            <div className="bg-blue-500 p-2 rounded-t-lg">
+              <h2 className="text-center text-white font-bold">
+                Update your Bio
+              </h2>
+            </div>
+          </div>
+          <div className="mt-5">
+            <textarea
+              type="text"
+              className="w-full border border-gray-400 p-3 rounded"
+              rows="4"
+              placeholder="Enter your bio here..."
+              name="bio"
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+            />
+          </div>
+
+          <div className="flex mt-4">
+            <button
+              className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded mr-2"
+              onClick={() => updateBioFunction({ bio })}
+            >
+              Submit
+            </button>
+
+            <button
+              className="bg-red-800 hover:bg-red-900 text-white py-2 px-4 rounded"
+              onClick={closeModal}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </Modal>
+      <ToastContainer/>
     </div>
+  
   );
 };
 

@@ -28,12 +28,9 @@ function SignupPage() {
       .required("Email is required"),
     password: yup
       .string()
-      .min(8, "Password should be a minimum of 8 characters")
+      .min(6, "Password should be a minimum of 6 characters")
       .required("Password is required"),
-    // role: yup
-    //   .string()
-    //   .oneOf(["Learner", "Creator"], "Invalid role")
-    //   .required("Role is required"),
+    
   });
 
   const navigate = useNavigate();
@@ -45,7 +42,6 @@ function SignupPage() {
     resolver: yupResolver(validateSchema),
   });
   const [role, setRole] = useState([]);
-  console.log("role :>> ", role);
   const [loading, setLoading] = useState(false);
 
   const GetRole = async () => {
@@ -63,7 +59,6 @@ function SignupPage() {
   }, []);
 
   const handleRegister = async (data) => {
-    console.log("data :>> ", data);
     const formattedBirthDate = new Date(data.dob).toISOString().split("T")[0];
     const formattedData = { ...data, dob: formattedBirthDate };
     try {
