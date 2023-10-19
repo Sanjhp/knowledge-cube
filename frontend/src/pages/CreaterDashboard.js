@@ -36,26 +36,25 @@ const CreaterDashboard = () => {
   }, [token]);
 
   const getAllCreatorCourses = async () => {
-  if (userId) {
-    try {
-      setLoading(true);
-      let url;
-      if (searchQuery) {
-        url = `${process.env.REACT_APP_BASE_URL}/course-creator/courses/creator/${userId}?searchQuery=${searchQuery}`;
-      } else {
-        url = `${process.env.REACT_APP_BASE_URL}/course-creator/courses/creator/${userId}`;
+    if (userId) {
+      try {
+        setLoading(true);
+        let url;
+        if (searchQuery) {
+          url = `${process.env.REACT_APP_BASE_URL}/course-creator/courses/creator/${userId}?searchQuery=${searchQuery}`;
+        } else {
+          url = `${process.env.REACT_APP_BASE_URL}/course-creator/courses/creator/${userId}`;
+        }
+        let res = await axios.get(url);
+        setCourses(res?.data?.courses);
+        setLoading(false);
+        console.log("res :>> ", res?.data);
+      } catch (error) {
+        setLoading(false);
+        console.log("error :>> ", error);
       }
-      let res = await axios.get(url);
-      setCourses(res?.data?.courses);
-      setLoading(false);
-      console.log("res :>> ", res?.data);
-    } catch (error) {
-      setLoading(false);
-      console.log("error :>> ", error);
     }
-  }
-};
-
+  };
 
   const filterCourses = () => {
     const filteredCourses = courses.filter((course) =>
@@ -98,9 +97,8 @@ const CreaterDashboard = () => {
       );
       console.log("res++ :>> ", res);
       closeModal();
-      getUser()
-      toast.success(res.data.message)
-    
+      getUser();
+      toast.success(res.data.message);
     } catch (error) {
       console.log("error :>> ", error);
     }
@@ -172,7 +170,7 @@ const CreaterDashboard = () => {
               placeholder="search here..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="min-[300px]:hidden max-[639px]:hidden sm:flex md:flex lg:flex bg-white text-gray-500 font-thin px-2 py-2 hover:shadow-[0_0px_12px_12px_rgba(0,0,0,0.2)] rounded-md border-gray-100 shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] text-xs w-[300px]"
+              className="min-[300px]:hidden max-[639px]:hidden sm:flex md:flex lg:flex bg-white text-black-500 font-thin px-2 py-2 hover:shadow-[0_0px_12px_12px_rgba(0,0,0,0.2)] rounded-md border-gray-100 shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] text-xs w-[300px]"
             />
             <i
               onClick={getAllCreatorCourses}
@@ -271,9 +269,8 @@ const CreaterDashboard = () => {
           </div>
         </div>
       </Modal>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
-  
   );
 };
 

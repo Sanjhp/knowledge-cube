@@ -30,7 +30,6 @@ function SignupPage() {
       .string()
       .min(6, "Password should be a minimum of 6 characters")
       .required("Password is required"),
-    
   });
 
   const navigate = useNavigate();
@@ -102,10 +101,8 @@ function SignupPage() {
         </div>
         <div className={styles.rightContainer}>
           <div className={styles.rightContainerContent}>
-            <h2>Hello! Welcome back.</h2>
-            <p>
-              Log in with your data that you entered during your registration.
-            </p>
+            <h2>Hello! Welcome.</h2>
+            <p>Register Yourself</p>
           </div>
           <div className={styles.signupCard}>
             <form onSubmit={handleSubmit(handleRegister)}>
