@@ -2,6 +2,7 @@ import express from "express";
 import auth from "../middleware/auth.js";
 import {
   GetUser,
+  GetUserDetails,
   UpdateProfile,
   UserLogin,
   UserRegistration,
@@ -24,6 +25,8 @@ router.post("/register", validateRegister, UserRegistration);
 router.post("/login", validateLogin, UserLogin);
 
 router.get("/get-user/:id", auth, GetUser);
+
+router.get("/user-details", GetUserDetails)
 
 router.put("/update-user/:id", auth, validateProfile, UpdateProfile);
 

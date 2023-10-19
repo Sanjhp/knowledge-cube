@@ -112,6 +112,44 @@ export const GetUser = async (req, res) => {
   }
 };
 
+//get user details 
+
+export const GetUserDetails = async (req, res) => {
+  try {
+    const userId = req.query.userId;
+
+   
+    if (!userId) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ success: false, message: "userId parameter is required" });
+    }
+
+    const user = await UserModel.findOne({ _id: userId });
+
+    // Check if user is found
+    if (!user) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ success: false, message: "User not found" });
+    }
+
+    // Return user details
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: "Fetched user successfully!",
+      data: user,
+    });
+  } catch (error) {
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ success: false, error: error.message });
+  }
+};
+
+
+
+
 export const UpdateProfile = async (req, res) => {
   try {
     const errors = validationResult(req);

@@ -4,10 +4,14 @@ import CreatorNavbar from "../components/Navbar/CreatorNavbar";
 import Cookies from "universal-cookie";
 import axios from "axios";
 import Modal from "react-modal";
+import "./global.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CreaterDashboard = () => {
   const [token, setToken] = useState(null);
   const [userId, setUserId] = useState(null);
+  console.log("userId :>> ", userId);
   const [userName, setUserName] = useState("");
   const [courses, setCourses] = useState([]);
   const [userDetails, setUserDetails] = useState({});
@@ -32,11 +36,16 @@ const CreaterDashboard = () => {
   }, [token]);
 
   const getAllCreatorCourses = async () => {
+  if (userId) {
     try {
       setLoading(true);
-      const res = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/course-creator/courses/creator/${userId}`
-      );
+      let url;
+      if (searchQuery) {
+        url = `${process.env.REACT_APP_BASE_URL}/course-creator/courses/creator/${userId}?searchQuery=${searchQuery}`;
+      } else {
+        url = `${process.env.REACT_APP_BASE_URL}/course-creator/courses/creator/${userId}`;
+      }
+      let res = await axios.get(url);
       setCourses(res?.data?.courses);
       setLoading(false);
       console.log("res :>> ", res?.data);
@@ -44,24 +53,25 @@ const CreaterDashboard = () => {
       setLoading(false);
       console.log("error :>> ", error);
     }
-  };
+  }
+};
+
 
   const filterCourses = () => {
-    const filteredCourses = courses.filter(course =>
+    const filteredCourses = courses.filter((course) =>
       course.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setCourses(filteredCourses);
   };
-  
+
   useEffect(() => {
     filterCourses();
   }, [searchQuery]);
-  
 
   const getUser = async () => {
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/users/get-user/${userId}?searchQuery=${searchQuery}`,
+        `${process.env.REACT_APP_BASE_URL}/users/get-user/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -88,14 +98,19 @@ const CreaterDashboard = () => {
       );
       console.log("res++ :>> ", res);
       closeModal();
+      getUser()
+      toast.success(res.data.message)
+    
     } catch (error) {
       console.log("error :>> ", error);
     }
   };
 
   useEffect(() => {
-    getAllCreatorCourses();
-    getUser();
+    if (userId) {
+      getAllCreatorCourses();
+      getUser();
+    }
   }, [userId]);
 
   function openModal() {
@@ -142,7 +157,6 @@ const CreaterDashboard = () => {
           </div>
         </div>
         <div>
-          {" "}
           <button
             className="bg-blue-500 text-white p-2 rounded"
             onClick={openModal}
@@ -160,7 +174,10 @@ const CreaterDashboard = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="min-[300px]:hidden max-[639px]:hidden sm:flex md:flex lg:flex bg-white text-gray-500 font-thin px-2 py-2 hover:shadow-[0_0px_12px_12px_rgba(0,0,0,0.2)] rounded-md border-gray-100 shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] text-xs w-[300px]"
             />
-            <i onClick={getAllCreatorCourses} className="ri-search-line min-[300px]:-ml-8 lg:-ml-2 bg-black px-4 py-2 min-[300px]:rounded-sm max-[639px]:rounded-sm sm:rounded-tr-md md:rounded-tr-md lg:rounded-tr-md sm:rounded-br-md md:rounded-br-md lg:rounded-br-md text-white shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] hover:bg-gray-400 hover:text-black text-xs"></i>
+            <i
+              onClick={getAllCreatorCourses}
+              className="ri-search-line min-[300px]:-ml-8 lg:-ml-2 bg-black px-4 py-2 min-[300px]:rounded-sm max-[639px]:rounded-sm sm:rounded-tr-md md:rounded-tr-md lg:rounded-tr-md sm:rounded-br-md md:rounded-br-md lg:rounded-br-md text-white shadow-[0_2px_10px_10px_rgba(0,0,0,0.1)] hover:bg-gray-400 hover:text-black text-xs"
+            ></i>
           </span>
 
           <div className="bg-black border-black border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-black hover:border-black hover:border-2 hover:border-solid w-32 min-[300px]:-ml-8 sm:ml-0">
@@ -173,14 +190,10 @@ const CreaterDashboard = () => {
           </div>
         </div>
         <div className="min-[300px]:grid min-[639px]:grid-rows-1 lg:grid lg:grid-cols-12 col-span-12 my-4 gap-4 px-16">
-          {isLoading && (
-            <div className="loader loader-1">
-              <div className="loader-outter"></div>
-              <div className="loader-inner"></div>
-            </div>
-          )}
+          {isLoading && <div class="loading">Loading&#8230;</div>}
 
-          {courses && courses.length > 0 ? (
+          {courses &&
+            courses.length > 0 &&
             courses?.map((course) => (
               <div
                 key={course._id}
@@ -210,12 +223,7 @@ const CreaterDashboard = () => {
                   </div>
                 </div>
               </div>
-            ))
-          ) : (
-            <div className="col-span-12 text-center text-black text-2xl font-semibold">
-              You haven't created any course yet!!
-            </div>
-          )}
+            ))}
         </div>
       </div>
 
@@ -263,7 +271,9 @@ const CreaterDashboard = () => {
           </div>
         </div>
       </Modal>
+      <ToastContainer/>
     </div>
+  
   );
 };
 
