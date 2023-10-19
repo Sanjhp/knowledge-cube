@@ -82,7 +82,7 @@ const ForgetPassword = () => {
                 )}
               </div>
               <button
-                className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-128 cursor-pointer"
+                className="flex bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-128 cursor-pointer"
                 type="submit"
               >
                 {loading && <div className="loader"></div>}

@@ -117,8 +117,6 @@ export const GetUser = async (req, res) => {
 export const GetUserDetails = async (req, res) => {
   try {
     const userId = req.query.userId;
-
-   
     if (!userId) {
       return res
         .status(StatusCodes.BAD_REQUEST)

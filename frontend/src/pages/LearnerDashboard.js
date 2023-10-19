@@ -1,15 +1,34 @@
 import { React, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import LearnerNavbar from "../components/Navbar/LearnerNavbar";
-import Carousal from "../components/Carousal";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { Document, Page } from "react-pdf";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 const LearnerDashboard = () => {
   const greeting = "Good Morning";
   const name = Cookies.get("userName");
   const user = name;
+
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3,
+      slidesToSlide: 3, // optional, default to 1.
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2,
+      slidesToSlide: 2, // optional, default to 1.
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+      slidesToSlide: 1, // optional, default to 1.
+    },
+  };
 
   const lessonSchedule = [
     {
@@ -44,13 +63,13 @@ const LearnerDashboard = () => {
   const [filled, setFilled] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
   const [isLoading, setLoading] = useState(false);
-//   const [userDetails, setUserDetails] = useState({});
-//   useEffect(()=>{
-//     const token = Cookies.get("token")
-//     const Id = Cookies.get("userId")
-// setUserId(Id)
-//   },[])
-  
+  //   const [userDetails, setUserDetails] = useState({});
+  //   useEffect(()=>{
+  //     const token = Cookies.get("token")
+  //     const Id = Cookies.get("userId")
+  // setUserId(Id)
+  //   },[])
+
   useEffect(() => {
     if (filled < 40 && isRunning) {
       setTimeout(() => setFilled((prev) => (prev += 1)), 50);
@@ -140,10 +159,36 @@ const LearnerDashboard = () => {
           )}
 
           {enrolledCourses && enrolledCourses.length > 0 ? (
-            enrolledCourses?.map((course) => (
-              <div className="col-span-12 z-10 ">
-                {/* <Carousal> */}
-                <div className="w-1/4">
+            <Carousel
+              additionalTransfrom={0}
+              arrows
+              autoPlaySpeed={3000}
+              centerMode={false}
+              className=""
+              containerClass="col-span-12"
+              dotListClass=""
+              draggable
+              focusOnSelect={false}
+              infinite={false}
+              itemClass=""
+              keyBoardControl
+              minimumTouchDrag={80}
+              pauseOnHover
+              renderArrowsWhenDisabled={false}
+              renderButtonGroupOutside={false}
+              renderDotsOutside={false}
+              responsive={responsive}
+              rewind={false}
+              rewindWithAnimation={false}
+              rtl={false}
+              shouldResetAutoplay
+              showDots={false}
+              sliderClass=""
+              slidesToSlide={2}
+              swipeable
+            >
+              {enrolledCourses?.map((course) => (
+                <div className="col-span-3">
                   <div
                     key={course._id}
                     className="flex flex-col col-span-6 px-4 mx-4 my-8 py-4 bg-white border-2 border-gray-100 shadow-2xl shadow-gray-400 rounded-md transition ease-in delay-0 hover:-translate-y-2 duration:1000 z-50"
@@ -191,101 +236,107 @@ const LearnerDashboard = () => {
                     </div>
                   </div>
                 </div>
-                {/* </Carousal> */}
-                <div className="grid grid-cols-12 col-span-12 gap-8">
-                  <div className="grid grid-cols-6 col-span-6 justify-between items-center px-8">
-                    <span className="col-span-5 col-start-1 text-2xl font-bold">
-                      Your Progress
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-6 col-span-5 justify-between items-center col-start-7 px-8">
-                    <span className="col-span-5 text-2xl font-bold">
-                      Download your Certificate
-                    </span>
-                  </div>
-                </div>
-                <div className="grid grid-cols-12 justify-between items-center col-span-12 gap-4 px-4 py-4">
-                  <div className="grid grid-cols-6 justify-between items-center col-span-6 h-[40vh] px-2 py-2 overflow-y-scroll overscroll-contain">
-                    {lessonSchedule.map((element) => (
-                      <div className="grid grid-cols-6 col-span-6">
-                        {/* <span className="text-xl font-semibold mb-4">{element.date}</span> */}
-                        <div className="grid grid-cols-6 col-span-6">
-                          {element.lessons.map((key, index) => (
-                            <div className="grid grid-cols-12 col-span-6 shadow-[#3484B4] shadow-sm transition delay-50 hover:-translate-y-2 duration-500 rounded-md px-4 py-4 mb-4">
-                              {element.lessons[index].map((elements) => (
-                                // <div className="grid">
-                                <div className="grid grid-cols-12 col-span-12">
-                                  <span className="font-semibold col-span-6">
-                                    course name {elements.courseName}
-                                  </span>
-                                  <span className="text-l font-semibold col-span-4 col-start-7">
-                                    <div className="relative overflow-hidden w-[200px] h-[25px] rounded-[5px] bg-slate-300">
-                                      <div
-                                        style={{
-                                          height: "100%",
-                                          width: `${filled}%`,
-                                          backgroundColor: "#3484B4",
-                                          transition: "width 0.5s",
-                                          padding: "5px",
-                                          fontWeight: "400",
-                                          fontSize: "12px",
-                                        }}
-                                      >
-                                        60%
-                                      </div>
-                                      <span
-                                        className="font-bold absolute l-[50%] t-[50%]
-                              origin-[-50%_50%]  text-black shadow-md shadow-gray-300"
-                                      >
-                                        {filled}%
-                                      </span>
-                                    </div>
-                                  </span>
-                                </div>
-                              ))}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="grid grid-cols-4 justify-between items-center col-span-6 h-[40vh] px-2 py-2 overflow-y-scroll overscroll-contain">
-                    {enrolledCourses?.map((course) => (
-                      <div
-                        key={course._id}
-                        className="grid grid-cols-4 justify-between items-center col-span-4"
-                      >
-                        <div className="grid grid-cols-6 col-span-6">
-                          <div className="grid grid-cols-12 col-span-6 shadow-[#3484B4] shadow-sm transition delay-50 hover:-translate-y-2 duration-500 rounded-md px-4 py-4 mb-4 bg-[#3484B4]">
-                            <div className="grid grid-cols-12 col-span-12">
-                              <span className="font-semibold text-white col-span-9">
-                                Certificate
-                              </span>
-                              <Link
-                                to=""
-                                onClick={() =>
-                                  downloadCertificate(course?.certificate)
-                                }
-                                className="text-sm font-extralight text-white col-span-4 col-start-10 hover:text-gray-200 hover:underline"
-                              >
-                                View Certificate
-                              </Link>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))
+                // {/* </Carousal> */}
+              ))}
+            </Carousel>
           ) : (
             <div className="col-span-12 text-center mt-5 text-black text-2xl font-semibold">
               You don't have any enrolled course yet!!
             </div>
           )}
         </div>
+        {enrolledCourses && enrolledCourses.length > 0 ? (
+          <div className="col-span-12 px-4">
+            <div className="grid grid-cols-12 col-span-12 gap-8">
+              <div className="grid grid-cols-6 col-span-6 justify-between items-center px-8">
+                <span className="col-span-5 col-start-1 text-2xl font-bold">
+                  Your Progress
+                </span>
+              </div>
+              <div className="grid grid-cols-6 col-span-5 justify-between items-center col-start-7 px-8">
+                <span className="col-span-5 text-2xl font-bold">
+                  Download your Certificate
+                </span>
+              </div>
+            </div>
+            <div className="grid grid-cols-12 justify-between items-center col-span-12 gap-8 px-4 py-4">
+              <div className="grid grid-cols-6 justify-between items-center col-span-6 h-[40vh] px-2 py-2 overflow-y-scroll overscroll-contain">
+                {lessonSchedule.map((element) => (
+                  <div className="grid grid-cols-6 col-span-6">
+                    {/* <span className="text-xl font-semibold mb-4">{element.date}</span> */}
+                    <div className="grid grid-cols-6 col-span-6">
+                      {element.lessons.map((key, index) => (
+                        <div className="grid grid-cols-12 col-span-6 shadow-[#3484B4] shadow-sm transition delay-50 hover:-translate-y-2 duration-500 rounded-md px-4 py-4 mb-4">
+                          {element.lessons[index].map((elements) => (
+                            // <div className="grid">
+                            <div className="grid grid-cols-12 col-span-12">
+                              <span className="font-semibold col-span-6">
+                                course name {elements.courseName}
+                              </span>
+                              <span className="text-l font-semibold col-span-4 col-start-7">
+                                <div className="relative overflow-hidden w-[200px] h-[25px] rounded-[5px] bg-slate-300">
+                                  <div
+                                    style={{
+                                      height: "100%",
+                                      width: `${filled}%`,
+                                      backgroundColor: "#3484B4",
+                                      transition: "width 0.5s",
+                                      padding: "5px",
+                                      fontWeight: "400",
+                                      fontSize: "12px",
+                                    }}
+                                  >
+                                    60%
+                                  </div>
+                                  <span
+                                    className="font-bold absolute l-[50%] t-[50%]
+                              origin-[-50%_50%]  text-black shadow-md shadow-gray-300"
+                                  >
+                                    {filled}%
+                                  </span>
+                                </div>
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="grid grid-cols-4 justify-between items-center col-span-6 h-[40vh] px-2 py-2 overflow-y-scroll overscroll-contain">
+                {enrolledCourses?.map((course) => (
+                  <div
+                    key={course._id}
+                    className="grid grid-cols-4 justify-between items-center col-span-4"
+                  >
+                    <div className="grid grid-cols-6 col-span-6">
+                      <div className="grid grid-cols-12 col-span-6 shadow-[#3484B4] shadow-sm transition delay-50 hover:-translate-y-2 duration-500 rounded-md px-4 py-4 mb-4 bg-[#3484B4]">
+                        <div className="grid grid-cols-12 col-span-12">
+                          <span className="font-semibold text-white col-span-9">
+                            Certificate
+                          </span>
+                          <Link
+                            to=""
+                            onClick={() =>
+                              downloadCertificate(course?.certificate)
+                            }
+                            className="text-sm font-extralight text-white col-span-4 col-start-10 hover:text-gray-200 hover:underline"
+                          >
+                            View Certificate
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
