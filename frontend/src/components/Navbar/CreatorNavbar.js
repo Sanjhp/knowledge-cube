@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const CreatorNavbar = ({backgroundColor}) => {
+const CreatorNavbar = ({backgroundColor , yes}) => {
   const navigate = useNavigate();
   const [accessToken, setAccessToken] = useState("");
   const [id, setId] = useState("");
@@ -41,7 +41,7 @@ const CreatorNavbar = ({backgroundColor}) => {
     window.location.reload()
   };
 
- 
+  backgroundColor = yes==="false"? "transparent":backgroundColor;
   return (
     <div className="grid grid-cols-12 px-4 justify-between items-center" style={{backgroundColor}}>
       <div className="grid grid-cols-12 col-span-12 col-start-1 px-4 py-4 justify-between items-center">

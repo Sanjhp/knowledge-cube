@@ -60,7 +60,7 @@ function Navbar() {
   }
 
   return (
-    <div>{roleName === "Learner" ? <LearnerNavbar backgroundColor="white" yes="true" /> : <CreatorNavbar backgroundColor="white"/>}</div>
+    <div>{roleName === "Learner" ? <LearnerNavbar backgroundColor="white" yes="true" /> : <CreatorNavbar backgroundColor="white" yes="true"/>}</div>
   );
 }
 
