@@ -6,12 +6,18 @@ import axios from "axios";
 import { Document, Page } from "react-pdf";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { FaLanguage } from "react-icons/fa";
 
 const LearnerDashboard = () => {
   const greeting = "Good Morning";
   const name = Cookies.get("userName");
-  const user = name;
-
+  // const user = name.charAt(0).toUpperCase()+ name.slice(1);
+  const capitalizedCreator = name
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word?.slice(1))
+    .join(" ");
+  const username = capitalizedCreator;
+  const user = username;
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -118,26 +124,13 @@ const LearnerDashboard = () => {
     link.click();
   };
 
-  // const getUser = async () => {
-  //   try {
-  //     const res = await axios.get(
-  //       `${process.env.REACT_APP_BASE_URL}/users/get-user/${userId}?searchQuery=${searchQuery}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     );
-  //     console.log("user :>> ", res?.data?.data);
-  //     setUserDetails(res?.data?.data);
-  //   } catch (error) {
-  //     console.log("error :>> ", error);
-  //   }
-  // };
+  const creatorDetails = async (creatorId) => {
+    // Make a request to the server endpoint with userId as a query parameter
+    const response = await fetch(`/api/getUserDetails?userId=${creatorId}`);
+    const data = await response.json();
+    return data;
+  };
 
-  // useEffect(() => {
-  //   getUser();
-  // }, [userId]);
   return (
     <div>
       <LearnerNavbar />
@@ -145,7 +138,7 @@ const LearnerDashboard = () => {
         <div className="grid grid-cols-10 justify-center items-center col-span-12 px-12 py-12 rounded-sm bg-blue-100 bg-opacity-50">
           <span className="grid grid-rows-2 col-span-6">
             <span className="text-3xl font-bold">My Courses</span>
-            <span className="text-xl font-extralight">
+            <span className="text-xl font-extralight mt-2">
               {greeting} {user} !
             </span>
           </span>
@@ -217,11 +210,16 @@ const LearnerDashboard = () => {
                         {course?.chapters?.length} lessons
                       </span>
                       <span className="flex items-center">
-                        <i className="ri-time-line  text-violet-500 mx-2 text-[25px]"></i>
+                        <FaLanguage className="fill-violet-500 h-10 w-10 text-[25px]" />
+                        {/* <i className="ri-time-line  text-violet-500 mx-2 text-[25px]"></i> */}
                         {course?.language}
                       </span>
                     </div>
-                    <span className="text-l font-extralight my-2">creator</span>
+                    <span className="text-l font-extralight my-2">
+                      {course?.enrollments?.length > 0
+                        ? `${course.enrollments.length} enrolled students`
+                        : ""}
+                    </span>
                     <span className="border-b-[1px] border-gray-200 my-4"></span>
                     <div className="flex justify-between items-center">
                       <span className="flex">Rs. {course.price}</span>

@@ -69,7 +69,9 @@ const UploadChapterByCourse = () => {
       {chapters.map((chapter, index) => (
         <div className="grid grid-rows-1 gap-2 px-4 py-2 items-center" key={index}>
           <div className="grid grid-cols-8 gap-8 rounded-lg shadow-md justify-center items-center px-6 py-6">
-            <div className="grid col-span-1">{`Chapter - ${chapter.number}`}</div>
+            {/* <div className="grid col-span-1">{`Chapter - ${chapter.number}`}</div> */}
+            <div className="grid col-span-1">Chapter -  {index+1}</div>
+
             <div className="grid col-span-2 ">
               <span className="text-gray-500">Title</span>
               <input

@@ -15,8 +15,7 @@ const AllCourses = () => {
       const categoryRes = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/category/get-categories`
       );
-      console.log("categoryRes :>> ", categoryRes.data.data);
-      setCateogy(categoryRes.data.data);
+      setCateogy(categoryRes?.data?.data);
     } catch (error) {
       console.log("error :>> ", error);
     }
@@ -39,30 +38,30 @@ const AllCourses = () => {
     try {
       let url = "http://localhost:5000/api/course-creator/courses";
       const queryParams = [];
-
+  
       if (searchQuery) {
         queryParams.push(`searchQuery=${searchQuery}`);
       }
-
+  
       if (selectedCategoryId && selectedCategoryId !== "select a category") {
         queryParams.push(`category=${selectedCategoryId}`);
       }
-
+  
       if (priceRange && priceRange !== "Select Price") {
         queryParams.push(`priceRange=${priceRange}`);
       }
-
+  
       if (queryParams.length > 0) {
         url += `?${queryParams.join("&")}`;
       }
-
+  
       const response = await axios.get(url);
-      console.log("Courses:", response.data);
       setCourses(response?.data?.courses);
     } catch (error) {
       console.error("Error fetching courses:", error);
     }
   };
+  
 
   useEffect(() => {
     getAllCourses();
@@ -152,8 +151,9 @@ const AllCourses = () => {
                     <div className="flex justify-between items-center ">
                       <span>
                         {course?.user?.name}
-                        Rs. {course?.price}
+                     
                       </span>
+                      <span>   Rs. {course?.price}</span>
                     </div>
                   </div>
                 </Link>
