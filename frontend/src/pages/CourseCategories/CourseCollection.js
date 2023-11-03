@@ -9,7 +9,6 @@ const CourseCollection = () => {
   const handleGetCategories= async()=>{
     try{
       const res=await axios.get(`${process.env.REACT_APP_BASE_URL}/category/get-categories`)
-      console.log('res :>> ', res?.data?.data);
       setCategories(res?.data?.data)
     }catch(error){
       console.log('error :>> ', error);
@@ -89,7 +88,7 @@ const CourseCollection = () => {
               to="/all-courses"
               className="flex flex-row justify-center items-center"
             >
-              See all Categories
+              See all Courses
             </Link>
           </div>
         </div>

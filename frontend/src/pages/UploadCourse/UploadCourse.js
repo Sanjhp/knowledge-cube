@@ -8,7 +8,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import Cookies from "js-cookie";
-// import Category from "../../../../Backend/src/Model/categoryModel";
 
 const validateSchema = yup.object().shape({
   title: yup.string().required("Title is required"),
@@ -23,12 +22,10 @@ const UploadCourse = () => {
   const [assessmentFile, setAssessmentFile] = useState(null);
   const [selectedImage, setSelectedImage] = useState();
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
-  console.log('selectedCategoryId :>> ', selectedCategoryId);
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState(null);
   const accessToken = Cookies.get("token");
   const [id, setId] = useState(null);
-  console.log("id :>> ", id);
 
   useEffect(() => {
     if (accessToken) {
@@ -37,7 +34,6 @@ const UploadCourse = () => {
       const userId = payload._id;
       setId(userId);
       setToken(accessToken);
-      console.log("User ID:", userId);
     } else {
       console.log("Token not found");
     }
@@ -46,7 +42,6 @@ const UploadCourse = () => {
   const handleImageUpload = (event) => {
     const coverImage = event.target.files[0];
     if (coverImage && coverImage.type.startsWith("image/")) {
-      console.log("Selected Cover Image:", coverImage);
       setSelectedImage(coverImage);
     } else {
       console.error("Invalid Image Format");
@@ -59,16 +54,6 @@ const UploadCourse = () => {
     }
   }, [selectedImage]);
 
-  const [val, setVal] = useState([]);
-  var count = 1;
-
-  function handleAdd() {
-    count = count + 1;
-    const abc = [...val, []];
-    setVal(abc);
-    // const count2 = count[count.length - 1] + 1;
-    // setCount(count2);
-  }
   const {
     register,
     handleSubmit,
@@ -76,7 +61,7 @@ const UploadCourse = () => {
   } = useForm({
     resolver: yupResolver(validateSchema),
   });
-  console.log("errors :>> ", errors);
+  // console.log("errors :>> ", errors);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -86,7 +71,6 @@ const UploadCourse = () => {
     assessmentPdf: null,
     certificate: null,
   });
-  console.log("formData :>> ", formData);
 
   const [chapters, setChapters] = useState([{ title: "", video: null }]);
 
@@ -95,15 +79,16 @@ const UploadCourse = () => {
     updatedChapters[index].video = event.target.files[0];
     setChapters(updatedChapters);
   };
-
-  const username = "Samantha";
+  const Creator = Cookies.get("userName");
+  const capitalizedCreator = Creator.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  const username= capitalizedCreator;  
   const [category, setCateogy] = useState([]);
   const getCategories = async () => {
     try {
       const categoryRes = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/category/get-categories`
       );
-      console.log("categoryRes :>> ", categoryRes.data.data);
+      // console.log("categoryRes :>> ", categoryRes.data.data);
       setCateogy(categoryRes.data.data);
     } catch (error) {
       console.log("error :>> ", error);
@@ -124,13 +109,13 @@ const UploadCourse = () => {
       formData.append("categoryId", selectedCategoryId);
       formData.append("assessmentPdf", assessmentFile);
       formData.append("certificate", certificateFile);
-      formData.append("creatorId", id);     
+      formData.append("creatorId", id);
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/course-creator/create-course`,
         formData
       );
       setLoading(false);
-      console.log("response :>> ", response);
+      // console.log("response :>> ", response);
       toast.success(response.data.message);
       const courseId = response.data.course._id;
       navigate(`/chapter-upload/${courseId}`);
@@ -151,35 +136,6 @@ const UploadCourse = () => {
       }
     }
   };
- 
-  // const uploadChapters = async (courseId, chapters) => {
-  //   try {
-  //     const chapterIds = [];
-
-  //     for (const chapter of chapters) {
-  //       const chapterFormData = new FormData();
-  //       chapterFormData.append("title", chapter.title);
-  //       chapterFormData.append("video", chapter.video);
-
-  //       const chapterResponse = await axios.post(
-  //         `${process.env.REACT_APP_BASE_URL}/course-creator/courses/${courseId}/chapters`,
-  //         chapterFormData
-  //       );
-
-  //       if (chapterResponse.status === 200) {
-  //         chapterIds.push(chapterResponse.data.chapterId);
-  //       } else {
-  //         console.error("Error uploading chapter:", chapter.title);
-  //         return null;
-  //       }
-  //     }
-
-  //     return chapterIds;
-  //   } catch (error) {
-  //     console.error("Error uploading chapters: ", error);
-  //     return null;
-  //   }
-  // };
 
   return (
     <div>
@@ -191,14 +147,18 @@ const UploadCourse = () => {
         >
           <div className="flex flex-row justify-between items-center px-8 py-8 bg-slate-200 bg-opacity-30">
             <div className="flex flex-row items-center">
-              <span className="text-xl font-thin text-gray-600">
-                Good Morning
-                <span className="font-semibold text-[#3484B4]">{username}</span>
-              </span>
+              <div className="text-xl font-thin text-gray-600">
+                <span className="text-xl font-thin text-gray-600 mr-2">
+                  Good Morning
+                </span>
+                <span className="font-semibold text-[#3484B4]">
+                  {username}!!
+                </span>
+              </div>
             </div>
             <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-[150px]">
               <Link
-                to="/new-course"
+                to="/upload-course"
                 className="flex flex-row justify-center items-center text-xs"
               >
                 <svg

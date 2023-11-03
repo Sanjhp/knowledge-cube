@@ -7,26 +7,16 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import dummyuser from "../assets/user.webp"
+import VideoModal from "../components/vedio/vedio";
+import dummyuser from "../assets/user.webp";
 const LearnerCourseDetailsPage = () => {
   const navigate = useNavigate();
   const [highlight, setHighlight] = useState(true);
   const [unhighlight, setUnhighlight] = useState(false);
-  // const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const userId = Cookies.get("userId");
   const [isEnrolled, setIsEnrolled] = useState(false);
-  
-
-  const userDetails= async (userId)=>{
-    try{
-      const user= `${process.env.REACT_APP_BASE_URL}/users/user-details`
-      console.log('user :>> ', user);
-
-    }catch(error){
-      console.log('error :>> ', error);
-    }
-  }
+  console.log('isEnrolled :>> ', isEnrolled);
 
   const getEnrolledCourses = async () => {
     try {
@@ -38,11 +28,7 @@ const LearnerCourseDetailsPage = () => {
       setLoading(false);
       const enrolledCourses = res.data.enrolledCourses;
       setIsEnrolled(enrolledCourses.some((course) => course._id === courseId));
-      console.log("res :>> ", res);
-      console.log(
-        "res.data.enrolledCourses._id :>> ",
-        res.data.enrolledCourses[0]._id
-      );
+
       // setEnrolledCourses(res.data.enrolledCourses);
     } catch (err) {
       setLoading(false);
@@ -60,20 +46,12 @@ const LearnerCourseDetailsPage = () => {
   const [courseDetails, setCourseDetails] = useState({});
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-
-  console.log("rating :>> ", rating);
   const [reviews, setReviews] = useState([]);
-  console.log("reviews :>> ", reviews);
-  const [averageRating, setAverageRating] = useState("");
-  console.log('averageRating :>> ', averageRating);
   const [totalReviews, setTotalReviews] = useState("");
   const [enrollments, setEnrollments] = useState([]);
-
   const { courseId } = useParams();
-
   const [showVideo, setShowVideo] = useState(false);
   const Id = Cookies.get("userId");
-  console.log("Id :>> ", Id);
 
   const CreateEnrollment = async () => {
     try {
@@ -86,7 +64,6 @@ const LearnerCourseDetailsPage = () => {
         enrollmentdata
       );
       toast.success(res?.data?.message);
-      console.log("res.data :>> ", res.data);
     } catch (err) {
       toast.success(err.response.data.message);
       console.log("err :>> ", err);
@@ -105,7 +82,6 @@ const LearnerCourseDetailsPage = () => {
         `${process.env.REACT_APP_BASE_URL}/review/create-review`,
         data
       );
-      console.log("res :>> ", res);
       toast.success(res.data.message);
       navigate("/learner-dashboard");
     } catch (error) {
@@ -119,14 +95,12 @@ const LearnerCourseDetailsPage = () => {
       const res = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/course-creator/courses/${courseId}`
       );
-      console.log("res ====:>> ", res);
 
       setCourseDetails(res?.data?.course);
       setReviews(res?.data.course.reviews);
-      // setAverageRating(res?.data?.averageRating);
-      const totalReviews = res?.data?.reviews?.length || 0;
+      const totalReviews = res?.data?.course?.reviews?.length || 0;
       setTotalReviews(totalReviews);
-      const totalEnrollments = res?.data?.enrollments?.length || 0;
+      const totalEnrollments = res?.data?.course.enrollments?.length || 0;
       setEnrollments(totalEnrollments);
     } catch (error) {
       console.log("error", error);
@@ -158,14 +132,13 @@ const LearnerCourseDetailsPage = () => {
               <span className="flex flex-rows mx-2 col-span-4 justify-center items-center">
                 <i className="ri-star-fill text-orange-400"></i>
                 <span className="text-sm font-extralight">
-                {/* {averageRating} */}
                   {totalReviews === 0 ? (
                     "No ratings"
                   ) : (
                     <>
-                    {totalReviews} reviews and ratings
-                      {/* {averageRating} ({totalReviews} rating
-                      {totalReviews !== 1 ? "s" : ""}) */}
+                      {totalReviews === 1
+                        ? "1 review and rating"
+                        : `${totalReviews} reviews and ratings`}
                     </>
                   )}
                 </span>
@@ -174,12 +147,7 @@ const LearnerCourseDetailsPage = () => {
               <span className="flex flex-rows mx-2 col-span-4 justify-center items-center">
                 <i className="ri-eye-line text-green-500"></i>
                 <span className="text-sm font-extralight">
-                {enrollments} Enrolled Students
-                  {/* {enrollments?.length === 0 ? (
-                    "No enrollments"
-                  ) : (
-                    <>{enrollments} Enrolled Students</>
-                  )} */}
+                  {enrollments} Enrolled Students
                 </span>
               </span>
 
@@ -259,11 +227,29 @@ const LearnerCourseDetailsPage = () => {
                   return (
                     <li
                       key={chapter?._id}
-                      className={showVideo ? "list-none flex-col gap-3 justify-between items-center p-4 border-[1px] border-gray-200":"list-none flex gap-3 justify-between items-center p-4 border-[1px] border-gray-200"}
+                      className={
+                        showVideo
+                          ? "list-none flex-col gap-3 justify-between items-center p-4 border-[1px] border-gray-200"
+                          : "list-none flex gap-3 justify-between items-center p-4 border-[1px] border-gray-200"
+                      }
                     >
-                      <div className={showVideo?"flex flex-col justify-end items-end":"flex  justify-center items-center"}>
+                      <div
+                        className={
+                          showVideo
+                            ? "flex flex-col justify-end items-end"
+                            : "flex  justify-center items-center"
+                        }
+                      >
                         <span>{index + 1}</span>
-                        <span className={showVideo?"hidden font-bold mx-2":"font-bold mx-2"}>{chapter.title}</span>
+                        <span
+                          className={
+                            showVideo
+                              ? "hidden font-bold mx-2"
+                              : "font-bold mx-2"
+                          }
+                        >
+                          {chapter.title}
+                        </span>
                       </div>
                       {isEnrolled && (
                         <img
@@ -273,14 +259,11 @@ const LearnerCourseDetailsPage = () => {
                         />
                       )}
 
-                      {showVideo === index && (
-                        <video width="400" height="350" controls>
-                          <source
-                            src={`http://localhost:5000/${chapter?.videoUrl}`}
-                            type="video/mp4"
-                          />
-                          Your browser does not support the video tag.
-                        </video>
+                      {showVideo !== null && (
+                        <VideoModal
+                          videoUrl={`http://localhost:5000/${courseDetails?.chapters[showVideo]?.videoUrl}`}
+                          onClose={() => setShowVideo(null)}
+                        />
                       )}
                     </li>
                   );
@@ -293,7 +276,7 @@ const LearnerCourseDetailsPage = () => {
                 <span className="text-3xl">Instructor</span>
                 <br />
                 <br />
-              {courseDetails?.user?.bio}
+                {courseDetails?.user?.bio}
               </div>
             )}
 
@@ -338,14 +321,14 @@ const LearnerCourseDetailsPage = () => {
                   <div className="grid grid-cols-10 col-span-10 gap-2 py-4 px-4 border-[1px] border-gray-100 justify-center items-center my-2">
                     <div className="flex col-span-1">
                       <img
-                      src={dummyuser}
+                        src={dummyuser}
                         // src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60"
                         className="w-[50px] h-[50px] object-cover rounded-[25px] ml-[12px]"
                       />
                     </div>
                     <p className="grid grid-cols-10 text-xs text-gray-400 col-span-3">
                       <span className="text-base text-gray-500 col-span-10">
-                       Unknown User
+                        Unknown User
                         {review.userId.name}
                       </span>
                       <span className="col-span-10">
@@ -364,23 +347,27 @@ const LearnerCourseDetailsPage = () => {
         </div>
 
         {/* COURSE PRICE CARD */}
-        <div className="absolute sm:left-[800px] md:left-[800px] grid grid-cols-4 col-span-4 col-start-9 items-center my-8 mx-8">
+        <div className="absolute sm:left-[800px] md:left-[1124px] grid grid-cols-4 col-span-4 col-start-9 items-center my-8 mx-8">
           <div className="flex flex-col col-span-4 px-4 py-4 bg-white border-2 border-gray-100 shadow-2xl shadow-gray-400 rounded-md transition ease-in delay-0 hover:-translate-y-2 duration:1000">
             <div className="flex flex-col">
               <img
                 src={`http://localhost:5000/${courseDetails?.coverImage}`}
                 className="w-fill rounded-md z-10"
               />
-              <div className="flex flex-row justify-center items-center my-4">
-                <span className="">Rs. {courseDetails?.price}</span>
-              </div>
 
-              <div
-                className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid cursor-pointer"
-                onClick={() => CreateEnrollment(Id, courseId)}
-              >
-                Buy Now
-              </div>
+              {!isEnrolled && (
+                <>
+                  <div className="flex flex-row justify-center items-center my-4">
+                    <span className="">Rs. {courseDetails?.price}</span>
+                  </div>
+                  <div
+                    className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid cursor-pointer"
+                    onClick={() => CreateEnrollment(Id, courseId)}
+                  >
+                    Buy Now
+                  </div>
+                </>
+              )}
               <span className="text-xl font-semibold mt-4">
                 This course includes
               </span>

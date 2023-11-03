@@ -50,7 +50,7 @@ const Categories = () => {
             <div className={category.containerStyle}>
                 <div className={category.Head}>
                     <h1>Top Categories</h1>
-                    <Link to="/categories" className={category.button}>
+                    <Link to="/course-collection" className={category.button}>
                         See All Categories
                     </Link>
                 </div>

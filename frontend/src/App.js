@@ -1,11 +1,7 @@
-import logo from "./logo.svg";
 import "./App.css";
-import UploadCourse from "./pages/UploadCourse/UploadCourse";
-import CourseHeader from "./pages/CourseCategories/CourseHeader";
 import CourseCollection from "./pages/CourseCategories/CourseCollection";
 import AllCourses from "./pages/AllCourses";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
-import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home/Home";
 import Course from "./pages/UploadCourse/UploadCourse";
 import Updateprofile from "./pages/UpdateProfile/Updateprofile";
@@ -13,8 +9,6 @@ import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import Signin from "./pages/Signin/Signin";
 import Signup from "./pages/Signup/Signup";
-import CourseOverview from "./pages/CourseOverview";
-import CourseCategories from "./pages/CourseCategories/CourseCategories";
 import LearnerDashboard from "./pages/LearnerDashboard";
 import CreaterDashboard from "./pages/CreaterDashboard";
 import EditCourse from "./pages/EditCourse";
@@ -33,11 +27,6 @@ function App() {
         <Route exact path="/chapter-upload/:courseId" element={<Chapter />} />
         <Route exact path="/all-courses" element={<AllCourses />} />
         <Route exact path="/course-collection" element={<CourseCollection />} />
-        {/* <Route
-          exact
-          path="/course-overview/:courseId"
-          element={<CourseOverview />}
-        /> */}
         <Route exact path="/learner-dashboard" element={<LearnerDashboard />} />
         <Route exact path="/creator-dashboard" element={<CreaterDashboard />} />
         <Route exact path="/login" element={<Signin />} />

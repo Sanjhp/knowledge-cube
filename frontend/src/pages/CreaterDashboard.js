@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate} from "react-router-dom";
 import CreatorNavbar from "../components/Navbar/CreatorNavbar";
 import Cookies from "universal-cookie";
 import axios from "axios";
@@ -9,6 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const CreaterDashboard = () => {
+  const navigate= useNavigate()
   const [token, setToken] = useState(null);
   const [userId, setUserId] = useState(null);
   console.log("userId :>> ", userId);
@@ -195,7 +196,10 @@ const CreaterDashboard = () => {
             courses?.map((course) => (
               <div
                 key={course._id}
-                className="grid grid-cols-12 col-span-12 shadow-gray-300 shadow-sm rounded-sm px-2 py-2 justify-center items-center gap-4 my-2"
+                onClick={()=>{
+                  navigate(`/learner-course-details-page/${course._id}`)
+                }}
+                className="grid grid-cols-12 col-span-12 cursor-pointer shadow-gray-300 shadow-sm rounded-sm px-2 py-2 justify-center items-center gap-4 my-2"
               >
                 <div className="col-span-2">
                   <img
