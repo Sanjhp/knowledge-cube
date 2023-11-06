@@ -9,6 +9,7 @@ import courseRouter from "./src/Routes/courseRoutes.js";
 import categoryRouter from "./src/Routes/categoryRoutes.js";
 import reviewRouter from "./src/Routes/reviewRoutes.js";
 import enrollmentRouter from "./src/Routes/enrollmentRoutes.js";
+import ratingRouter from "./src/Routes/ratingRoutes.js";
 const PORT = process.env.PORT || 5000;
 
 connectionDB();
@@ -26,6 +27,7 @@ app.use("/api/roles", RoleRouter);
 app.use("/api/course-creator", courseRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/review", reviewRouter);
+app.use("/api/rating", ratingRouter);
 app.use("/api/enroll", enrollmentRouter);
 app.listen(PORT, () => {
   console.log(`Server is runing PORT:${PORT}`);

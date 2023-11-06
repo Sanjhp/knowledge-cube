@@ -3,9 +3,28 @@ import User from "../Model/userModel.js";
 import Course from "../Model/courseModel.js";
 import Category from "../Model/categoryModel.js";
 import Review from "../Model/reviewModel.js";
+import Rating from "../Model/ratingModel.js";
 import Enrollment from "../Model/enrollmentModel.js";
 import CourseFilter from "../Model/courseFilterModel.js";
 import { StatusCodes } from "http-status-codes";
+import ffmpeg from 'fluent-ffmpeg';
+import ffprobePath from 'ffprobe-static';
+
+ffmpeg.setFfprobePath(ffprobePath.path);
+
+const getVideoDuration = (videoUrl) => {
+  return new Promise((resolve, reject) => {
+    ffmpeg.ffprobe(videoUrl, (err, metadata) => {
+      if (err) {
+        reject(new Error('Failed to get video duration.'));
+      } else {
+        const durationInSeconds = metadata.format.duration;
+        resolve(durationInSeconds);
+      }
+    });
+  });
+};
+
 
 // API endpoint for uploading a course
 export const UploadCourse = async (req, res) => {
@@ -98,19 +117,21 @@ export const UploadCourse = async (req, res) => {
   }
 };
 // uploading a chapter for a specific course
+
 export const UploadChapterById = async (req, res) => {
   try {
     const { title } = req.body;
     const courseId = req.params.courseId;
     const videoUrl = req.files["video"][0].path;
-    console.log("req.body :>> ", req.body);
-    console.log("videoUrl :>> ", videoUrl);
 
+    const durationInSeconds = await getVideoDuration(videoUrl);
+
+    // Create a new Chapter document with the calculated duration
     const chapter = await Chapter.create({
       title,
       videoUrl,
+      vedioDuration: durationInSeconds, // Save the duration to the Chapter model
     });
-    console.log("chapter :>> ", chapter);
 
     // Find the course by ID and add the chapter to its chapters array
     const course = await Course.findByIdAndUpdate(
@@ -130,6 +151,59 @@ export const UploadChapterById = async (req, res) => {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
       message: "Failed to add the chapter",
+      error: error.message,
+    });
+  }
+};
+
+//delete course by id
+export const deleteCourseById = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const deletedCourse = await Course.findByIdAndDelete(courseId);
+    
+    if (!deletedCourse) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        message: 'Course not found.',
+      });
+    }
+
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: 'Course deleted successfully!',
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: 'Failed to delete the course',
+      error: error.message,
+    });
+  }
+};
+
+export const deleteChapterById = async (req, res) => {
+  try {
+    const { chapterId } = req.params;
+    const deletedChapter = await Chapter.findByIdAndDelete(chapterId);
+    
+    if (!deletedChapter) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        message: 'Chapter not found.',
+      });
+    }
+
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: 'Chapter deleted successfully!',
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: 'Failed to delete the chapter',
       error: error.message,
     });
   }
@@ -172,8 +246,12 @@ export const GetAllCourses = async (req, res) => {
         model: "Review",
       })
       .populate({
-        path: "enrollments", // Make sure this path matches your Course schema
+        path: "enrollments",
         model: "Enrollment",
+      })
+      .populate({
+        path: "ratings",
+        model: "Rating",
       })
       .populate({
         path: "user",
@@ -215,6 +293,10 @@ export const GetCourseById = async (req, res) => {
         path: "reviews",
         model: "Review",
       })
+      .populate({
+        path: "ratings",
+        model: "Rating",
+      })
       .populate("category")
       .populate({
         path: "user",
@@ -249,6 +331,44 @@ export const GetCourseById = async (req, res) => {
   }
 };
 
+//API to update course
+export const UpdateCourseById = async (req, res) => {
+  try {
+    const courseId = req.params.courseId;
+
+    // Fetch the course by ID
+    const course = await Course.findById(courseId);
+
+    if (!course) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        message: "Course not found.",
+      });
+    }
+
+    // Apply updates from req.body to the course object
+    Object.keys(req.body).forEach((update) => {
+      course[update] = req.body[update];
+    });
+
+    // Save the updated course
+    await course.save();
+
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: "Course updated successfully!",
+      course: course,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: "Failed to update the course.",
+      error: error.message,
+    });
+  }
+};
+
 export const GetCoursesByCreator = async (req, res) => {
   try {
     const creatorId = req.params.creatorId;
@@ -264,7 +384,7 @@ export const GetCoursesByCreator = async (req, res) => {
         ],
       });
     } else {
-       courses = await Course.find({ creatorId })
+      courses = await Course.find({ creatorId })
         .populate({
           path: "chapters",
           model: "Chapter",
@@ -276,6 +396,10 @@ export const GetCoursesByCreator = async (req, res) => {
         .populate({
           path: "reviews",
           model: "Review",
+        })
+        .populate({
+          path: "ratings",
+          model: "Rating",
         })
         .populate("category")
         .populate({
@@ -296,6 +420,71 @@ export const GetCoursesByCreator = async (req, res) => {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
       message: "Failed to retrieve courses by creator",
+      error: error.message,
+    });
+  }
+};
+
+//get chapters by courseId
+export const GetAllChaptersByCourseId = async (req, res) => {
+  try {
+    const courseId = req.params.courseId;
+    const chapters = await Chapter.find({ courseId: courseId });
+
+    if (!chapters || chapters.length === 0) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        message: "Chapters not found for the given course.",
+      });
+    }
+
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      chapters: chapters,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: "Failed to retrieve chapters",
+      error: error.message,
+    });
+  }
+};
+
+//update chapters
+export const UpdateChapterById = async (req, res) => {
+  try {
+    const chapterId = req.params.chapterId;
+
+    // Fetch the chapter by ID
+    const chapter = await Chapter.findById(chapterId);
+
+    if (!chapter) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        message: "Chapter not found.",
+      });
+    }
+
+    // Apply updates from req.body to the chapter object
+    Object.keys(req.body).forEach((update) => {
+      chapter[update] = req.body[update];
+    });
+
+    // Save the updated chapter
+    await chapter.save();
+
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: "Chapter updated successfully!",
+      chapter: chapter,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: "Failed to update the chapter.",
       error: error.message,
     });
   }
