@@ -9,6 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import VideoModal from "../components/vedio/vedio";
 import dummyuser from "../assets/user.webp";
+
 const LearnerCourseDetailsPage = () => {
   const navigate = useNavigate();
   const [highlight, setHighlight] = useState(true);
@@ -16,7 +17,7 @@ const LearnerCourseDetailsPage = () => {
   const [isLoading, setLoading] = useState(false);
   const userId = Cookies.get("userId");
   const [isEnrolled, setIsEnrolled] = useState(false);
-  console.log('isEnrolled :>> ', isEnrolled);
+  console.log("isEnrolled :>> ", isEnrolled);
 
   const getEnrolledCourses = async () => {
     try {
@@ -50,7 +51,7 @@ const LearnerCourseDetailsPage = () => {
   const [totalReviews, setTotalReviews] = useState("");
   const [enrollments, setEnrollments] = useState([]);
   const { courseId } = useParams();
-  const [showVideo, setShowVideo] = useState(false);
+  const [showVideo, setShowVideo] = useState(null);
   const Id = Cookies.get("userId");
 
   const CreateEnrollment = async () => {
@@ -75,7 +76,6 @@ const LearnerCourseDetailsPage = () => {
       const data = {
         courseId: courseId,
         userId: Id,
-        rating: rating,
         comment: comment,
       };
       const res = await axios.post(
@@ -171,7 +171,7 @@ const LearnerCourseDetailsPage = () => {
               } font-extralight focus:bg-orange-500 focus:text-white active:bg-orange-400 active:text-white`}
               onClick={() => handleButtonClick(0)}
             >
-              Overview
+              Curriculum
             </button>
 
             <button
@@ -182,7 +182,7 @@ const LearnerCourseDetailsPage = () => {
               } font-extralight focus:bg-orange-500 focus:text-white active:bg-orange-400 active:text-white`}
               onClick={() => handleButtonClick(1)}
             >
-              Curriculum
+              Overview
             </button>
 
             <button
@@ -209,7 +209,7 @@ const LearnerCourseDetailsPage = () => {
           </div>
 
           <div className="col-span-12 col-start-1">
-            {(selectedButton === 0 || highlight === true) && (
+            {selectedButton === 1 && (
               <div className="col-span-8 my-4">
                 <span className="text-3xl">Course Description</span>
                 <br />
@@ -218,58 +218,59 @@ const LearnerCourseDetailsPage = () => {
               </div>
             )}
 
-            {selectedButton === 1 && (
-              <div className="col-span-8 my-4">
-                <span className="text-3xl">Curriculum</span>
-                <br />
-                <br />
-                {courseDetails?.chapters?.map((chapter, index) => {
-                  return (
-                    <li
-                      key={chapter?._id}
-                      className={
-                        showVideo
-                          ? "list-none flex-col gap-3 justify-between items-center p-4 border-[1px] border-gray-200"
-                          : "list-none flex gap-3 justify-between items-center p-4 border-[1px] border-gray-200"
-                      }
-                    >
-                      <div
+            {selectedButton === 0 ||
+              (highlight === true && (
+                <div className="col-span-8 my-4">
+                  <span className="text-3xl">Curriculum</span>
+                  <br />
+                  <br />
+                  {courseDetails?.chapters?.map((chapter, index) => {
+                    return (
+                      <li
+                        key={chapter?._id}
                         className={
                           showVideo
-                            ? "flex flex-col justify-end items-end"
-                            : "flex  justify-center items-center"
+                            ? "list-none flex-col gap-3 justify-between items-center p-4 border-[1px] border-gray-200"
+                            : "list-none flex gap-3 justify-between items-center p-4 border-[1px] border-gray-200"
                         }
                       >
-                        <span>{index + 1}</span>
-                        <span
+                        <div
                           className={
                             showVideo
-                              ? "hidden font-bold mx-2"
-                              : "font-bold mx-2"
+                              ? "flex flex-col justify-end items-end"
+                              : "flex  justify-center items-center"
                           }
                         >
-                          {chapter.title}
-                        </span>
-                      </div>
-                      {isEnrolled && (
-                        <img
-                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAABcUlEQVR4nO2Yu0oDQRSGPyysbSRFYqkg6ENoJ7G19TV8ABs7bX0C0eAFEm3ESnwAG8FHEIxo0ggpjgzMhFE3sLuMm+PmfHBgGeby/5yZ3dkDhmEYhpGeFtABBoAoiQFwDiwXMdFXIFwmhNPWzGOk4wd08w6oiCbQ89pO8wwI20mTicCS1/ZODkIKtSJ59ZmROmXkFlinBkYEGAHHwGLJOdQYCfEG7AHzJedSYeQqen4CtkrON3Ujjg3gMWpLdX6kaiOOOWAXeEl4fmQaRgILwAHwmeD8yDSNBFaAs6jfM7CTeI3KjHR/GNlOvMYY21rU9LBvZrx+10rOG2MfxJm9oozqcGm8AVb5W8T+EJUhM5eRvu/oCnVay0GveTqf+M49ZWZawLXX5jRm8pCwpFl13MdGNBWrpWB8xEbufOMF/4dLr9lpH9OOHB4CDfTSAI4ivU77N/YVbBMpGE5zJm2fqqECkTIhhl7jr0wYhmEYBiX5AmT1wprACIzgAAAAAElFTkSuQmCC"
-                          className="hover:scale-110 w-4 cursor-pointer"
-                          onClick={() => setShowVideo(index)}
-                        />
-                      )}
+                          <span>{index + 1}</span>
+                          <span
+                            className={
+                              showVideo
+                                ? "hidden font-bold mx-2"
+                                : "font-bold mx-2"
+                            }
+                          >
+                            {chapter.title}
+                          </span>
+                        </div>
+                        {isEnrolled && (
+                          <img
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAABcUlEQVR4nO2Yu0oDQRSGPyysbSRFYqkg6ENoJ7G19TV8ABs7bX0C0eAFEm3ESnwAG8FHEIxo0ggpjgzMhFE3sLuMm+PmfHBgGeby/5yZ3dkDhmEYhpGeFtABBoAoiQFwDiwXMdFXIFwmhNPWzGOk4wd08w6oiCbQ89pO8wwI20mTicCS1/ZODkIKtSJ59ZmROmXkFlinBkYEGAHHwGLJOdQYCfEG7AHzJedSYeQqen4CtkrON3Ujjg3gMWpLdX6kaiOOOWAXeEl4fmQaRgILwAHwmeD8yDSNBFaAs6jfM7CTeI3KjHR/GNlOvMYY21rU9LBvZrx+10rOG2MfxJm9oozqcGm8AVb5W8T+EJUhM5eRvu/oCnVay0GveTqf+M49ZWZawLXX5jRm8pCwpFl13MdGNBWrpWB8xEbufOMF/4dLr9lpH9OOHB4CDfTSAI4ivU77N/YVbBMpGE5zJm2fqqECkTIhhl7jr0wYhmEYBiX5AmT1wprACIzgAAAAAElFTkSuQmCC"
+                            className="hover:scale-110 w-4 cursor-pointer"
+                            onClick={() => setShowVideo(index)}
+                          />
+                        )}
 
-                      {showVideo !== null && (
-                        <VideoModal
-                          videoUrl={`http://localhost:5000/${courseDetails?.chapters[showVideo]?.videoUrl}`}
-                          onClose={() => setShowVideo(null)}
-                        />
-                      )}
-                    </li>
-                  );
-                })}
-              </div>
-            )}
+                        {showVideo !== null && (
+                          <VideoModal
+                            videoUrl={`http://localhost:5000/${courseDetails?.chapters[showVideo]?.videoUrl}`}
+                            onClose={() => setShowVideo(null)}
+                          />
+                        )}
+                      </li>
+                    );
+                  })}
+                </div>
+              ))}
 
             {selectedButton === 2 && (
               <div className="col-span-8 my-4">
@@ -282,23 +283,24 @@ const LearnerCourseDetailsPage = () => {
 
             {selectedButton === 3 && (
               <div className="col-span-8 my-8">
-                <span className="text-3xl">Reviews</span>
+                <span className="text-3xl">Reviews & Ratings</span>
                 <br />
                 <br />
                 <div className="grid grid-cols-10 col-span-10 gap-2">
+                  <div className="col-span-10 my-4">
+                    <Rate
+                      rating={rating}
+                      onRating={(rate) => setRating(rate)}
+                    />
+                  </div>
+                  {/* CONSOLE.LOG rating TO VIEW DYNAMIC RATING COUNT */}
+                  <span className="col-span-10 text-sm text-gray-300">
+                    {rating} stars
+                  </span>
+
                   <form className="grid grid-cols-10 col-span-10 gap-2 py-4 px-8 border-[1px] border-r-[1px] border-b-[1px] border-gray-200 rounded-sm">
                     <span className="text-xl font-extralight uppercase col-span-10 border-b-[1px] border-gray-100">
                       Send your Review
-                    </span>
-                    <div className="col-span-10 my-4">
-                      <Rate
-                        rating={rating}
-                        onRating={(rate) => setRating(rate)}
-                      />
-                    </div>
-                    {/* CONSOLE.LOG rating TO VIEW DYNAMIC RATING COUNT */}
-                    <span className="col-span-10 text-sm text-gray-300">
-                      {rating} stars
                     </span>
 
                     <textarea

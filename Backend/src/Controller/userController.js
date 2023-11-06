@@ -167,7 +167,7 @@ export const UpdateProfile = async (req, res) => {
         .json({ success: false, message: "User not found!" });
     }
 
-    const allowedUpdates = ["name", "phone", "dob"];
+    const allowedUpdates = ["name", "phone", "dob", "password"];
 
     const isValidUpdates = Object.keys(req.body).every((update) => {
       return allowedUpdates.includes(update);
@@ -178,7 +178,13 @@ export const UpdateProfile = async (req, res) => {
     }
 
     Object.keys(req.body).forEach((update) => {
-      user[update] = req.body[update];
+      if (update === "password") {
+        const salt = bcrypt.genSaltSync(10);
+        const hashedPassword = bcrypt.hashSync(req.body[update], salt);
+        user[update] = hashedPassword;
+      } else {
+        user[update] = req.body[update];
+      }
     });
 
     await user.save();

@@ -1,31 +1,29 @@
+import { StatusCodes } from "http-status-codes";
 import Review from "../Model/reviewModel.js";
 import User from "../Model/userModel.js";
 import Role from "../Model/roleModel.js";
-import { StatusCodes } from "http-status-codes";
 import Course from "../Model/courseModel.js";
 
 export const CreateReview = async (req, res) => {
   try {
-    const { courseId, userId, rating, comment } = req.body;
+    const { courseId, userId, comment } = req.body;
 
     // Check if the user with the provided userId exists
     const user = await User.findById(userId);
-    console.log("user :>> ", user);
     if (!user) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ success: false, message: "User not found" });
+      return res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        message: "User not found",
+      });
     }
-    console.log("user.role :>> ", user.role);
+
     // Fetch the role information based on roleId
-
     const role = await Role.findById(user.role);
-    console.log("role :>> ", role);
-
     if (!role) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ success: false, message: "Role not found" });
+      return res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        message: "Role not found",
+      });
     }
 
     // Check if the user's role is "Creator"
@@ -35,6 +33,7 @@ export const CreateReview = async (req, res) => {
         message: "Creators are not allowed to post reviews",
       });
     }
+
     const existingReview = await Review.findOne({ courseId, userId });
 
     if (existingReview) {
@@ -44,23 +43,15 @@ export const CreateReview = async (req, res) => {
       });
     }
 
-    const parsedRating = parseInt(rating, 10);
-
-    if (isNaN(parsedRating) || parsedRating < 0 || parsedRating > 5) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ success: false, message: "Invalid rating value" });
-    }
     const review = new Review({
       courseId,
       userId,
-      rating: parsedRating,
       comment,
     });
 
     await review.save();
     const course = await Course.findById(courseId);
-    course.reviews.push(review._id);
+    course?.reviews?.push(review._id);
     await course.save();
 
     res
@@ -74,7 +65,6 @@ export const CreateReview = async (req, res) => {
   }
 };
 
-//get all reviews on a course
 export const GetReviewsByCourseId = async (req, res) => {
   try {
     const { courseId } = req.query;
@@ -86,15 +76,19 @@ export const GetReviewsByCourseId = async (req, res) => {
     }
 
     // Fetch reviews by courseId
-    const reviews = await Review.find({ courseId }).populate({
+    const reviews = await Review.find({ courseId }) .populate({
       path: "user",
       model: "User",
       populate: {
         path: "role",
         model: "Role",
       },
-    });
-    console.log("reviews :>> ", reviews);
+    })
+
+    // .populate({
+    //   path: "chapters",
+    //   model: "Chapter",
+    // })
 
     if (!reviews || reviews.length === 0) {
       return res.status(StatusCodes.NOT_FOUND).json({
@@ -103,11 +97,7 @@ export const GetReviewsByCourseId = async (req, res) => {
       });
     }
 
-    // Calculate the average rating
-    const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
-    const averageRating = totalRating / reviews.length;
-
-    res.status(StatusCodes.OK).json({ success: true, reviews, averageRating });
+    res.status(StatusCodes.OK).json({ success: true, reviews });
   } catch (error) {
     console.error(error);
     res

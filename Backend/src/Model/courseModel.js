@@ -49,6 +49,12 @@ const courseSchema = mongoose.Schema(
         ref: "Review",
       },
     ],
+    ratings: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Rating",
+      },
+    ],
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

@@ -7,15 +7,10 @@ const reviewSchema = new mongoose.Schema(
       ref: "Course",
       required: true,
     },
-    userId: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User", 
       required: true
-    },
-  
-    rating: {
-      type: Number,
-      required: false,
     },
     comment: {
       type: String,

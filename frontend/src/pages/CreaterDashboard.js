@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link,useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CreatorNavbar from "../components/Navbar/CreatorNavbar";
 import Cookies from "universal-cookie";
 import axios from "axios";
@@ -9,11 +9,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const CreaterDashboard = () => {
-  const navigate= useNavigate()
+  const navigate = useNavigate();
   const [token, setToken] = useState(null);
   const [userId, setUserId] = useState(null);
-  console.log("userId :>> ", userId);
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState(null);
   const [courses, setCourses] = useState([]);
   const [userDetails, setUserDetails] = useState({});
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -26,13 +25,20 @@ const CreaterDashboard = () => {
     const token = cookies.get("token");
     const userName = cookies.get("userName");
 
+    const capitalizedCreator = userName
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+
+    const name = capitalizedCreator;
+    setUserName(name);
+
     if (token) {
       const parts = token.split(".");
       const payload = JSON.parse(atob(parts[1]));
       const userId = payload._id;
       setUserId(userId);
       setToken(token);
-      setUserName(userName);
     }
   }, [token]);
 
@@ -49,7 +55,6 @@ const CreaterDashboard = () => {
         let res = await axios.get(url);
         setCourses(res?.data?.courses);
         setLoading(false);
-        console.log("res :>> ", res?.data);
       } catch (error) {
         setLoading(false);
         console.log("error :>> ", error);
@@ -78,7 +83,6 @@ const CreaterDashboard = () => {
           },
         }
       );
-      console.log("user :>> ", res?.data?.data);
       setUserDetails(res?.data?.data);
     } catch (error) {
       console.log("error :>> ", error);
@@ -96,7 +100,6 @@ const CreaterDashboard = () => {
           },
         }
       );
-      console.log("res++ :>> ", res);
       closeModal();
       getUser();
       toast.success(res.data.message);
@@ -196,16 +199,30 @@ const CreaterDashboard = () => {
             courses?.map((course) => (
               <div
                 key={course._id}
-                onClick={()=>{
-                  navigate(`/learner-course-details-page/${course._id}`)
-                }}
                 className="grid grid-cols-12 col-span-12 cursor-pointer shadow-gray-300 shadow-sm rounded-sm px-2 py-2 justify-center items-center gap-4 my-2"
               >
-                <div className="col-span-2">
+                <div className="flex col-span-2 gap-5">
                   <img
+                    onClick={() => {
+                      navigate(`/learner-course-details-page/${course._id}`);
+                    }}
                     src={`http://localhost:5000/${course.coverImage}`}
                     className="min-[300px]:w-fill lg:w-fill rounded-md"
                   />
+                  <div className="flex gap-2 ml-auto">
+                    <Link
+                      to={`/update-course/${course._id}`}
+                      className="bg-blue-600 h-10 px-5 py-2 text-white"
+                    >
+                      Update
+                    </Link>
+                    <Link
+                      // to={`/update-course/{course._id}`}
+                      className="bg-red-600 h-10  px-5 py-2 text-white"
+                    >
+                      Delete
+                    </Link>
+                  </div>
                 </div>
                 <div className="grid grid-cols-12 col-span-12">
                   <div className="grid grid-rows-2 col-span-4 items-center gap-8">
