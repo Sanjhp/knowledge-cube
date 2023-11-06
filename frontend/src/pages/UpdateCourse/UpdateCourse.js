@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useParams } from "react-router-dom";
 
 const validateSchema = yup.object().shape({
   title: yup.string().required("Title is required"),
@@ -16,6 +17,9 @@ const validateSchema = yup.object().shape({
 });
 
 const UpdateCourse = () => {
+  const { courseId } = useParams();
+  console.log("courseId", courseId);
+
   const navigate = useNavigate();
   const [isNewCourse, setIsNewCourse] = useState(true);
   const [certificateFile, setCertificateFile] = useState(null);
@@ -56,6 +60,7 @@ const UpdateCourse = () => {
 
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -79,9 +84,38 @@ const UpdateCourse = () => {
     setChapters(updatedChapters);
   };
   const Creator = Cookies.get("userName");
-  const capitalizedCreator = Creator.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-  const username= capitalizedCreator;  
+  const capitalizedCreator = Creator.split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+  const username = capitalizedCreator;
   const [category, setCateogy] = useState([]);
+  const [coverImage, setCoverImage] = useState(null);
+  console.log("coverImage", coverImage);
+  const FetchCourseDetails = async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/course-creator/courses/${courseId}`
+      );
+      console.log("res", res.data);
+      const { course } = res?.data;
+      setValue("title", course?.title);
+      setValue("description", course?.description);
+      setValue("skillLevel", course?.skillLevel);
+      setValue("category", course?.category);
+      setValue("language", course?.language);
+      setValue("price", course?.price);
+     
+    } catch (err) {
+      console.log("err", err);
+    }
+  };
+
+  useEffect(() => {
+    FetchCourseDetails();
+  }, [])
+  
+
+
   const getCategories = async () => {
     try {
       const categoryRes = await axios.get(
@@ -95,65 +129,60 @@ const UpdateCourse = () => {
   useEffect(() => {
     getCategories();
   }, []);
-  const uploadCourseFunction = async (data) => {
-    try {
-      const formData = new FormData();
-      formData.append("title", data.title);
-      formData.append("description", data.description);
-      formData.append("price", data.price);
-      formData.append("language", data.language);
-      formData.append("coverImage", selectedImage);
-      formData.append("skillLevel", data.skillLevel);
-      formData.append("categoryId", selectedCategoryId);
-      formData.append("assessmentPdf", assessmentFile);
-      formData.append("certificate", certificateFile);
-      formData.append("creatorId", id);
-      const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/course-creator/create-course`,
-        formData
-      );
-      setLoading(false);
-      toast.success(response.data.message);
-      const courseId = response.data.course._id;
-      navigate(`/chapter-upload/${courseId}`);
-    } catch (error) {
-      setLoading(false);
-      console.error("Error uploading course: ", error);
-      if (error?.response?.data?.message === "unAuthorized") {
-        Cookies.remove("token");
-        Cookies.remove("roleName");
-        Cookies.remove("roleId");
-        navigate("/login");
-      } else if (error?.response?.data?.message) {
-        toast.error(error?.response?.data?.message);
-        navigate("/login");
-      } else {
-        toast.error("unsuccess");
-        navigate("/login");
-      }
-    }
-  };
+  // const uploadCourseFunction = async (data) => {
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("title", data.title);
+  //     formData.append("description", data.description);
+  //     formData.append("price", data.price);
+  //     formData.append("language", data.language);
+  //     formData.append("coverImage", selectedImage);
+  //     formData.append("skillLevel", data.skillLevel);
+  //     formData.append("categoryId", selectedCategoryId);
+  //     formData.append("assessmentPdf", assessmentFile);
+  //     formData.append("certificate", certificateFile);
+  //     formData.append("creatorId", id);
+  //     const response = await axios.post(
+  //       `${process.env.REACT_APP_BASE_URL}/course-creator/create-course`,
+  //       formData
+  //     );
+  //     setLoading(false);
+  //     toast.success(response.data.message);
+  //     const courseId = response.data.course._id;
+  //     navigate(`/chapter-upload/${courseId}`);
+  //   } catch (error) {
+  //     setLoading(false);
+  //     console.error("Error uploading course: ", error);
+  //     if (error?.response?.data?.message === "unAuthorized") {
+  //       Cookies.remove("token");
+  //       Cookies.remove("roleName");
+  //       Cookies.remove("roleId");
+  //       navigate("/login");
+  //     } else if (error?.response?.data?.message) {
+  //       toast.error(error?.response?.data?.message);
+  //       navigate("/login");
+  //     } else {
+  //       toast.error("unsuccess");
+  //       navigate("/login");
+  //     }
+  //   }
+  // };
 
   return (
     <div>
       <CreatorNavbar />
       <div className="grid grid-cols-6 mb-8">
-        <form
-          onSubmit={handleSubmit(uploadCourseFunction)}
-          className="col-span-6 flex flex-col"
-        >
+        <form onSubmit={handleSubmit("")} className="col-span-6 flex flex-col">
           <div className="flex flex-row justify-between items-center px-8 py-8 bg-slate-200 bg-opacity-30">
             <div className="flex flex-row items-center">
-              <div className="text-xl font-thin text-gray-600">
+              {/* <div className="text-xl font-thin text-gray-600">
                 <span className="text-xl font-thin text-gray-600 mr-2">
-                  Good Morning
+                 Update the course
                 </span>
-                <span className="font-semibold text-[#3484B4]">
-                  {username}!!
-                </span>
-              </div>
+                
+              </div> */}
             </div>
-            <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white w-[150px] cursor-none">
+            {/* <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white w-[150px] cursor-none">
               <Link
                 to="/upload-course"
                 className="flex flex-row justify-center items-center text-xs"
@@ -173,10 +202,10 @@ const UpdateCourse = () => {
                 </svg>
                 New Course
               </Link>
-            </div>
+            </div> */}
           </div>
-          <span className="text-l font-semibold my-4 px-4">
-            Upload New Course
+          <span className="text-2xl font-semibold my-4 px-4">
+            Update the course
           </span>
           <div className="grid grid-cols-4 gap-4 justify-center items-center px-4">
             <div className="grid grid-cols-1 gap-4 col-span-2">
@@ -207,11 +236,16 @@ const UpdateCourse = () => {
                 <span className="text-gray-500 text-sm">
                   Upload Cover Image
                 </span>
+                <img
+                  src={`${process.env.REACT_APP_BASE_URL}/${coverImage}`}
+                  alt=""
+                />
                 <input
                   type="file"
                   className="px-4 py-4 border-2 border-gray-200 rounded-xl bg-gray-200 text-gray-400"
                   placeholder="type here"
                   name="coverImage"
+                  value={coverImage}
                   onChange={handleImageUpload}
                 />
               </div>
