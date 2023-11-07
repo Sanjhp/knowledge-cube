@@ -18,6 +18,7 @@ import LearnerCourseDetailsPage from "./pages/LearnerCourseDetailsPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UpdateCourse from "./pages/UpdateCourse/UpdateCourse";
+import UpdateChapter from "./pages/UpdateCourse/UpdateChapters";
 
 function App() {
   return (
@@ -25,8 +26,17 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route exact path="/upload-course" element={<Course />} />
-        
-        <Route exact path="/update-course/:courseId" element={<UpdateCourse />} />
+
+        <Route
+          exact
+          path="/update-course/:courseId"
+          element={<UpdateCourse />}
+        />
+        <Route
+          exact
+          path="/update-chapter/:courseId"
+          element={<UpdateChapter />}
+        />
         <Route exact path="/chapter-upload/:courseId" element={<Chapter />} />
         <Route exact path="/all-courses" element={<AllCourses />} />
         <Route exact path="/course-collection" element={<CourseCollection />} />

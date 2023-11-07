@@ -18,12 +18,7 @@ const validateSchema = yup.object().shape({
 
 const UpdateCourse = () => {
   const { courseId } = useParams();
-  console.log("courseId", courseId);
-
   const navigate = useNavigate();
-  const [isNewCourse, setIsNewCourse] = useState(true);
-  const [certificateFile, setCertificateFile] = useState(null);
-  const [assessmentFile, setAssessmentFile] = useState(null);
   const [selectedImage, setSelectedImage] = useState();
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
   const [loading, setLoading] = useState(false);
@@ -43,39 +38,18 @@ const UpdateCourse = () => {
     }
   }, [accessToken]);
 
-  const handleImageUpload = (event) => {
-    const coverImage = event.target.files[0];
-    if (coverImage && coverImage.type.startsWith("image/")) {
-      setSelectedImage(coverImage);
-    } else {
-      console.error("Invalid Image Format");
-    }
-  };
-
-  useEffect(() => {
-    if (selectedImage) {
-      setFormData({ ...formData, coverImage: selectedImage });
-    }
-  }, [selectedImage]);
-
-  const {
-    register,
-    setValue,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(validateSchema),
-  });
-  const [formData, setFormData] = useState({
+  const [formState, setFormState] = useState({
     title: "",
     description: "",
-    language: "",
     skillLevel: "",
+    category: "",
+    language: "",
+    price: "",
     coverImage: null,
     assessmentPdf: null,
     certificate: null,
   });
-
+  // console.log("formState :>> ", formState);
   const [chapters, setChapters] = useState([{ title: "", video: null }]);
 
   const handleChapterFileChange = (event, index) => {
@@ -83,28 +57,45 @@ const UpdateCourse = () => {
     updatedChapters[index].video = event.target.files[0];
     setChapters(updatedChapters);
   };
-  const Creator = Cookies.get("userName");
-  const capitalizedCreator = Creator.split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-  const username = capitalizedCreator;
+  const handleImageUpload = (e) => {
+    const coverImage = e.target.files[0];
+    if (coverImage && coverImage.type.startsWith("image/")) {
+      setSelectedImage(coverImage);
+      setFormState((prevState) => ({ ...prevState, coverImage: coverImage })); // Update the formState
+    } else {
+      console.error("Invalid Image Format");
+    }
+  };
+
+  useEffect(() => {
+    if (selectedImage) {
+      setFormState({ ...formState, coverImage: selectedImage });
+    }
+  }, [selectedImage]);
+
   const [category, setCateogy] = useState([]);
   const [coverImage, setCoverImage] = useState(null);
-  console.log("coverImage", coverImage);
+  const [certificateFile, setCertificateFile] = useState(null);
+  const [assessmentFile, setAssessmentFile] = useState(null);
+
   const FetchCourseDetails = async () => {
     try {
       const res = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/course-creator/courses/${courseId}`
       );
-      console.log("res", res.data);
       const { course } = res?.data;
-      setValue("title", course?.title);
-      setValue("description", course?.description);
-      setValue("skillLevel", course?.skillLevel);
-      setValue("category", course?.category);
-      setValue("language", course?.language);
-      setValue("price", course?.price);
-     
+
+      setFormState({
+        title: course?.title || "",
+        description: course?.description || "",
+        skillLevel: course?.skillLevel || "",
+        category: course?.category || "",
+        language: course?.language || "",
+        price: course?.price || "",
+        coverImage: course?.coverImage || null,
+        assessmentPdf: course?.assessmentPdf || null,
+        certificate: course?.certificate || null,
+      });
     } catch (err) {
       console.log("err", err);
     }
@@ -112,9 +103,7 @@ const UpdateCourse = () => {
 
   useEffect(() => {
     FetchCourseDetails();
-  }, [])
-  
-
+  }, []);
 
   const getCategories = async () => {
     try {
@@ -126,87 +115,78 @@ const UpdateCourse = () => {
       console.log("error :>> ", error);
     }
   };
+
   useEffect(() => {
     getCategories();
   }, []);
-  // const uploadCourseFunction = async (data) => {
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append("title", data.title);
-  //     formData.append("description", data.description);
-  //     formData.append("price", data.price);
-  //     formData.append("language", data.language);
-  //     formData.append("coverImage", selectedImage);
-  //     formData.append("skillLevel", data.skillLevel);
-  //     formData.append("categoryId", selectedCategoryId);
-  //     formData.append("assessmentPdf", assessmentFile);
-  //     formData.append("certificate", certificateFile);
-  //     formData.append("creatorId", id);
-  //     const response = await axios.post(
-  //       `${process.env.REACT_APP_BASE_URL}/course-creator/create-course`,
-  //       formData
-  //     );
-  //     setLoading(false);
-  //     toast.success(response.data.message);
-  //     const courseId = response.data.course._id;
-  //     navigate(`/chapter-upload/${courseId}`);
-  //   } catch (error) {
-  //     setLoading(false);
-  //     console.error("Error uploading course: ", error);
-  //     if (error?.response?.data?.message === "unAuthorized") {
-  //       Cookies.remove("token");
-  //       Cookies.remove("roleName");
-  //       Cookies.remove("roleId");
-  //       navigate("/login");
-  //     } else if (error?.response?.data?.message) {
-  //       toast.error(error?.response?.data?.message);
-  //       navigate("/login");
-  //     } else {
-  //       toast.error("unsuccess");
-  //       navigate("/login");
-  //     }
-  //   }
-  // };
 
+  const updateCourseFunction = async (data) => {
+    console.log("data", data);
+    console.log("formState ==> ", formState);
+    try {
+      const formData = new FormData();
+      formData.append("title", data.title);
+      formData.append("description", data.description);
+      formData.append("price", data.price);
+      formData.append("language", data.language);
+      formData.append("coverImage", selectedImage);
+      formData.append("skillLevel", data.skillLevel);
+      formData.append("categoryId", selectedCategoryId);
+      formData.append("assessmentPdf", assessmentFile);
+      formData.append("certificate", certificateFile);
+      formData.append("creatorId", id);
+      const response = await axios.patch(
+        `${process.env.REACT_APP_BASE_URL}/course-creator/update/${courseId}`,
+        formState
+      );
+      setLoading(false);
+      toast.success(response.data.message);
+
+      //navigate(`/chapter-upload/${courseId}`);
+    } catch (error) {
+      setLoading(false);
+      console.error("Error uploading course: ", error);
+      if (error?.response?.data?.message === "unAuthorized") {
+        Cookies.remove("token");
+        Cookies.remove("roleName");
+        Cookies.remove("roleId");
+        // navigate("/login");
+      } else if (error?.response?.data?.message) {
+        toast.error(error?.response?.data?.message);
+        //  navigate("/login");
+      } else {
+        toast.error("unsuccess");
+        // navigate("/login");
+      }
+    }
+  };
+
+  const downloadCertificate = (certificateFile) => {
+    const fullUrl = `http://localhost:5000/${certificateFile}`;
+
+    const link = document.createElement("a");
+    link.href = fullUrl;
+    link.download = "certificate.pdf";
+    link.click();
+  };
   return (
     <div>
       <CreatorNavbar />
       <div className="grid grid-cols-6 mb-8">
-        <form onSubmit={handleSubmit("")} className="col-span-6 flex flex-col">
+        <form
+          // onSubmit={handleSubmit(updateCourseFunction)}
+          className="col-span-6 flex flex-col"
+        >
           <div className="flex flex-row justify-between items-center px-8 py-8 bg-slate-200 bg-opacity-30">
             <div className="flex flex-row items-center">
-              {/* <div className="text-xl font-thin text-gray-600">
-                <span className="text-xl font-thin text-gray-600 mr-2">
-                 Update the course
-                </span>
-                
-              </div> */}
+              <span className="text-2xl font-semibold my-4 px-4">
+                Update the course
+              </span>
+              <Link to={`/update-chapter/${courseId}`} className="ml-[20vh] rounded-lg bg-blue-800 px-4 py-2 text-white font-semibold">Edit Chapters</Link>
+              {/* <button onClick={()=>navigate(`/update-course/${courseId}`)} className="ml-[20vh] rounded-lg bg-blue-800 px-4 py-2 text-white font-semibold">Edit Chapters</button> */}
             </div>
-            {/* <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white w-[150px] cursor-none">
-              <Link
-                to="/upload-course"
-                className="flex flex-row justify-center items-center text-xs"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-6 h-6 mx-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"
-                  />
-                </svg>
-                New Course
-              </Link>
-            </div> */}
           </div>
-          <span className="text-2xl font-semibold my-4 px-4">
-            Update the course
-          </span>
+
           <div className="grid grid-cols-4 gap-4 justify-center items-center px-4">
             <div className="grid grid-cols-1 gap-4 col-span-2">
               <div className="grid grid-col-1 gap-2">
@@ -216,7 +196,10 @@ const UpdateCourse = () => {
                   name="title"
                   placeholder="type here"
                   className="px-4 py-4 border-2 border-gray-200 rounded-xl bg-gray-200"
-                  {...register("title")}
+                  value={formState.title}
+                  onChange={(e) =>
+                    setFormState({ ...formState, title: e.target.value })
+                  }
                 />
               </div>
               <div className="grid grid-cols-1 gap-2">
@@ -227,7 +210,10 @@ const UpdateCourse = () => {
                   placeholder="type here"
                   name="description"
                   className="px-4 py-4 border-2 border-gray-200 rounded-xl bg-gray-200"
-                  {...register("description")}
+                  value={formState.description}
+                  onChange={(e) =>
+                    setFormState({ ...formState, description: e.target.value })
+                  }
                 />
               </div>
             </div>
@@ -236,27 +222,29 @@ const UpdateCourse = () => {
                 <span className="text-gray-500 text-sm">
                   Upload Cover Image
                 </span>
-                <img
-                  src={`${process.env.REACT_APP_BASE_URL}/${coverImage}`}
-                  alt=""
-                />
+                <span className="text-gray-500"> Certificate </span>
+                {formState.coverImage && (
+                  <img
+                    src={`http://localhost:5000/${formState.coverImage}`}
+                    alt=""
+                    className="w-40 h-20"
+                  />
+                )}
                 <input
                   type="file"
                   className="px-4 py-4 border-2 border-gray-200 rounded-xl bg-gray-200 text-gray-400"
                   placeholder="type here"
                   name="coverImage"
-                  value={coverImage}
-                  onChange={handleImageUpload}
+                  onChange={(e) => handleImageUpload(e)}
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
                   <span className="text-gray-500 text-sm">Select language</span>
                   <select
-                    {...register("language")}
-                    value={formData.language}
+                    value={formState.language}
                     onChange={(e) =>
-                      setFormData({ ...formData, language: e.target.value })
+                      setFormState({ ...formState, language: e.target.value })
                     }
                     className="px-4 py-4 text-gray-400 bg-gray-200 rounded-xl"
                   >
@@ -279,10 +267,9 @@ const UpdateCourse = () => {
                     Select skill level
                   </span>
                   <select
-                    {...register("skillLevel")}
-                    value={formData.skillLevel}
+                    value={formState.skillLevel}
                     onChange={(e) =>
-                      setFormData({ ...formData, skillLevel: e.target.value })
+                      setFormState({ ...formState, skillLevel: e.target.value })
                     }
                     className="px-4 py-4 text-gray-400 bg-gray-200 rounded-xl"
                   >
@@ -312,12 +299,6 @@ const UpdateCourse = () => {
                         {cats.name}
                       </option>
                     ))}
-                    {/* <option selected value="Intermediate" className="text-gray">
-                      Intermediate
-                    </option>
-                    <option selected value="Advance" className="text-gray">
-                      Advance
-                    </option> */}
                   </select>
                 </div>
               </div>
@@ -328,17 +309,30 @@ const UpdateCourse = () => {
           </span>
           <div className="grid grid-cols-4 px-4 gap-4 items-center">
             <div className="grid grid-rows-2 justify-center items-center">
-              <span className="text-gray-500"> Price </span>
+              <span className="text-gray-500 mb-2"> Price </span>
               <input
                 type="decimal"
                 placeholder="$|0.0"
                 name="price"
                 className="bg-gray-200 px-2 py-2 rounded-xl "
-                {...register("price")}
+                value={formState.price}
+                onChange={(e) =>
+                  setFormState({ ...formState, price: e.target.value })
+                }
               />
             </div>
             <div className="grid grid-rows-2 justify-center items-center">
               <span className="text-gray-500"> Certificate </span>
+
+              {formState.certificate && (
+                <Link
+                  to=""
+                  onClick={() => downloadCertificate(formState.certificate)}
+                  className="text-sm  hover:text-blue-700 font-[400] my-2"
+                >
+                  View Current Certificate
+                </Link>
+              )}
               <input
                 type="file"
                 placeholder="pdf"
@@ -349,6 +343,16 @@ const UpdateCourse = () => {
 
             <div className="grid grid-rows-2 justify-center items-center">
               <span className="text-gray-500"> Assessment </span>
+
+              {formState.assessmentPdf && (
+                <Link
+                  to=""
+                  onClick={() => downloadCertificate(formState.assessmentPdf)}
+                  className="text-sm  hover:text-blue-700 font-[400] my-2"
+                >
+                  View Current Assessment PDF
+                </Link>
+              )}
               <input
                 type="file"
                 placeholder="pdf"
@@ -360,7 +364,9 @@ const UpdateCourse = () => {
             <div className="grid justify-center items-end mt-8">
               <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-[200px]">
                 <button
-                  type="submit"
+                  // type="submit"t
+                  type="button"
+                  onClick={updateCourseFunction}
                   className="flex flex-row justify-center items-center"
                 >
                   Submit
