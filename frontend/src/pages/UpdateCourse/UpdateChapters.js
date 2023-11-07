@@ -34,35 +34,7 @@ const UploadChapterByCourse = () => {
       { title: "", video: null, number: chapterNumber },
     ]);
   };
-  //   const uploadChapters = async () => {
-  //     try {
-  //       const chapterIds = [];
 
-  //       for (const chapter of chapters) {
-  //         const chapterFormData = new FormData();
-  //         chapterFormData.append("title", chapter.title);
-  //         chapterFormData.append("video", chapter.video);
-
-  //         const chapterResponse = await axios.post(
-  //           `${process.env.REACT_APP_BASE_URL}/course-creator/courses/${courseId}/chapters`,
-  //           chapterFormData
-  //         );
-
-  //         if (chapterResponse.status === 200) {
-  //           chapterIds.push(chapterResponse.data.chapterId);
-  //           navigate("/creator-dashboard");
-  //         } else {
-  //           console.error("Error uploading chapter:", chapter.title);
-  //           return null;
-  //         }
-  //       }
-
-  //       return chapterIds;
-  //     } catch (error) {
-  //       console.error("Error uploading chapters: ", error);
-  //       return null;
-  //     }
-  //   };
 
   const GetChapters = async () => {
     try {
@@ -80,12 +52,12 @@ const UploadChapterByCourse = () => {
     GetChapters();
   }, []);
 
-  const handleUpdateChapter = async (chapterId) => {
+  const handleUpdateChapter = async (chapter) => {
+    console.log('chapter', chapter)
     try {
-    //   const chapterId = "CHAPTER_ID_TO_UPDATE"; 
       const response = await axios.patch(
-        `http://localhost:5000/api/course-creatorupdate-chapter/${chapterId}`,
-        chapters
+        `http://localhost:5000/api/course-creator/update-chapter/${chapter._id}`,
+        chapter
       );
 
       console.log(response.data);
@@ -102,7 +74,6 @@ const UploadChapterByCourse = () => {
           key={chapter._id}
         >
           <div className="grid grid-cols-8 gap-8 rounded-lg shadow-md justify-center items-center px-6 py-6">
-            {/* <div className="grid col-span-1">{`Chapter - ${chapter.number}`}</div> */}
             <div className="grid col-span-1">Chapter - {index + 1}</div>
 
             <div className="grid col-span-2 ">
@@ -129,58 +100,12 @@ const UploadChapterByCourse = () => {
                 onChange={(e) => handleChapterFileChange(e, index)}
               />
             </div>
-            <button className="bg-blue-600 p-2 rounded-lg text-white"  onClick={() => handleUpdateChapter(chapter._id)}>Update</button>
+            <button className="bg-blue-600 p-2 rounded-lg text-white"  onClick={() => handleUpdateChapter(chapter)}>Update</button>
             <button className="bg-red-600 p-2 rounded-lg text-white" onClick={() => handleUpdateChapter(chapter._id)}>Delete</button>
           </div>
         </div>
       ))}
-      <div className="grid grid-cols-12 col-span-12 p-4">
-        <div className="col-span-10 bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 my-6 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-[200px]">
-          <button
-            onClick={() => handleAddChapter()}
-            className="flex flex-row justify-center items-center"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            Add Chapter
-          </button>
-        </div>
-        <div className="col-span-2 bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 my-6 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-[200px]">
-          <button
-            onClick={""}
-            type="submit"
-            className="flex flex-row justify-center items-center"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            Submit
-          </button>
-        </div>
-      </div>
+      
     </div>
   );
 };

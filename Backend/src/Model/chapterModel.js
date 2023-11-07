@@ -12,7 +12,7 @@ const chapterSchema = mongoose.Schema(
     },
     vedioDuration: {
       type: Number,
-      required: true,
+      required: false,
     },
   },
   {
