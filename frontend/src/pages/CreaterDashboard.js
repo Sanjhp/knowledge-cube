@@ -43,6 +43,7 @@ const CreaterDashboard = () => {
   }, [token]);
 
   const getAllCreatorCourses = async () => {
+
     if (userId) {
       try {
         setLoading(true);
@@ -53,6 +54,7 @@ const CreaterDashboard = () => {
           url = `${process.env.REACT_APP_BASE_URL}/course-creator/courses/creator/${userId}`;
         }
         let res = await axios.get(url);
+
         setCourses(res?.data?.courses);
         setLoading(false);
       } catch (error) {
@@ -114,6 +116,20 @@ const CreaterDashboard = () => {
       getUser();
     }
   }, [userId]);
+
+  const handleCourseDelete = async (courseId) => {
+    console.log('courseId', courseId)
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/api/course-creator/delete-course/${courseId}`
+      );
+      toast.success(response?.data?.message);
+      getAllCreatorCourses()
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error deleting chapter:", error);
+    }
+  };
 
   function openModal() {
     setIsOpen(true);
@@ -216,12 +232,10 @@ const CreaterDashboard = () => {
                     >
                       Update
                     </Link>
-                    <Link
-                      // to={`/update-course/{course._id}`}
-                      className="bg-red-600 h-10  px-5 py-2 text-white"
-                    >
+                    <button onClick={() => handleCourseDelete(course._id)} className="bg-red-600 h-10  px-5 py-2 text-white">
                       Delete
-                    </Link>
+                    </button>
+
                   </div>
                 </div>
                 <div className="grid grid-cols-12 col-span-12">

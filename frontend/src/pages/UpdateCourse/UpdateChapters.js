@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useParams } from "react-router-dom";
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 const UploadChapterByCourse = () => {
   const navigate = useNavigate();
@@ -35,7 +36,6 @@ const UploadChapterByCourse = () => {
     ]);
   };
 
-
   const GetChapters = async () => {
     try {
       const res = await axios.get(
@@ -53,20 +53,42 @@ const UploadChapterByCourse = () => {
   }, []);
 
   const handleUpdateChapter = async (chapter) => {
-    console.log('chapter', chapter)
+    console.log("chapter", chapter);
     try {
       const response = await axios.patch(
         `http://localhost:5000/api/course-creator/update-chapter/${chapter._id}`,
         chapter
       );
+      toast.success(response?.data?.message);
+      GetChapters()
 
       console.log(response.data);
     } catch (error) {
       console.error("Error updating chapter:", error);
     }
   };
+
+  const handleChapterDelete = async (chapter) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/api/course-creator/delete-chapter/${chapter?._id}`
+      );
+      toast.success(response?.data?.message);
+      GetChapters()
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error deleting chapter:", error);
+    }
+  };
+
   return (
     <div className="p-8">
+      <Link
+        to={`/update-course/${courseId}`}
+        className="text-lg font-semibold items-center  px-4 mb-10 flex"
+      >
+        <IoMdArrowRoundBack /> <span className="">Back</span>
+      </Link>
       <span className="text-xl font-semibold my-8 px-4">Course Content</span>
       {chapters?.map((chapter, index) => (
         <div
@@ -100,12 +122,21 @@ const UploadChapterByCourse = () => {
                 onChange={(e) => handleChapterFileChange(e, index)}
               />
             </div>
-            <button className="bg-blue-600 p-2 rounded-lg text-white"  onClick={() => handleUpdateChapter(chapter)}>Update</button>
-            <button className="bg-red-600 p-2 rounded-lg text-white" onClick={() => handleUpdateChapter(chapter._id)}>Delete</button>
+            <button
+              className="bg-blue-600 p-2 rounded-lg text-white"
+              onClick={() => handleUpdateChapter(chapter)}
+            >
+              Update
+            </button>
+            <button
+              className="bg-red-600 p-2 rounded-lg text-white"
+              onClick={() => handleChapterDelete(chapter)}
+            >
+              Delete
+            </button>
           </div>
         </div>
       ))}
-      
     </div>
   );
 };
