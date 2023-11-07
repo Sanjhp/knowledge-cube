@@ -15,7 +15,6 @@ const UploadChapterByCourse = () => {
   const { courseId } = useParams();
 
   const [chapters, setChapters] = useState([{ title: "", video: null }]);
-  console.log("chapters :>> ", chapters);
   const handleChapterFileChange = (event, index) => {
     const updatedChapters = [...chapters];
     updatedChapters[index].video = event.target.files[0];

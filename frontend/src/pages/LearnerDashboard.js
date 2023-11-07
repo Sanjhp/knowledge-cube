@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import LearnerNavbar from "../components/Navbar/LearnerNavbar";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { Document, Page } from "react-pdf";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { FaLanguage } from "react-icons/fa";
@@ -11,7 +10,6 @@ import { FaLanguage } from "react-icons/fa";
 const LearnerDashboard = () => {
   const greeting = "Good Morning";
   const name = Cookies.get("userName");
-  // const user = name.charAt(0).toUpperCase()+ name.slice(1);
   const capitalizedCreator = name
     .split(" ")
     .map((word) => word.charAt(0).toUpperCase() + word?.slice(1))
@@ -69,12 +67,6 @@ const LearnerDashboard = () => {
   const [filled, setFilled] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
   const [isLoading, setLoading] = useState(false);
-  //   const [userDetails, setUserDetails] = useState({});
-  //   useEffect(()=>{
-  //     const token = Cookies.get("token")
-  //     const Id = Cookies.get("userId")
-  // setUserId(Id)
-  //   },[])
 
   useEffect(() => {
     if (filled < 40 && isRunning) {
@@ -83,7 +75,6 @@ const LearnerDashboard = () => {
   }, [filled, isRunning]);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const userId = Cookies.get("userId");
-  const [searchQuery, setSearchQuery] = useState("");
   const getEnrolledCourses = async () => {
     try {
       setLoading(true);
@@ -92,11 +83,6 @@ const LearnerDashboard = () => {
         `${process.env.REACT_APP_BASE_URL}/enroll/user-enrolled-courses/${userId}`
       );
       setLoading(false);
-      console.log("res :>> ", res);
-      console.log(
-        "res.data.enrolledCourses._id :>> ",
-        res.data.enrolledCourses[0]._id
-      );
       setEnrolledCourses(res.data.enrolledCourses);
     } catch (err) {
       setLoading(false);

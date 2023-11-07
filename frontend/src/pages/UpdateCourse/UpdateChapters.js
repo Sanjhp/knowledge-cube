@@ -1,0 +1,113 @@
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import CreatorNavbar from "../../components/Navbar/CreatorNavbar";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useParams } from "react-router-dom";
+
+const UploadChapterByCourse = () => {
+  const navigate = useNavigate();
+  const { courseId } = useParams();
+
+  const [chapters, setChapters] = useState([{ title: "", video: null }]);
+  console.log("chapters :>> ", chapters);
+  const handleChapterFileChange = (event, index) => {
+    const updatedChapters = [...chapters];
+    updatedChapters[index].video = event.target.files[0];
+    setChapters(updatedChapters);
+  };
+  const handleTitleChange = (event, index) => {
+    const updatedChapters = [...chapters];
+    updatedChapters[index].title = event.target.value;
+    setChapters(updatedChapters);
+  };
+
+  const handleAddChapter = () => {
+    const chapterNumber = chapters.length + 1;
+    setChapters([
+      ...chapters,
+      { title: "", video: null, number: chapterNumber },
+    ]);
+  };
+
+
+  const GetChapters = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:5000/api/course-creator/courses/${courseId}`
+      );
+      console.log("res :>> ", res?.data?.course?.chapters);
+      setChapters(res?.data?.course?.chapters);
+    } catch (err) {
+      console.log("err :>> ", err);
+    }
+  };
+
+  useEffect(() => {
+    GetChapters();
+  }, []);
+
+  const handleUpdateChapter = async (chapter) => {
+    console.log('chapter', chapter)
+    try {
+      const response = await axios.patch(
+        `http://localhost:5000/api/course-creator/update-chapter/${chapter._id}`,
+        chapter
+      );
+
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error updating chapter:", error);
+    }
+  };
+  return (
+    <div className="p-8">
+      <span className="text-xl font-semibold my-8 px-4">Course Content</span>
+      {chapters?.map((chapter, index) => (
+        <div
+          className="grid grid-rows-1 gap-2 px-4 py-2 items-center"
+          key={chapter._id}
+        >
+          <div className="grid grid-cols-8 gap-8 rounded-lg shadow-md justify-center items-center px-6 py-6">
+            <div className="grid col-span-1">Chapter - {index + 1}</div>
+
+            <div className="grid col-span-2 ">
+              <span className="text-gray-500">Title</span>
+              <input
+                type="text"
+                className="bg-gray-200 px-2 py-2 rounded-xl"
+                placeholder="Type here"
+                value={chapter.title}
+                onChange={(e) => handleTitleChange(e, index)}
+              />
+            </div>
+            <div className="grid col-span-2">
+              <video width="350" height="600" controls>
+                <source
+                  src={`http://localhost:5000/${chapter?.videoUrl}`}
+                  type="video/mp4"
+                />
+                Your browser does not support the video tag.
+              </video>
+              <input
+                type="file"
+                className="bg-gray-200 px-2 py-2 rounded-xl"
+                onChange={(e) => handleChapterFileChange(e, index)}
+              />
+            </div>
+            <button className="bg-blue-600 p-2 rounded-lg text-white"  onClick={() => handleUpdateChapter(chapter)}>Update</button>
+            <button className="bg-red-600 p-2 rounded-lg text-white" onClick={() => handleUpdateChapter(chapter._id)}>Delete</button>
+          </div>
+        </div>
+      ))}
+      
+    </div>
+  );
+};
+
+export default UploadChapterByCourse;

@@ -34,11 +34,13 @@ const UpdateUser = () => {
   } = useForm({
     resolver: yupResolver(validateSchema),
   });
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState(null);
   const accessToken = Cookies.get("token");
   const [id, setId] = useState(null);
+  const [user, setUser] = useState({
+    "password": ''
+  });
 
   // Retrieve the token from localStorage
   useEffect(() => {
@@ -48,7 +50,6 @@ const UpdateUser = () => {
       const userId = payload._id;
       setId(userId);
       setToken(accessToken);
-      console.log("User ID:", userId);
     } else {
       console.log("Token not found");
     }
@@ -64,7 +65,6 @@ const UpdateUser = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log("response", response);
 
         const { name, email, phone, role, dob } = response?.data?.data;
         const formattedBirthDate = new Date(dob).toISOString().split("T")[0];
@@ -74,13 +74,11 @@ const UpdateUser = () => {
         setValue("phone", phone);
         const roleName = Cookies.get("roleName");
         setValue("role", roleName);
-        console.log("roleName :>> ", roleName);
         setValue("dob", formattedBirthDate);
         setLoading(false);
       } catch (err) {
         if (err?.response?.data?.message === "unAuthorized") {
           Cookies.removeItem("token");
-
           navigate("/");
         } else if (err?.response?.data?.message) {
           console.log(err?.response?.data?.message[0]);
@@ -96,8 +94,6 @@ const UpdateUser = () => {
   }, [id]);
 
   const handleProfileUpdate = async (value) => {
-    console.log("hello :>> ");
-    console.log("value :>> ", value);
     try {
       setLoading(true);
       const updatedUserData = {
@@ -105,6 +101,9 @@ const UpdateUser = () => {
         phone: value.phone,
         dob: value.dob,
       };
+      if (user.password) {
+        updatedUserData.password = user.password;
+      }
 
       const response = await axios.put(
         `/api/users/update-user/${id}`,
@@ -117,18 +116,30 @@ const UpdateUser = () => {
       );
       const updatedName = response?.data?.data?.name;
       Cookies.set("userName", updatedName);
-      console.log("response :>> ", response);
+
       toast.success(response?.data?.message);
       handleGetUser();
       setLoading(false);
     } catch (err) {
       setLoading(false);
       if (err?.response?.data?.message === "unAuthorized") {
-        Cookies.remove("token");
+        localStorage.removeItem("token");
         navigate("/");
-      } else if (err?.response?.data?.message) {
-        toast.error(err?.response?.data?.message);
-        console.log("err :>> ", err);
+      } else if (
+        err?.response?.data?.message &&
+        Array.isArray(err.response.data.message)
+      ) {
+        const passwordError = err?.response?.data?.message.find(
+          (error) => error.password
+        );
+        if (passwordError) {
+          toast.error(passwordError.password);
+        } else {
+          const errorMessages = err?.response?.data?.message
+            .map((error) => error.password)
+            .join(", ");
+          toast.error(errorMessages);
+        }
       } else {
         toast.error("An error occured!");
         console.log("err :>> ", err);
@@ -237,8 +248,10 @@ const UpdateUser = () => {
                 type="password"
                 id="password"
                 name="password"
-                {...register("password")}
-                readOnly
+                value={user.password}
+                onChange={(e) => {
+                  setUser({ ...user, password: e.target.value });
+                }}
               />
               {errors && errors.password && (
                 <p className={styles.errorMessage}>{errors.password.message}</p>

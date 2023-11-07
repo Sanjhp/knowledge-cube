@@ -10,6 +10,10 @@ const chapterSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    vedioDuration: {
+      type: Number,
+      required: false,
+    },
   },
   {
     timestamps: true,

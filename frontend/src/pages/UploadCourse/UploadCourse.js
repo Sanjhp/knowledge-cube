@@ -61,7 +61,6 @@ const UploadCourse = () => {
   } = useForm({
     resolver: yupResolver(validateSchema),
   });
-  // console.log("errors :>> ", errors);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -88,7 +87,6 @@ const UploadCourse = () => {
       const categoryRes = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/category/get-categories`
       );
-      // console.log("categoryRes :>> ", categoryRes.data.data);
       setCateogy(categoryRes.data.data);
     } catch (error) {
       console.log("error :>> ", error);
@@ -115,7 +113,6 @@ const UploadCourse = () => {
         formData
       );
       setLoading(false);
-      // console.log("response :>> ", response);
       toast.success(response.data.message);
       const courseId = response.data.course._id;
       navigate(`/chapter-upload/${courseId}`);
@@ -156,7 +153,7 @@ const UploadCourse = () => {
                 </span>
               </div>
             </div>
-            <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-[150px]">
+            <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white w-[150px] cursor-none">
               <Link
                 to="/upload-course"
                 className="flex flex-row justify-center items-center text-xs"
