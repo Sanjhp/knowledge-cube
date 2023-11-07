@@ -16,7 +16,9 @@ const LearnerCourseDetailsPage = () => {
   const [unhighlight, setUnhighlight] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const userId = Cookies.get("userId");
+  const [loginUser, setLoginUser] = useState(userId);
   const [isEnrolled, setIsEnrolled] = useState(false);
+  const [avgRating,setAvgRating]=useState(null)
   console.log("isEnrolled :>> ", isEnrolled);
 
   const getEnrolledCourses = async () => {
@@ -28,7 +30,7 @@ const LearnerCourseDetailsPage = () => {
       );
       setLoading(false);
       const enrolledCourses = res.data.enrolledCourses;
-      setIsEnrolled(enrolledCourses.some((course) => course._id === courseId));
+      setIsEnrolled(enrolledCourses.some((course) => course?._id === courseId));
 
       // setEnrolledCourses(res.data.enrolledCourses);
     } catch (err) {
@@ -46,8 +48,10 @@ const LearnerCourseDetailsPage = () => {
   }, []);
   const [courseDetails, setCourseDetails] = useState({});
   const [rating, setRating] = useState(0);
+  console.log("rating", rating);
   const [comment, setComment] = useState("");
   const [reviews, setReviews] = useState([]);
+  console.log("reviews", reviews);
   const [totalReviews, setTotalReviews] = useState("");
   const [enrollments, setEnrollments] = useState([]);
   const { courseId } = useParams();
@@ -71,7 +75,8 @@ const LearnerCourseDetailsPage = () => {
     }
   };
 
-  const createReviewFunction = async (data) => {
+  const createReviewFunction = async (e) => {
+    e.preventDefault();
     try {
       const data = {
         courseId: courseId,
@@ -82,10 +87,31 @@ const LearnerCourseDetailsPage = () => {
         `${process.env.REACT_APP_BASE_URL}/review/create-review`,
         data
       );
-      toast.success(res.data.message);
-      navigate("/learner-dashboard");
+      toast.success(res?.data?.message);
+      // navigate("/learner-dashboard");
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error?.response?.data?.message);
+      console.log("error :>> ", error);
+    }
+  };
+  const createRatingFunction = async (e) => {
+    e.preventDefault();
+    try {
+      const data = {
+        courseId: courseId,
+        userId: Id,
+        rating: rating,
+      };
+      const res = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/rating/add-rating`,
+        data
+      );
+      
+      toast.success(res?.data?.message);
+      GetAllRatings()
+      setRating(0);
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
       console.log("error :>> ", error);
     }
   };
@@ -106,6 +132,27 @@ const LearnerCourseDetailsPage = () => {
       console.log("error", error);
     }
   };
+
+  const GetAllRatings = async () => {
+    try {
+      const res =await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/rating/get-ratings?courseId=${courseId}`
+      );
+      console.log('res====', res.data)
+      setAvgRating(res?.data?.averageRating)
+      toast.success(res?.data?.message);
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+      console.log("error :>> ", error);
+    }
+  };
+
+  useEffect(() => {
+    GetAllRatings()
+  
+    
+  }, [])
+  
 
   useEffect(() => {
     GetSingleCourse();
@@ -132,15 +179,8 @@ const LearnerCourseDetailsPage = () => {
               <span className="flex flex-rows mx-2 col-span-4 justify-center items-center">
                 <i className="ri-star-fill text-orange-400"></i>
                 <span className="text-sm font-extralight">
-                  {totalReviews === 0 ? (
-                    "No ratings"
-                  ) : (
-                    <>
-                      {totalReviews === 1
-                        ? "1 review and rating"
-                        : `${totalReviews} reviews and ratings`}
-                    </>
-                  )}
+                {avgRating ? `${avgRating}` : "0 Ratings"}
+
                 </span>
               </span>
 
@@ -286,17 +326,25 @@ const LearnerCourseDetailsPage = () => {
                 <span className="text-3xl">Reviews & Ratings</span>
                 <br />
                 <br />
-                <div className="grid grid-cols-10 col-span-10 gap-2">
-                  <div className="col-span-10 my-4">
-                    <Rate
-                      rating={rating}
-                      onRating={(rate) => setRating(rate)}
-                    />
+                <div>
+                  <div className="grid grid-cols-10 col-span-10 gap-2">
+                    <div className="col-span-10 my-4">
+                      <Rate
+                        rating={rating}
+                        onRating={(rate) => setRating(rate)}
+                      />
+                    </div>
+                    <span className="col-span-10 text-sm text-gray-300 mt-4">
+                      {rating} stars
+                    </span>
+                    <button
+                      onClick={createRatingFunction}
+                      className=" bg-black text-white px-5 py-2 rounded-lg mt-2"
+                    >
+                      Submit
+                    </button>
                   </div>
                   {/* CONSOLE.LOG rating TO VIEW DYNAMIC RATING COUNT */}
-                  <span className="col-span-10 text-sm text-gray-300">
-                    {rating} stars
-                  </span>
 
                   <form className="grid grid-cols-10 col-span-10 gap-2 py-4 px-8 border-[1px] border-r-[1px] border-b-[1px] border-gray-200 rounded-sm">
                     <span className="text-xl font-extralight uppercase col-span-10 border-b-[1px] border-gray-100">
@@ -324,7 +372,6 @@ const LearnerCourseDetailsPage = () => {
                     <div className="flex col-span-1">
                       <img
                         src={dummyuser}
-                        // src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60"
                         className="w-[50px] h-[50px] object-cover rounded-[25px] ml-[12px]"
                       />
                     </div>
@@ -337,7 +384,7 @@ const LearnerCourseDetailsPage = () => {
                         {new Date(review.createdAt).toLocaleString()}
                       </span>
                     </p>
-                    <p className="col-span-7 ml-4">{review.rating} stars</p>
+
                     <p className="col-span-10 border-[1px] border-gray-100 py-4 px-2">
                       {review.comment}
                     </p>
