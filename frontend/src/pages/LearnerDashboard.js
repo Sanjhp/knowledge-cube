@@ -74,14 +74,16 @@ const LearnerDashboard = () => {
     }
   }, [filled, isRunning]);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
+  console.log('enrolledCourses', enrolledCourses)
 
   const validEnrolledCourses = enrolledCourses?.filter(
     (course) => course !== null
   );
-  
+
   console.log("validEnrolledCourses :>> ", validEnrolledCourses);
 
   const userId = Cookies.get("userId");
+
   const getEnrolledCourses = async () => {
     try {
       setLoading(true);
@@ -89,6 +91,7 @@ const LearnerDashboard = () => {
       const res = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/enroll/user-enrolled-courses/${userId}`
       );
+      console.log('res', res)
       setLoading(false);
       setEnrolledCourses(res.data.enrolledCourses);
     } catch (err) {
@@ -96,15 +99,11 @@ const LearnerDashboard = () => {
       console.log("Error: ", err);
     }
   };
-  const [pdfUrl, setPdfUrl] = useState("");
-
-  // const handleViewCertificate = (certificateUrl) => {
-  //   setPdfUrl(certificateUrl);
-  // };
 
   useEffect(() => {
     getEnrolledCourses();
   }, []);
+
 
   const downloadCertificate = (certificateUrl) => {
     const fullUrl = `http://localhost:5000/${certificateUrl}`;
@@ -114,6 +113,24 @@ const LearnerDashboard = () => {
     link.download = "certificate.pdf"; // specify the file name here
     link.click();
   };
+  useEffect(() => {
+    if (validEnrolledCourses && validEnrolledCourses.length > 0) {
+      const interval = setInterval(() => {
+        setFilled((prev) => {
+          if (prev < 100) {
+            const currentCourse = validEnrolledCourses.find(
+              (course) => course._id === prev / 100
+            );
+            return prev + 1;
+          } else {
+            return 0;
+          }
+        });
+      }, 50);
+
+      return () => clearInterval(interval);
+    }
+  }, [validEnrolledCourses]);
 
   // const creatorDetails = async (creatorId) => {
   //   // Make a request to the server endpoint with userId as a query parameter
@@ -122,7 +139,15 @@ const LearnerDashboard = () => {
   //   return data;
   // };
 
-  
+
+  const calculateProgress = (courseProgress) => {
+    const totalChapters = courseProgress.length;
+    const completedChapters = courseProgress?.filter(progress => progress).length;
+    const progressPercentage = (completedChapters / totalChapters) * 100;
+    return progressPercentage;
+  };
+
+
   return (
     <div>
       <LearnerNavbar />
@@ -254,14 +279,12 @@ const LearnerDashboard = () => {
             </div>
             <div className="grid grid-cols-12 justify-between items-center col-span-12 gap-8 px-4 py-4">
               <div className="grid grid-cols-6 justify-between items-center col-span-6 h-[40vh] px-2 py-2 overflow-y-scroll overscroll-contain">
-                {lessonSchedule.map((element) => (
+                {/* {lessonSchedule.map((element) => (
                   <div className="grid grid-cols-6 col-span-6">
-                    {/* <span className="text-xl font-semibold mb-4">{element.date}</span> */}
                     <div className="grid grid-cols-6 col-span-6">
                       {element.lessons.map((key, index) => (
                         <div className="grid grid-cols-12 col-span-6 shadow-[#3484B4] shadow-sm transition delay-50 hover:-translate-y-2 duration-500 rounded-md px-4 py-4 mb-4">
                           {element.lessons[index].map((elements) => (
-                            // <div className="grid">
                             <div className="grid grid-cols-12 col-span-12">
                               <span className="font-semibold col-span-6">
                                 {elements.courseName}
@@ -295,7 +318,47 @@ const LearnerDashboard = () => {
                       ))}
                     </div>
                   </div>
+                ))} */}
+                {validEnrolledCourses.map((course) => (
+                  <div key={course?._id} className="mb-4">
+                    <span className="font-semibold text-lg mb-2">{course?.title}</span>
+                    <div className="relative h-8 rounded-full bg-gray-300">
+                      <div
+                        className="absolute top-0 left-0 h-full bg-blue-500 rounded-full"
+                        style={{
+                          width: `${calculateProgress(course?.courseProgress)}%`,
+                        }}
+                      ></div>
+                    </div>
+                    <span className="block text-sm mt-2">
+                      {`${calculateProgress(course?.courseProgress)}% Completed`}
+                    </span>
+                  </div>
                 ))}
+
+
+                {/* {validEnrolledCourses.map((course) => (
+                  <div key={course?._id} className="grid grid-cols-12 col-span-6">
+                    <span className="font-semibold col-span-6">{course?.title}</span>
+                    <div className="relative overflow-hidden w-[200px] h-[25px] rounded-[5px] bg-slate-300 col-span-4 col-start-7">
+                      <div
+                        style={{
+                          height: "100%",
+                          width: `${calculateProgress(course?.courseProgress)}%`,
+                          backgroundColor: "#3484B4",
+                          transition: "width 0.5s",
+                          padding: "5px",
+                          fontWeight: "400",
+                          fontSize: "12px",
+                        }}
+                      ></div>
+                      <span className="font-bold absolute l-[50%] t-[50%] origin-[-50%_50%]  text-black shadow-md shadow-gray-300">
+                        {calculateProgress(course?.courseProgress)}%
+                      </span>
+                    </div>
+                  </div>
+                ))} */}
+
               </div>
 
               <div className="grid grid-cols-4 justify-between items-center col-span-6 h-[40vh] px-2 py-2 overflow-y-scroll overscroll-contain">

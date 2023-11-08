@@ -168,6 +168,23 @@ const LearnerCourseDetailsPage = () => {
     setHighlight(false);
   };
 
+  // const handleChapterCompletion = async (chapterId) => {
+   
+  //   try {
+  //     const response = await axios.put("http://localhost:5000/api/enroll/enrollment/update-chapter-progress", {
+  //       enrollmentId: enrollmentId, 
+  //       courseId: courseId,
+  //       chapterIndex: chapterId, 
+  //     });
+      
+  
+  //     setWatchedVideos([...watchedVideos, chapterId]);
+  //   } catch (error) {
+  //     console.error("Failed to update chapter progress: ", error);
+  //   }
+  // };
+  
+
   return (
     <div>
       <LearnerNavbar />
@@ -292,7 +309,7 @@ const LearnerCourseDetailsPage = () => {
                                 : "font-bold mx-2"
                             }
                           >
-                            {chapter.title}
+                            {chapter?.title}
                           </span>
                         </div>
                         {isEnrolled && (
