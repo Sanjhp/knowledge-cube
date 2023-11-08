@@ -10,13 +10,11 @@ const CreatorNavbar = ({backgroundColor , yes}) => {
   const roleName = Cookies.get("roleName");
   useEffect(() => {
     if (accessToken) {
-      const parts = accessToken.split(".");
+      const parts = accessToken?.split(".");
       const payload = JSON.parse(atob(parts[1]));
-      const userId = payload._id;
-      console.log("userId", userId);
+      const userId = payload?._id;
       setId(userId);
       setAccessToken(accessToken);
-      console.log("User ID:", userId);
     } else {
       console.log("Token not found");
     }

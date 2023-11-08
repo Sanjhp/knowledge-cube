@@ -4,12 +4,9 @@ import path from "path";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    console.log("Field Name:", file.fieldname);
-    console.log("File Name:", file.originalname);
     let destinationFolder = "public/video-lectures";
 
     const ext = path.extname(file.originalname);
-    console.log("ext :>> ", ext);
     if (ext === ".jpg" || ext === ".jpeg" || ext === ".png" || ext === ".gif") {
       destinationFolder = "public/course-images";
     } else if (ext === ".pdf" || ext === ".doc" || ext === ".docx") {
@@ -20,8 +17,6 @@ const storage = multer.diskStorage({
         destinationFolder = "public/certificates";
       }
     }
-    // console.log('object :>> ', object);
-    console.log("Destination Folder:", destinationFolder);
 
     // Create destination folder if it doesn't exist
     if (!fs.existsSync(destinationFolder)) {
@@ -35,48 +30,7 @@ const storage = multer.diskStorage({
   },
 });
 
-// const fileFilter = (req, file, cb) => {
 
-// const fileFilter = (req, file, cb) => {
-//   const ext = path.extname(file.originalname).toLowerCase();
-
-//   if (
-//     file.fieldname === "coverImage" ||
-//     file.fieldname === "certificate" ||
-//     file.fieldname === "assessmentPdf"
-//   ) {
-//     return cb(null, true);
-//   }
-//   return cb(new Error("Unexpected field"));
-// };
-
-// const fileFilter = (req, file, cb) => {
-//   const ext = path.extname(file.originalname).toLowerCase();
-//   console.log("ext :>> ", ext);
-
-//   // Check for allowed extensions for coverImage, certificate, and assessmentPdf
-//   if (
-//     (file.fieldname === "coverImage" &&
-//       (ext === ".jpg" ||
-//         ext === ".jpeg" ||
-//         ext === ".png" ||
-//         ext === ".gif")) ||
-//     (file.fieldname === "certificate" &&
-//       (ext === ".pdf" || ext === ".doc" || ext === ".docx")) ||
-//     (file.fieldname === "assessmentPdf" &&
-//       (ext === ".pdf" || ext === ".doc" || ext === ".docx"))
-//   ) {
-//     console.log("Field Name:", file.fieldname);
-//     console.log("File Name:", file.originalname);
-//     return cb(null, true);
-//   }
-
-//   return cb(
-//     new Error(
-//       "Invalid file format. Allowed formats: .jpg, .jpeg, .png, .gif, .pdf, .doc, .docx"
-//     )
-//   );
-// };
 
 const fileFilter = (req, file, cb) => {
   const ext = path.extname(file.originalname).toLowerCase();
@@ -96,8 +50,7 @@ const fileFilter = (req, file, cb) => {
     (file.fieldname === "video" &&
       (ext === ".mp4" || ext === ".avi" || ext === ".mov"))
   ) {
-    console.log("Field Name:", file.fieldname);
-    console.log("File Name:", file.originalname);
+  
     return cb(null, true);
   }
 
@@ -107,7 +60,6 @@ const fileFilter = (req, file, cb) => {
     )
   );
 };
-
 
 const fileUpload = multer({
   storage: storage,

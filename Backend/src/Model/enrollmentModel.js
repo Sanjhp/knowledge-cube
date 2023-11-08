@@ -12,6 +12,17 @@ const enrollmentSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    courseProgress: [{
+      courseId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course",
+        required: true,
+      },
+      chapterProgress: [{
+        type: Boolean,
+        default: false,
+      }],
+    }],
   },
   {
     timestamps: true,

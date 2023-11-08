@@ -74,7 +74,13 @@ const LearnerDashboard = () => {
     }
   }, [filled, isRunning]);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
-  console.log('enrolledCourses', enrolledCourses)
+
+  const validEnrolledCourses = enrolledCourses?.filter(
+    (course) => course !== null
+  );
+  
+  console.log("validEnrolledCourses :>> ", validEnrolledCourses);
+
   const userId = Cookies.get("userId");
   const getEnrolledCourses = async () => {
     try {
@@ -92,32 +98,31 @@ const LearnerDashboard = () => {
   };
   const [pdfUrl, setPdfUrl] = useState("");
 
-  const handleViewCertificate = (certificateUrl) => {
-    setPdfUrl(certificateUrl);
-  };
+  // const handleViewCertificate = (certificateUrl) => {
+  //   setPdfUrl(certificateUrl);
+  // };
 
   useEffect(() => {
     getEnrolledCourses();
   }, []);
 
   const downloadCertificate = (certificateUrl) => {
-    // Construct the full URL to the certificate file
     const fullUrl = `http://localhost:5000/${certificateUrl}`;
 
-    // Trigger the download
     const link = document.createElement("a");
     link.href = fullUrl;
     link.download = "certificate.pdf"; // specify the file name here
     link.click();
   };
 
-  const creatorDetails = async (creatorId) => {
-    // Make a request to the server endpoint with userId as a query parameter
-    const response = await fetch(`/api/getUserDetails?userId=${creatorId}`);
-    const data = await response.json();
-    return data;
-  };
+  // const creatorDetails = async (creatorId) => {
+  //   // Make a request to the server endpoint with userId as a query parameter
+  //   const response = await fetch(`/api/getUserDetails?userId=${creatorId}`);
+  //   const data = await response.json();
+  //   return data;
+  // };
 
+  
   return (
     <div>
       <LearnerNavbar />
@@ -167,63 +172,65 @@ const LearnerDashboard = () => {
               slidesToSlide={2}
               swipeable
             >
-              {enrolledCourses && enrolledCourses
-                ?.filter((course) => course).map((course) => (
-              <div className="col-span-3">
-                <div
-                  key={course?._id}
-                  className="flex flex-col col-span-6 px-4 mx-4 my-8 py-4 bg-white border-2 border-gray-100 shadow-2xl shadow-gray-400 rounded-md transition ease-in delay-0 hover:-translate-y-2 duration:1000 z-50"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="black"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"
-                    />
-                  </svg>
-
-                  <span className="flex text-xl text-black leading-6 my-4">
-                    {course?.title}
-                  </span>
-                  <div className="flex justify-between items-center my-2">
-                    <span className="flex items-center">
-                      <i className="ri-book-line text-orange-500 text-[25px] mr-2"></i>{" "}
-                      {course?.chapters?.length} lessons
-                    </span>
-                    <span className="flex items-center">
-                      <FaLanguage className="fill-violet-500 h-10 w-10 text-[25px]" />
-                      {/* <i className="ri-time-line  text-violet-500 mx-2 text-[25px]"></i> */}
-                      {course?.language}
-                    </span>
-                  </div>
-                  <span className="text-l font-extralight my-2">
-                    {course?.enrollments?.length > 0
-                      ? `${course?.enrollments?.length} enrolled students`
-                      : ""}
-                  </span>
-                  <span className="border-b-[1px] border-gray-200 my-4"></span>
-                  <div className="flex justify-between items-center">
-                    <span className="flex">Rs. {course?.price}</span>
-                    <div className="cursor-pointer bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-32">
-                      <Link
-                        to={`/learner-course-details-page/${course?._id}`}
-                        className="flex flex-row justify-center items-center text-xs cursor-pointer"
+              {enrolledCourses &&
+                enrolledCourses
+                  ?.filter((course) => course)
+                  .map((course) => (
+                    <div className="col-span-3">
+                      <div
+                        key={course?._id}
+                        className="flex flex-col col-span-6 px-4 mx-4 my-8 py-4 bg-white border-2 border-gray-100 shadow-2xl shadow-gray-400 rounded-md transition ease-in delay-0 hover:-translate-y-2 duration:1000 z-50"
                       >
-                        Watch now
-                      </Link>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="black"
+                          className="w-6 h-6"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"
+                          />
+                        </svg>
+
+                        <span className="flex text-xl text-black leading-6 my-4">
+                          {course?.title}
+                        </span>
+                        <div className="flex justify-between items-center my-2">
+                          <span className="flex items-center">
+                            <i className="ri-book-line text-orange-500 text-[25px] mr-2"></i>{" "}
+                            {course?.chapters?.length} lessons
+                          </span>
+                          <span className="flex items-center">
+                            <FaLanguage className="fill-violet-500 h-10 w-10 text-[25px]" />
+                            {/* <i className="ri-time-line  text-violet-500 mx-2 text-[25px]"></i> */}
+                            {course?.language}
+                          </span>
+                        </div>
+                        <span className="text-l font-extralight my-2">
+                          {course?.enrollments?.length > 0
+                            ? `${course?.enrollments?.length} enrolled students`
+                            : ""}
+                        </span>
+                        <span className="border-b-[1px] border-gray-200 my-4"></span>
+                        <div className="flex justify-between items-center">
+                          <span className="flex">Rs. {course?.price}</span>
+                          <div className="cursor-pointer bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-32">
+                            <Link
+                              to={`/learner-course-details-page/${course?._id}`}
+                              className="flex flex-row justify-center items-center text-xs cursor-pointer"
+                            >
+                              Watch now
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-                // {/* </Carousal> */}
-              ))}
+                    // {/* </Carousal> */}
+                  ))}
             </Carousel>
           ) : (
             <div className="col-span-12 text-center mt-5 text-black text-2xl font-semibold">
@@ -231,7 +238,7 @@ const LearnerDashboard = () => {
             </div>
           )}
         </div>
-        {enrolledCourses && enrolledCourses.length > 0 ? (
+        {validEnrolledCourses && validEnrolledCourses?.length > 0 ? (
           <div className="col-span-12 px-4">
             <div className="grid grid-cols-12 col-span-12 gap-8">
               <div className="grid grid-cols-6 col-span-6 justify-between items-center px-8">
@@ -257,7 +264,7 @@ const LearnerDashboard = () => {
                             // <div className="grid">
                             <div className="grid grid-cols-12 col-span-12">
                               <span className="font-semibold col-span-6">
-                                course name {elements.courseName}
+                                {elements.courseName}
                               </span>
                               <span className="text-l font-semibold col-span-4 col-start-7">
                                 <div className="relative overflow-hidden w-[200px] h-[25px] rounded-[5px] bg-slate-300">
@@ -292,7 +299,7 @@ const LearnerDashboard = () => {
               </div>
 
               <div className="grid grid-cols-4 justify-between items-center col-span-6 h-[40vh] px-2 py-2 overflow-y-scroll overscroll-contain">
-                {enrolledCourses?.map((course) => (
+                {validEnrolledCourses.map((course) => (
                   <div
                     key={course?._id}
                     className="grid grid-cols-4 justify-between items-center col-span-4"
@@ -301,7 +308,7 @@ const LearnerDashboard = () => {
                       <div className="grid grid-cols-12 col-span-6 shadow-[#3484B4] shadow-sm transition delay-50 hover:-translate-y-2 duration-500 rounded-md px-4 py-4 mb-4 bg-[#3484B4]">
                         <div className="grid grid-cols-12 col-span-12">
                           <span className="font-semibold text-white col-span-9">
-                            Certificate
+                            {course?.title}
                           </span>
                           <Link
                             to=""

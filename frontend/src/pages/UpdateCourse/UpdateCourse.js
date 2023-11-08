@@ -49,7 +49,6 @@ const UpdateCourse = () => {
     assessmentPdf: null,
     certificate: null,
   });
-  // console.log("formState :>> ", formState);
   const [chapters, setChapters] = useState([{ title: "", video: null }]);
 
   const handleChapterFileChange = (event, index) => {
@@ -121,8 +120,6 @@ const UpdateCourse = () => {
   }, []);
 
   const updateCourseFunction = async (data) => {
-    console.log("data", data);
-    console.log("formState ==> ", formState);
     try {
       const formData = new FormData();
       formData.append("title", data.title);

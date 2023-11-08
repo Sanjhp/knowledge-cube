@@ -39,7 +39,6 @@ export const UploadCourse = async (req, res) => {
       categoryId,
     } = req.body;
     const date = new Date();
-    console.log("req.body :>> ", req.body);
     const coverImage = req.files["coverImage"]
       ? req.files["coverImage"][0].path
       : null;
@@ -49,11 +48,9 @@ export const UploadCourse = async (req, res) => {
     const assessmentPdf = req.files["assessmentPdf"]
       ? req.files["assessmentPdf"][0].path
       : null;
-    console.log("originalName", req.files["coverImage"][0].originalname);
     const originalName = req.files["coverImage"][0].originalname
       .split(" ")
       .join("-");
-    console.log("originalName :>> ", originalName);
 
     if (
       !coverImage ||
@@ -77,7 +74,6 @@ export const UploadCourse = async (req, res) => {
     }
 
     const user = await User.findById(creatorId).populate("role");
-    console.log("user :>> ", user);
 
     if (!user || user.role.roleName !== "Creator") {
       return res.status(StatusCodes.FORBIDDEN).json({
@@ -308,7 +304,6 @@ export const GetCourseById = async (req, res) => {
       })
       .exec();
 
-    console.log("course :>> ", course);
 
     if (!course) {
       return res.status(StatusCodes.NOT_FOUND).json({
