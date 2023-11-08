@@ -16,7 +16,6 @@ const UploadChapterByCourse = () => {
   const { courseId } = useParams();
 
   const [chapters, setChapters] = useState([{ title: "", video: null }]);
-  console.log("chapters :>> ", chapters);
   const handleChapterFileChange = (event, index) => {
     const updatedChapters = [...chapters];
     updatedChapters[index].video = event.target.files[0];
@@ -41,7 +40,6 @@ const UploadChapterByCourse = () => {
       const res = await axios.get(
         `http://localhost:5000/api/course-creator/courses/${courseId}`
       );
-      console.log("res :>> ", res?.data?.course?.chapters);
       setChapters(res?.data?.course?.chapters);
     } catch (err) {
       console.log("err :>> ", err);
@@ -61,8 +59,6 @@ const UploadChapterByCourse = () => {
       );
       toast.success(response?.data?.message);
       GetChapters()
-
-      console.log(response.data);
     } catch (error) {
       console.error("Error updating chapter:", error);
     }

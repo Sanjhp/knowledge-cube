@@ -33,18 +33,15 @@ const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
 
   const handleResetPassword = async (value) => {
-    console.log("value :>> ", value);
     setLoading(true);
     try {
       const res = await axios.post("/api/users/reset-password", value);
       setLoading(false);
       toast.success(res.data.message || "Successfully registered!!");
-      console.log("res :>> ", res);
       navigate("/login")
     } catch (err) {
       setLoading(false);
       if (err?.res?.data?.message) {
-        console.log(err?.res?.data?.message)
         toast.error(err?.res?.data?.message);
       } else {
         toast.error("An error occured");

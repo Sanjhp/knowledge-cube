@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LearnerNavbar from "../components/Navbar/LearnerNavbar";
 import Rate from "../components/Rate";
 import axios from "axios";
@@ -16,10 +15,8 @@ const LearnerCourseDetailsPage = () => {
   const [unhighlight, setUnhighlight] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const userId = Cookies.get("userId");
-  const [loginUser, setLoginUser] = useState(userId);
   const [isEnrolled, setIsEnrolled] = useState(false);
-  const [avgRating,setAvgRating]=useState(null)
-  console.log("isEnrolled :>> ", isEnrolled);
+  const [avgRating, setAvgRating] = useState(null);
 
   const getEnrolledCourses = async () => {
     try {
@@ -48,16 +45,30 @@ const LearnerCourseDetailsPage = () => {
   }, []);
   const [courseDetails, setCourseDetails] = useState({});
   const [rating, setRating] = useState(0);
-  console.log("rating", rating);
   const [comment, setComment] = useState("");
   const [reviews, setReviews] = useState([]);
-  console.log("reviews", reviews);
   const [totalReviews, setTotalReviews] = useState("");
   const [enrollments, setEnrollments] = useState([]);
   const { courseId } = useParams();
   const [showVideo, setShowVideo] = useState(null);
   const Id = Cookies.get("userId");
+  const [watchedVideos, setWatchedVideos] = useState([]);
 
+  const handleVideoWatched = (chapterId) => {
+    setWatchedVideos([...watchedVideos, chapterId]);
+  };
+
+  const updateChapterProgress = async (enrollmentId, chapterIndex) => {
+    try {
+      const response = await axios.put("/enrollment/update-chapter-progress", {
+        enrollmentId,
+        chapterIndex,
+      });
+      console.log("response :>> ", response);
+    } catch (error) {
+      console.error("Failed to update chapter progress: ", error);
+    }
+  };
   const CreateEnrollment = async () => {
     try {
       const enrollmentdata = {
@@ -88,7 +99,6 @@ const LearnerCourseDetailsPage = () => {
         data
       );
       toast.success(res?.data?.message);
-      // navigate("/learner-dashboard");
     } catch (error) {
       toast.error(error?.response?.data?.message);
       console.log("error :>> ", error);
@@ -106,9 +116,9 @@ const LearnerCourseDetailsPage = () => {
         `${process.env.REACT_APP_BASE_URL}/rating/add-rating`,
         data
       );
-      
+
       toast.success(res?.data?.message);
-      GetAllRatings()
+      GetAllRatings();
       setRating(0);
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -135,24 +145,18 @@ const LearnerCourseDetailsPage = () => {
 
   const GetAllRatings = async () => {
     try {
-      const res =await axios.get(
+      const res = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/rating/get-ratings?courseId=${courseId}`
       );
-      console.log('res====', res.data)
-      setAvgRating(res?.data?.averageRating)
-      toast.success(res?.data?.message);
+      setAvgRating(res?.data?.averageRating);
     } catch (error) {
-      toast.error(error?.response?.data?.message);
       console.log("error :>> ", error);
     }
   };
 
   useEffect(() => {
-    GetAllRatings()
-  
-    
-  }, [])
-  
+    GetAllRatings();
+  }, []);
 
   useEffect(() => {
     GetSingleCourse();
@@ -179,8 +183,7 @@ const LearnerCourseDetailsPage = () => {
               <span className="flex flex-rows mx-2 col-span-4 justify-center items-center">
                 <i className="ri-star-fill text-orange-400"></i>
                 <span className="text-sm font-extralight">
-                {avgRating ? `${avgRating}` : "0 Ratings"}
-
+                  {avgRating ? `${avgRating}` : "0 Ratings"}
                 </span>
               </span>
 
@@ -344,7 +347,7 @@ const LearnerCourseDetailsPage = () => {
                       Submit
                     </button>
                   </div>
-                  {/* CONSOLE.LOG rating TO VIEW DYNAMIC RATING COUNT */}
+                  {/*rating TO VIEW DYNAMIC RATING COUNT */}
 
                   <form className="grid grid-cols-10 col-span-10 gap-2 py-4 px-8 border-[1px] border-r-[1px] border-b-[1px] border-gray-200 rounded-sm">
                     <span className="text-xl font-extralight uppercase col-span-10 border-b-[1px] border-gray-100">
@@ -455,24 +458,6 @@ const LearnerCourseDetailsPage = () => {
                     Certificate of completion
                   </span>
                 </div>
-              </div>
-
-              <span className="text-xl font-semibold mt-4">
-                Share this course
-              </span>
-              <div className="flex flex-rows justify-center items-center">
-                <Link to={"https://www.instagram.com"}>
-                  <i className="ri-facebook-box-fill hover:text-blue-400" />
-                </Link>
-                <Link to="https://www.instagram.com">
-                  <i className="ri-instagram-fill hover:text-pink-500" />
-                </Link>
-                <Link to="https://www.instagram.com">
-                  <i className="ri-twitter-fill hover:text-blue-300" />
-                </Link>
-                <Link to="https://www.instagram.com">
-                  <i className="ri-linkedin-box-fill hover:text-blue-500" />
-                </Link>
               </div>
             </div>
           </div>

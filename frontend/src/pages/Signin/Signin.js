@@ -78,17 +78,14 @@ function LoginPage() {
       const token = res?.data?.token;
       Cookies.set("token", token);
       const id = res?.data.user?._id;
-      console.log("id :>> ", id);
       Cookies.set("userId", id);
       const roleId = res?.data?.user?.role;
-      console.log("roleId :>> ", roleId);
 
       Cookies.set("roleId", roleId);
       const roleName = await RoleFunction(roleId);
       setLoading(false);
       Cookies.set("roleName", roleName);
       const userName = res?.data?.user?.name;
-      console.log("userName", userName);
       Cookies.set("userName", userName);
 
       toast.success(res?.data?.message);

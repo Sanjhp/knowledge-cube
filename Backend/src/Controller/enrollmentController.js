@@ -9,7 +9,6 @@ export const enrollUserInCourse = async (req, res) => {
     const { courseId, userId } = req.body;
 
     const user = await User.findById(userId);
-    console.log("user :>> ", user);
     if (!user) {
       return res
         .status(StatusCodes.NOT_FOUND)
@@ -64,12 +63,16 @@ export const getEnrolledCoursesByUserId = async (req, res) => {
   try {
     const { userId } = req.params;
 
-    const enrollments = await Enrollment.find({ userId }).populate("courseId");
-
+    const enrollments = await Enrollment.find({ userId })
+    .populate({
+      path: 'courseId',
+      populate: {
+        path: 'chapters',
+      },
+    });
     const enrolledCourses = enrollments.map(
       (enrollment) => enrollment.courseId
     );
-    console.log("enrolledCourses :>> ", enrolledCourses);
     res.status(StatusCodes.OK).json({ success: true, enrolledCourses });
   } catch (error) {
     console.error(error);
@@ -77,5 +80,36 @@ export const getEnrolledCoursesByUserId = async (req, res) => {
       success: false,
       message: "Failed to fetch enrolled courses",
     });
+  }
+};
+
+export const updateEnrollment = async (req, res) => {
+  const { enrollmentId, courseId, chapterIndex } = req.body;
+  try {
+    const enrollment = await Enrollment.findById(enrollmentId);
+    if (!enrollment) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ success: false, message: "Enrollment not found" });
+    }
+
+    const courseProgress = enrollment.courseProgress.find(
+      (course) => course.courseId.toString() === courseId
+    );
+    if (!courseProgress) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ success: false, message: "Course progress not found" });
+    }
+
+    courseProgress.chapterProgress[chapterIndex] = true;
+    await enrollment.save();
+
+    res.status(StatusCodes.OK).json({ success: true, enrollment });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ success: false, message: "Failed to update course progress" });
   }
 };

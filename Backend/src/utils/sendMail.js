@@ -13,7 +13,7 @@ const sendMail = async mailOptions => {
       //
     })
 
-    console.log('Sending mail to user ....')
+   // console.log('Sending mail to user ....')
 
     await transporter.sendMail(mailOptions)
     return 'success'

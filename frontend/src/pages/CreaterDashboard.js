@@ -118,14 +118,12 @@ const CreaterDashboard = () => {
   }, [userId]);
 
   const handleCourseDelete = async (courseId) => {
-    console.log('courseId', courseId)
     try {
       const response = await axios.delete(
         `http://localhost:5000/api/course-creator/delete-course/${courseId}`
       );
       toast.success(response?.data?.message);
       getAllCreatorCourses()
-      console.log(response.data);
     } catch (error) {
       console.error("Error deleting chapter:", error);
     }

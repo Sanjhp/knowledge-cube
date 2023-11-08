@@ -12,7 +12,6 @@ function HeroSection() {
   const handleGetStarted=()=>{
     const Token=Cookies.get("token")
     const Role= Cookies.get("roleName")
-    console.log('Token :>> ', Token);
     if(!Token){
       navigate("/register")
     }
