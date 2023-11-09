@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
 import LearnerNavbar from "../components/Navbar/LearnerNavbar";
@@ -159,29 +160,7 @@ const LearnerCourseDetailsPage = () => {
     setHighlight(false);
   };
 
-  const handleVideoEnd = (chapterId) => async () => {
-    try {
-      const response = await axios.put(
-        "http://localhost:5000/api/enroll/enrollment/update-progress",
-        {
-          enrollmentId: enrollmentId,
-          courseId: courseId,
-          chapterIndex: chapterId,
-        }
-      );
-      // console.log("response :>> ", response);
-
-      setWatchedVideos((prevWatchedVideos) => [
-        ...prevWatchedVideos,
-        chapterId,
-      ]);
-    } catch (error) {
-      console.error("Failed to update chapter progress: ", error);
-    }
-  };
-
-  // const handleVideoEnd = async (chapterId) => {
-  //   console.log("Video ended. Chapter ID:", chapterId);
+  // const handleVideoEnd = (chapterId) => async () => {
   //   try {
   //     const response = await axios.put(
   //       "http://localhost:5000/api/enroll/enrollment/update-progress",
@@ -191,13 +170,35 @@ const LearnerCourseDetailsPage = () => {
   //         chapterIndex: chapterId,
   //       }
   //     );
-  //     console.log("response :>> ", response);
+  //     // console.log("response :>> ", response);
 
-  //     setWatchedVideos([...watchedVideos, chapterId]);
+  //     setWatchedVideos((prevWatchedVideos) => [
+  //       ...prevWatchedVideos,
+  //       chapterId,
+  //     ]);
   //   } catch (error) {
   //     console.error("Failed to update chapter progress: ", error);
   //   }
   // };
+
+  const handleVideoEnd = async (chapterId) => {
+    console.log("Video ended. Chapter ID:", chapterId);
+    try {
+      const response = await axios.put(
+        "http://localhost:5000/api/enroll/enrollment/update-progress",
+        {
+          enrollmentId: enrollmentId,
+          courseId: courseId,
+          chapterIndex: chapterId,
+        }
+      );
+      console.log("response :>> ", response);
+
+      setWatchedVideos([...watchedVideos, chapterId]);
+    } catch (error) {
+      console.error("Failed to update chapter progress: ", error);
+    }
+  };
 
   return (
     <div>
@@ -335,12 +336,21 @@ const LearnerCourseDetailsPage = () => {
                         )}
 
                         {showVideo !== null && (
+                          // <VideoModal
+                          //   videoUrl={`http://localhost:5000/${courseDetails?.chapters[showVideo]?.videoUrl}`}
+                          //   onClose={() => setShowVideo(null)}
+                          //   // onEnded={handleVideoEnd(chapter?._id)}
+                          //   // onEnded={() => handleVideoEnd(enrollmentId, courseId, chapter?._id, setWatchedVideos)}
+                          //   onEnded={handleVideoEnd.bind(null, chapter?._id)}
+                          // />
                           <VideoModal
                             videoUrl={`http://localhost:5000/${courseDetails?.chapters[showVideo]?.videoUrl}`}
                             onClose={() => setShowVideo(null)}
-                            // onEnded={handleVideoEnd(chapter?._id)}
-                            // onEnded={() => handleVideoEnd(enrollmentId, courseId, chapter?._id, setWatchedVideos)}
-                            onEnded={handleVideoEnd.bind(null, chapter?._id)}
+                            onVideoEnd={() =>
+                              handleVideoEnd(
+                                courseDetails?.chapters[showVideo]?._id
+                              )
+                            }
                           />
                         )}
                       </li>

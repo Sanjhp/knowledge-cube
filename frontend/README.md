@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+# KnowledgeCube - Fullstack Online Learning Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+KnowledgeCube is an online learning platform designed to empower individuals and organizations to create and share short courses on various subjects. The platform is built using a modern technology stack to ensure a seamless and engaging user experience for both course creators and learners. Key components of the platform include a course creation suite, a content delivery system, and a user management system.
 
-## Available Scripts
+## Project Outline
 
-In the project directory, you can run:
+This project is an end-to-end Fullstack application aimed at creating an online learning platform. It is part of our Fullstack Development Program and is based on the MERN stack (MongoDB, Express.js, React, Node.js).
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### User Authentication
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Registration, login, and role-based access control for different user types: administrators, course creators, and learners.
 
-### `npm test`
+### Course Creation Suite
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Enables course creators to design, publish, and manage short courses.
+- Includes setting up course structure, uploading content, and creating quizzes or assessments.
 
-### `npm run build`
+### Content Management
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Allows for the storage, organization, and retrieval of various types of course content, such as text, images, videos, and documents.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Course Discovery
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Enables users to search, filter, and browse available courses based on various criteria, such as subject, difficulty level, or course creator.
 
-### `npm run eject`
+### Enrolment and Progress Tracking
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Allows learners to enroll in courses, track their learning progress, and resume learning where they left off.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Learner Dashboard
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Provides learners with a personalized dashboard displaying their enrolled courses, progress, and achievements.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Course Creator Dashboard
 
-## Learn More
+- Offers course creators insights into course performance, learner engagement, and feedback to help improve course quality.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Certificates
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Enables the issuance of completion certificates to learners who successfully complete courses.
 
-### Code Splitting
+## Tech Stack
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Frontend: React
+- Backend: Node.js, Express.js
+- Database: MongoDB
+- Authentication: JSON Web Tokens (JWT)
+- Responsive Design: CSS, Bootstrap
 
-### Analyzing the Bundle Size
+## Getting Started
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1. Clone the repository
+2. Navigate to the frontend and backend directories and run `npm install` to install dependencies.
+3. Configure your MongoDB connection in the backend configuration file.
+4. Run `npm start` in the root directories to start the development servers.
 
-### Making a Progressive Web App
+## Test Credentials
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. Learner
+   learner@gmail.com
+   password: 12345678
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+2. Creator
+   creator@gmail.com
+   password: 12345678

@@ -23,12 +23,11 @@ import Cookies from "js-cookie";
 
 function App() {
   const Role = Cookies.get("roleName");
-  console.log('Role :>> ', Role);
+  console.log("Role :>> ", Role);
   const isLearner = Role === "Learner";
   const isCreator = Role === "Creator";
-console.log('isLearner :>> ', isLearner);
-console.log('isCreator :>> ', isCreator);
-
+  console.log("isLearner :>> ", isLearner);
+  console.log("isCreator :>> ", isCreator);
 
   return (
     <BrowserRouter>
@@ -98,7 +97,7 @@ console.log('isCreator :>> ', isCreator);
           exact
           path="/learner-course-details-page/:courseId"
           element={
-            isCreator|| isLearner ? (
+            isCreator || isLearner ? (
               <LearnerCourseDetailsPage />
             ) : (
               <Navigate to="/" />
@@ -110,4 +109,4 @@ console.log('isCreator :>> ', isCreator);
     </BrowserRouter>
   );
 }
-export default App;
+export default App;

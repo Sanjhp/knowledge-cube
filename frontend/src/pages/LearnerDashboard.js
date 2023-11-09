@@ -34,36 +34,36 @@ const LearnerDashboard = () => {
     },
   };
 
-  const lessonSchedule = [
-    {
-      date: "20/12/2023",
-      lessons: [[{ courseName: "Course 1" }], [{ courseName: "Course 1" }]],
-    },
-    {
-      date: "23/12/2023",
-      lessons: [[{ courseName: "Course 1" }], [{ courseName: "Course 1" }]],
-    },
-    {
-      date: "23/12/2023",
-      lessons: [[{ courseName: "Course 1" }], [{ courseName: "Course 1" }]],
-    },
-    {
-      date: "23/12/2023",
-      lessons: [[{ courseName: "Course 1" }], [{ courseName: "Course 1" }]],
-    },
-    {
-      date: "23/12/2023",
-      lessons: [[{ courseName: "Course 1" }], [{ courseName: "Course 1" }]],
-    },
-    {
-      date: "23/12/2023",
-      lessons: [[{ courseName: "Course 1" }], [{ courseName: "Course 1" }]],
-    },
-    {
-      date: "23/12/2023",
-      lessons: [[{ courseName: "Course 1" }], [{ courseName: "Course 1" }]],
-    },
-  ];
+  // const lessonSchedule = [
+  //   {
+  //     date: "20/12/2023",
+  //     lessons: [[{ courseName: "Course 1" }], [{ courseName: "Course 1" }]],
+  //   },
+  //   {
+  //     date: "23/12/2023",
+  //     lessons: [[{ courseName: "Course 1" }], [{ courseName: "Course 1" }]],
+  //   },
+  //   {
+  //     date: "23/12/2023",
+  //     lessons: [[{ courseName: "Course 1" }], [{ courseName: "Course 1" }]],
+  //   },
+  //   {
+  //     date: "23/12/2023",
+  //     lessons: [[{ courseName: "Course 1" }], [{ courseName: "Course 1" }]],
+  //   },
+  //   {
+  //     date: "23/12/2023",
+  //     lessons: [[{ courseName: "Course 1" }], [{ courseName: "Course 1" }]],
+  //   },
+  //   {
+  //     date: "23/12/2023",
+  //     lessons: [[{ courseName: "Course 1" }], [{ courseName: "Course 1" }]],
+  //   },
+  //   {
+  //     date: "23/12/2023",
+  //     lessons: [[{ courseName: "Course 1" }], [{ courseName: "Course 1" }]],
+  //   },
+  // ];
   const [filled, setFilled] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
   const [isLoading, setLoading] = useState(false);

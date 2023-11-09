@@ -157,6 +157,7 @@ export const getEnrolledCoursesByUserId = async (req, res) => {
         courseProgress: chapterProgress,
       };
     });
+    console.log("Response to Frontend:", enrolledCoursesWithProgress);
 
     res
       .status(StatusCodes.OK)
@@ -169,7 +170,6 @@ export const getEnrolledCoursesByUserId = async (req, res) => {
     });
   }
 };
-
 
 // export const getEnrolledCoursesByUserId = async (req, res) => {
 //   try {
