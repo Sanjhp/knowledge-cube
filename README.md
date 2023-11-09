@@ -47,7 +47,6 @@ This project is an end-to-end Fullstack application aimed at creating an online 
 - Backend: Node.js, Express.js
 - Database: MongoDB
 - Authentication: JSON Web Tokens (JWT)
-- Responsive Design: CSS, Bootstrap
 
 ## Getting Started
 
