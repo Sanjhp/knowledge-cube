@@ -35,6 +35,11 @@ const UploadChapterByCourse = () => {
   };
   const uploadChapters = async () => {
     try {
+      const invalidChapters = chapters.filter((chapter) => chapter.video === null);
+      if (invalidChapters.length > 0) {
+        toast.error("Please select a video for all chapters.");
+        return;
+      }
       const chapterIds = [];
 
       for (const chapter of chapters) {
@@ -42,6 +47,7 @@ const UploadChapterByCourse = () => {
         chapterFormData.append("title", chapter.title);
         chapterFormData.append("video", chapter.video);
 
+       
         const chapterResponse = await axios.post(
           `${process.env.REACT_APP_BASE_URL}/course-creator/courses/${courseId}/chapters`,
           chapterFormData
@@ -49,6 +55,7 @@ const UploadChapterByCourse = () => {
 
         if (chapterResponse.status === 200) {
           chapterIds.push(chapterResponse.data.chapterId);
+          // toast.error("Some error occured!")
           navigate("/creator-dashboard");
         } else {
           console.error("Error uploading chapter:", chapter.title);
@@ -66,10 +73,13 @@ const UploadChapterByCourse = () => {
     <div className="p-8">
       <span className="text-xl font-semibold my-8 px-4">Course Content</span>
       {chapters.map((chapter, index) => (
-        <div className="grid grid-rows-1 gap-2 px-4 py-2 items-center" key={index}>
+        <div
+          className="grid grid-rows-1 gap-2 px-4 py-2 items-center"
+          key={index}
+        >
           <div className="grid grid-cols-8 gap-8 rounded-lg shadow-md justify-center items-center px-6 py-6">
             {/* <div className="grid col-span-1">{`Chapter - ${chapter.number}`}</div> */}
-            <div className="grid col-span-1">Chapter -  {index+1}</div>
+            <div className="grid col-span-1">Chapter - {index + 1}</div>
 
             <div className="grid col-span-2 ">
               <span className="text-gray-500">Title</span>

@@ -4,7 +4,7 @@ import CreatorNavbar from "../../components/Navbar/CreatorNavbar";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -20,7 +20,7 @@ const UploadCourse = () => {
   const [isNewCourse, setIsNewCourse] = useState(true);
   const [certificateFile, setCertificateFile] = useState(null);
   const [assessmentFile, setAssessmentFile] = useState(null);
-  const [selectedImage, setSelectedImage] = useState();
+  const [selectedImage, setSelectedImage] = useState(null);
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState(null);
@@ -79,8 +79,10 @@ const UploadCourse = () => {
     setChapters(updatedChapters);
   };
   const Creator = Cookies.get("userName");
-  const capitalizedCreator = Creator.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-  const username= capitalizedCreator;  
+  const capitalizedCreator = Creator.split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+  const username = capitalizedCreator;
   const [category, setCateogy] = useState([]);
   const getCategories = async () => {
     try {
@@ -108,6 +110,15 @@ const UploadCourse = () => {
       formData.append("assessmentPdf", assessmentFile);
       formData.append("certificate", certificateFile);
       formData.append("creatorId", id);
+      if (!certificateFile) {
+        toast.error("Please add a certificate pdf");
+      }
+      if (!selectedImage) {
+        toast.error("Please add a Cover Image");
+      }
+      if (!assessmentFile) {
+        toast.error("Please add a assessment pdf");
+      }
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/course-creator/create-course`,
         formData
@@ -126,10 +137,10 @@ const UploadCourse = () => {
         navigate("/login");
       } else if (error?.response?.data?.message) {
         toast.error(error?.response?.data?.message);
-        navigate("/login");
+        // navigate("/login");
       } else {
         toast.error("unsuccess");
-        navigate("/login");
+        // navigate("/login");
       }
     }
   };
@@ -324,14 +335,12 @@ const UploadCourse = () => {
             </div>
 
             <div className="grid justify-center items-end mt-8">
-              <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-[200px]">
-                <button
-                  type="submit"
-                  className="flex flex-row justify-center items-center"
-                >
-                  Submit
-                </button>
-              </div>
+              <button
+                type="submit"
+                className="flex justify-center items-center bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-[200px]"
+              >
+                Submit
+              </button>
             </div>
           </div>
         </form>

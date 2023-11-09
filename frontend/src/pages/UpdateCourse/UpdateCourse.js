@@ -19,7 +19,8 @@ const validateSchema = yup.object().shape({
 const UpdateCourse = () => {
   const { courseId } = useParams();
   const navigate = useNavigate();
-  const [selectedImage, setSelectedImage] = useState();
+  const [selectedImage, setSelectedImage] = useState(null);
+  console.log("selectedImage :>> ", selectedImage);
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState(null);
@@ -49,6 +50,7 @@ const UpdateCourse = () => {
     assessmentPdf: null,
     certificate: null,
   });
+  console.log("formState :>> ", formState);
   const [chapters, setChapters] = useState([{ title: "", video: null }]);
 
   const handleChapterFileChange = (event, index) => {
@@ -56,11 +58,12 @@ const UpdateCourse = () => {
     updatedChapters[index].video = event.target.files[0];
     setChapters(updatedChapters);
   };
+
   const handleImageUpload = (e) => {
-    const coverImage = e.target.files[0];
-    if (coverImage && coverImage.type.startsWith("image/")) {
-      setSelectedImage(coverImage);
-      setFormState((prevState) => ({ ...prevState, coverImage: coverImage })); // Update the formState
+    const image = e.target.files[0];
+
+    if (image && image.type.startsWith("image/")) {
+      setSelectedImage(image); // Set the selected image in the state
     } else {
       console.error("Invalid Image Format");
     }
@@ -73,7 +76,7 @@ const UpdateCourse = () => {
   }, [selectedImage]);
 
   const [category, setCateogy] = useState([]);
-  const [coverImage, setCoverImage] = useState(null);
+  // const [coverImage, setCoverImage] = useState(null);
   const [certificateFile, setCertificateFile] = useState(null);
   const [assessmentFile, setAssessmentFile] = useState(null);
 
@@ -179,7 +182,12 @@ const UpdateCourse = () => {
               <span className="text-2xl font-semibold my-4 px-4">
                 Update the course
               </span>
-              <Link to={`/update-chapter/${courseId}`} className="ml-[20vh] rounded-lg bg-blue-800 px-4 py-2 text-white font-semibold">Edit Chapters</Link>
+              <Link
+                to={`/update-chapter/${courseId}`}
+                className="ml-[20vh] rounded-lg bg-blue-800 px-4 py-2 text-white font-semibold"
+              >
+                Edit Chapters
+              </Link>
               {/* <button onClick={()=>navigate(`/update-course/${courseId}`)} className="ml-[20vh] rounded-lg bg-blue-800 px-4 py-2 text-white font-semibold">Edit Chapters</button> */}
             </div>
           </div>
@@ -220,9 +228,9 @@ const UpdateCourse = () => {
                   Upload Cover Image
                 </span>
                 <span className="text-gray-500"> Certificate </span>
-                {formState.coverImage && (
+                {formState?.coverImage && (
                   <img
-                    src={`http://localhost:5000/${formState.coverImage}`}
+                    src={`http://localhost:5000/${formState?.coverImage}`}
                     alt=""
                     className="w-40 h-20"
                   />
@@ -233,6 +241,12 @@ const UpdateCourse = () => {
                   placeholder="type here"
                   name="coverImage"
                   onChange={(e) => handleImageUpload(e)}
+                  // onChange={(e) => {
+                  //   setFormState({
+                  //     ...formState,
+                  //     coverImage: e.target.files[0],
+                  //   });
+                  // }}
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -359,16 +373,13 @@ const UpdateCourse = () => {
             </div>
 
             <div className="grid justify-center items-end mt-8">
-              <div className="bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-[200px]">
-                <button
-                  // type="submit"t
-                  type="button"
-                  onClick={updateCourseFunction}
-                  className="flex flex-row justify-center items-center"
-                >
-                  Submit
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={updateCourseFunction}
+                className="flex flex-row justify-center items-center bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-[200px]"
+              >
+                Submit
+              </button>
             </div>
           </div>
         </form>

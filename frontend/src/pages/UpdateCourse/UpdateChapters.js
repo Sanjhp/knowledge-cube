@@ -51,7 +51,6 @@ const UploadChapterByCourse = () => {
   }, []);
 
   const handleUpdateChapter = async (chapter) => {
-    console.log("chapter", chapter);
     try {
       const response = await axios.patch(
         `http://localhost:5000/api/course-creator/update-chapter/${chapter._id}`,

@@ -34,7 +34,6 @@ const storage = multer.diskStorage({
 
 const fileFilter = (req, file, cb) => {
   const ext = path.extname(file.originalname).toLowerCase();
-  console.log("ext :>> ", ext);
 
   // Check for allowed extensions for coverImage, certificate, assessmentPdf, and video
   if (

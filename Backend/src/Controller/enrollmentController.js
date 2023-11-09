@@ -152,6 +152,7 @@ export const getEnrolledCoursesByUserId = async (req, res) => {
         : [];
 
       return {
+        enrollmentId: enrollment._id,
         ...course.toObject(),
         courseProgress: chapterProgress,
       };
@@ -168,6 +169,7 @@ export const getEnrolledCoursesByUserId = async (req, res) => {
     });
   }
 };
+
 
 // export const getEnrolledCoursesByUserId = async (req, res) => {
 //   try {
