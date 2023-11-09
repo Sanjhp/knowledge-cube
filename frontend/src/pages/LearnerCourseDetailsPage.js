@@ -56,6 +56,7 @@ const LearnerCourseDetailsPage = () => {
   const [enrollments, setEnrollments] = useState([]);
   const { courseId } = useParams();
   const [showVideo, setShowVideo] = useState(null);
+  console.log('showVideo', showVideo)
   const Id = Cookies.get("userId");
   const [watchedVideos, setWatchedVideos] = useState([]);
 
@@ -160,39 +161,20 @@ const LearnerCourseDetailsPage = () => {
     setHighlight(false);
   };
 
-  // const handleVideoEnd = (chapterId) => async () => {
-  //   try {
-  //     const response = await axios.put(
-  //       "http://localhost:5000/api/enroll/enrollment/update-progress",
-  //       {
-  //         enrollmentId: enrollmentId,
-  //         courseId: courseId,
-  //         chapterIndex: chapterId,
-  //       }
-  //     );
-  //     // console.log("response :>> ", response);
-
-  //     setWatchedVideos((prevWatchedVideos) => [
-  //       ...prevWatchedVideos,
-  //       chapterId,
-  //     ]);
-  //   } catch (error) {
-  //     console.error("Failed to update chapter progress: ", error);
-  //   }
-  // };
-
-  const handleVideoEnd = async (chapterId) => {
-    console.log("Video ended. Chapter ID:", chapterId);
+  const handleVideoEnd = async (showVideo) => {
+    console.log('showVideo', showVideo)
+    const chapterId = courseDetails?.chapters[showVideo];
+    console.log("chapterId", chapterId);
     try {
       const response = await axios.put(
         "http://localhost:5000/api/enroll/enrollment/update-progress",
         {
           enrollmentId: enrollmentId,
           courseId: courseId,
-          chapterIndex: chapterId,
+          chapterIndex: showVideo,
         }
       );
-      console.log("response :>> ", response);
+      console.log("response", response);
 
       setWatchedVideos([...watchedVideos, chapterId]);
     } catch (error) {
@@ -336,21 +318,13 @@ const LearnerCourseDetailsPage = () => {
                         )}
 
                         {showVideo !== null && (
-                          // <VideoModal
-                          //   videoUrl={`http://localhost:5000/${courseDetails?.chapters[showVideo]?.videoUrl}`}
-                          //   onClose={() => setShowVideo(null)}
-                          //   // onEnded={handleVideoEnd(chapter?._id)}
-                          //   // onEnded={() => handleVideoEnd(enrollmentId, courseId, chapter?._id, setWatchedVideos)}
-                          //   onEnded={handleVideoEnd.bind(null, chapter?._id)}
-                          // />
                           <VideoModal
                             videoUrl={`http://localhost:5000/${courseDetails?.chapters[showVideo]?.videoUrl}`}
                             onClose={() => setShowVideo(null)}
-                            onVideoEnd={() =>
-                              handleVideoEnd(
-                                courseDetails?.chapters[showVideo]?._id
-                              )
-                            }
+                            onVideoEnd={() => handleVideoEnd(showVideo)} 
+                            // onVideoEnd={() =>
+                            //   handleVideoEnd(courseDetails?.chapters[showVideo])
+                            // }
                           />
                         )}
                       </li>

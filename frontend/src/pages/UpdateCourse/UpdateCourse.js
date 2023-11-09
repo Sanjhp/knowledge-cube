@@ -46,44 +46,30 @@ const UpdateCourse = () => {
     category: "",
     language: "",
     price: "",
-    // coverImage: null,
+    coverImage: null,
     assessmentPdf: null,
     certificate: null,
   });
   console.log("formState :>> ", formState);
-  const [chapters, setChapters] = useState([{ title: "", video: null }]);
 
-  const handleChapterFileChange = (event, index) => {
-    const updatedChapters = [...chapters];
-    updatedChapters[index].video = event.target.files[0];
-    setChapters(updatedChapters);
-  };
 
   const handleImageUpload = (e) => {
-
     const image = e.target.files[0];
     console.log('image', image)
     setSelectedImage(image);
-    const imageUrl = selectedImage ? URL.createObjectURL(selectedImage) : null;
-    setFormState({ ...formState, coverImage: imageUrl });
+    console.log('selectedImage', selectedImage)
   };
 
   useEffect(() => {
-    // Ensure that selectedImage is not null before creating the imageUrl
+  
     const imageUrl = selectedImage ? URL.createObjectURL(selectedImage) : null;
-    
-    // Update formState with the imageUrl
+    console.log('imageUrl', imageUrl)
     setFormState({ ...formState, coverImage: imageUrl });
+    
   }, [selectedImage]);
 
-  // useEffect(() => {
-  //   if (selectedImage) {
-  //     setFormState({ ...formState, coverImage: selectedImage });
-  //   }
-  // }, [selectedImage]);
 
   const [category, setCateogy] = useState([]);
-  // const [coverImage, setCoverImage] = useState(null);
   const [certificateFile, setCertificateFile] = useState(null);
   const [assessmentFile, setAssessmentFile] = useState(null);
 
