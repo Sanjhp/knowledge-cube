@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
 import LearnerNavbar from "../components/Navbar/LearnerNavbar";
 import Rate from "../components/Rate";
 import axios from "axios";
@@ -8,8 +8,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import VideoModal from "../components/vedio/vedio";
 import dummyuser from "../assets/user.webp";
+import { RiSendPlaneFill } from "react-icons/ri";
 
 const LearnerCourseDetailsPage = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const enrollmentId = searchParams.get("enrollmentId");
   const navigate = useNavigate();
   const [highlight, setHighlight] = useState(true);
   const [unhighlight, setUnhighlight] = useState(false);
@@ -54,21 +58,6 @@ const LearnerCourseDetailsPage = () => {
   const Id = Cookies.get("userId");
   const [watchedVideos, setWatchedVideos] = useState([]);
 
-  const handleVideoWatched = (chapterId) => {
-    setWatchedVideos([...watchedVideos, chapterId]);
-  };
-
-  const updateChapterProgress = async (enrollmentId, chapterIndex) => {
-    try {
-      const response = await axios.put("/enrollment/update-chapter-progress", {
-        enrollmentId,
-        chapterIndex,
-      });
-      console.log("response :>> ", response);
-    } catch (error) {
-      console.error("Failed to update chapter progress: ", error);
-    }
-  };
   const CreateEnrollment = async () => {
     try {
       const enrollmentdata = {
@@ -80,6 +69,7 @@ const LearnerCourseDetailsPage = () => {
         enrollmentdata
       );
       toast.success(res?.data?.message);
+      setIsEnrolled(!isEnrolled);
     } catch (err) {
       toast.success(err.response.data.message);
       console.log("err :>> ", err);
@@ -99,6 +89,7 @@ const LearnerCourseDetailsPage = () => {
         data
       );
       toast.success(res?.data?.message);
+      GetSingleCourse();
     } catch (error) {
       toast.error(error?.response?.data?.message);
       console.log("error :>> ", error);
@@ -168,6 +159,46 @@ const LearnerCourseDetailsPage = () => {
     setHighlight(false);
   };
 
+  const handleVideoEnd = (chapterId) => async () => {
+    try {
+      const response = await axios.put(
+        "http://localhost:5000/api/enroll/enrollment/update-progress",
+        {
+          enrollmentId: enrollmentId,
+          courseId: courseId,
+          chapterIndex: chapterId,
+        }
+      );
+      // console.log("response :>> ", response);
+
+      setWatchedVideos((prevWatchedVideos) => [
+        ...prevWatchedVideos,
+        chapterId,
+      ]);
+    } catch (error) {
+      console.error("Failed to update chapter progress: ", error);
+    }
+  };
+
+  // const handleVideoEnd = async (chapterId) => {
+  //   console.log("Video ended. Chapter ID:", chapterId);
+  //   try {
+  //     const response = await axios.put(
+  //       "http://localhost:5000/api/enroll/enrollment/update-progress",
+  //       {
+  //         enrollmentId: enrollmentId,
+  //         courseId: courseId,
+  //         chapterIndex: chapterId,
+  //       }
+  //     );
+  //     console.log("response :>> ", response);
+
+  //     setWatchedVideos([...watchedVideos, chapterId]);
+  //   } catch (error) {
+  //     console.error("Failed to update chapter progress: ", error);
+  //   }
+  // };
+
   return (
     <div>
       <LearnerNavbar />
@@ -181,21 +212,21 @@ const LearnerCourseDetailsPage = () => {
             <span className="text-sm font-extralight flex flex-cols col-span-5 my-2"></span>
             <div className="flex flex-rows col-span-5 my-2">
               <span className="flex flex-rows mx-2 col-span-4 justify-center items-center">
-                <i className="ri-star-fill text-orange-400"></i>
+                <i className="ri-star-fill text-orange-400 text-2xl mr-2"></i>
                 <span className="text-sm font-extralight">
                   {avgRating ? `${avgRating}` : "0 Ratings"}
                 </span>
               </span>
 
               <span className="flex flex-rows mx-2 col-span-4 justify-center items-center">
-                <i className="ri-eye-line text-green-500"></i>
+                <i className="ri-eye-line text-green-500 text-2xl mr-2"></i>
                 <span className="text-sm font-extralight">
                   {enrollments} Enrolled Students
                 </span>
               </span>
 
               <span className="flex flex-rows mx-2 col-span-4 justify-center items-center">
-                <i className="ri-play-circle-line text-violet-500"></i>
+                <i className="ri-play-circle-line text-violet-500 text-2xl mr-2"></i>
                 <span className="text-sm font-extralight">
                   {courseDetails?.chapters?.length} Lessons
                 </span>
@@ -292,7 +323,7 @@ const LearnerCourseDetailsPage = () => {
                                 : "font-bold mx-2"
                             }
                           >
-                            {chapter.title}
+                            {chapter?.title}
                           </span>
                         </div>
                         {isEnrolled && (
@@ -307,6 +338,9 @@ const LearnerCourseDetailsPage = () => {
                           <VideoModal
                             videoUrl={`http://localhost:5000/${courseDetails?.chapters[showVideo]?.videoUrl}`}
                             onClose={() => setShowVideo(null)}
+                            // onEnded={handleVideoEnd(chapter?._id)}
+                            // onEnded={() => handleVideoEnd(enrollmentId, courseId, chapter?._id, setWatchedVideos)}
+                            onEnded={handleVideoEnd.bind(null, chapter?._id)}
                           />
                         )}
                       </li>
@@ -330,22 +364,26 @@ const LearnerCourseDetailsPage = () => {
                 <br />
                 <br />
                 <div>
-                  <div className="grid grid-cols-10 col-span-10 gap-2">
-                    <div className="col-span-10 my-4">
+                  <div className="grid grid-cols-10 col-span-10 gap-2 py-4 px-8  border-[1px] border-r-[1px] border-b-[1px] border-gray-200 rounded-sm">
+                    <div className="col-span-10 mt-2">
                       <Rate
                         rating={rating}
                         onRating={(rate) => setRating(rate)}
                       />
                     </div>
-                    <span className="col-span-10 text-sm text-gray-300 mt-4">
+                    <span className="col-span-10 text-sm text-gray-300 mt-2">
                       {rating} stars
                     </span>
                     <button
                       onClick={createRatingFunction}
-                      className=" bg-black text-white px-5 py-2 rounded-lg mt-2"
+                      className="border-[1px] border-black text-center px-5 py-2 rounded-sm mt-2 hover:bg-black hover:text-white"
                     >
                       Submit
                     </button>
+                    {/* <div className=" bg-black text-white px-5 py-2 rounded-lg mt-2">
+                      send{" "}
+                      <RiSendPlaneFill className="w-5 h-5 fill-black hover:fill-blue-700" />
+                    </div> */}
                   </div>
                   {/*rating TO VIEW DYNAMIC RATING COUNT */}
 

@@ -78,10 +78,11 @@ const LearnerDashboard = () => {
   const validEnrolledCourses = enrolledCourses?.filter(
     (course) => course !== null
   );
-  
+
   console.log("validEnrolledCourses :>> ", validEnrolledCourses);
 
   const userId = Cookies.get("userId");
+
   const getEnrolledCourses = async () => {
     try {
       setLoading(true);
@@ -96,11 +97,6 @@ const LearnerDashboard = () => {
       console.log("Error: ", err);
     }
   };
-  const [pdfUrl, setPdfUrl] = useState("");
-
-  // const handleViewCertificate = (certificateUrl) => {
-  //   setPdfUrl(certificateUrl);
-  // };
 
   useEffect(() => {
     getEnrolledCourses();
@@ -111,9 +107,27 @@ const LearnerDashboard = () => {
 
     const link = document.createElement("a");
     link.href = fullUrl;
-    link.download = "certificate.pdf"; // specify the file name here
+    link.download = "certificate.pdf";
     link.click();
   };
+  useEffect(() => {
+    if (validEnrolledCourses && validEnrolledCourses.length > 0) {
+      const interval = setInterval(() => {
+        setFilled((prev) => {
+          if (prev < 100) {
+            const currentCourse = validEnrolledCourses.find(
+              (course) => course._id === prev / 100
+            );
+            return prev + 1;
+          } else {
+            return 0;
+          }
+        });
+      }, 50);
+
+      return () => clearInterval(interval);
+    }
+  }, [validEnrolledCourses]);
 
   // const creatorDetails = async (creatorId) => {
   //   // Make a request to the server endpoint with userId as a query parameter
@@ -122,7 +136,15 @@ const LearnerDashboard = () => {
   //   return data;
   // };
 
-  
+  const calculateProgress = (courseProgress) => {
+    const totalChapters = courseProgress.length;
+    const completedChapters = courseProgress?.filter(
+      (progress) => progress
+    ).length;
+    const progressPercentage = (completedChapters / totalChapters) * 100;
+    return progressPercentage;
+  };
+
   return (
     <div>
       <LearnerNavbar />
@@ -206,7 +228,6 @@ const LearnerDashboard = () => {
                           </span>
                           <span className="flex items-center">
                             <FaLanguage className="fill-violet-500 h-10 w-10 text-[25px]" />
-                            {/* <i className="ri-time-line  text-violet-500 mx-2 text-[25px]"></i> */}
                             {course?.language}
                           </span>
                         </div>
@@ -220,7 +241,7 @@ const LearnerDashboard = () => {
                           <span className="flex">Rs. {course?.price}</span>
                           <div className="cursor-pointer bg-[#3484B4] border-[#3484B4] border-2 border-solid rounded-md px-2 py-2 text-center text-white hover:bg-white hover:text-[#3484B4] hover:border-[#3484B4] hover:border-2 hover:border-solid w-32">
                             <Link
-                              to={`/learner-course-details-page/${course?._id}`}
+                              to={`/learner-course-details-page/${course?._id}?enrollmentId=${course?.enrollmentId}`}
                               className="flex flex-row justify-center items-center text-xs cursor-pointer"
                             >
                               Watch now
@@ -229,7 +250,6 @@ const LearnerDashboard = () => {
                         </div>
                       </div>
                     </div>
-                    // {/* </Carousal> */}
                   ))}
             </Carousel>
           ) : (
@@ -254,55 +274,41 @@ const LearnerDashboard = () => {
             </div>
             <div className="grid grid-cols-12 justify-between items-center col-span-12 gap-8 px-4 py-4">
               <div className="grid grid-cols-6 justify-between items-center col-span-6 h-[40vh] px-2 py-2 overflow-y-scroll overscroll-contain">
-                {lessonSchedule.map((element) => (
-                  <div className="grid grid-cols-6 col-span-6">
-                    {/* <span className="text-xl font-semibold mb-4">{element.date}</span> */}
-                    <div className="grid grid-cols-6 col-span-6">
-                      {element.lessons.map((key, index) => (
-                        <div className="grid grid-cols-12 col-span-6 shadow-[#3484B4] shadow-sm transition delay-50 hover:-translate-y-2 duration-500 rounded-md px-4 py-4 mb-4">
-                          {element.lessons[index].map((elements) => (
-                            // <div className="grid">
-                            <div className="grid grid-cols-12 col-span-12">
-                              <span className="font-semibold col-span-6">
-                                {elements.courseName}
-                              </span>
-                              <span className="text-l font-semibold col-span-4 col-start-7">
-                                <div className="relative overflow-hidden w-[200px] h-[25px] rounded-[5px] bg-slate-300">
-                                  <div
-                                    style={{
-                                      height: "100%",
-                                      width: `${filled}%`,
-                                      backgroundColor: "#3484B4",
-                                      transition: "width 0.5s",
-                                      padding: "5px",
-                                      fontWeight: "400",
-                                      fontSize: "12px",
-                                    }}
-                                  >
-                                    60%
-                                  </div>
-                                  <span
-                                    className="font-bold absolute l-[50%] t-[50%]
-                              origin-[-50%_50%]  text-black shadow-md shadow-gray-300"
-                                  >
-                                    {filled}%
-                                  </span>
-                                </div>
-                              </span>
-                            </div>
-                          ))}
+                <div className="grid grid-cols-6 col-span-6">
+                  {validEnrolledCourses.map((course) => (
+                    <div className="grid grid-cols-12 col-span-6 shadow-[#3484B4] shadow-sm transition delay-50 hover:-translate-y-2 duration-500 rounded-md px-4 py-4 mb-4">
+                      <div className="grid grid-rows-1  col-span-12 ">
+                        <div key={course?._id} className="grid col-span-6 mb-4">
+                          <span className="font-semibold text-lg col-span-6 mb-2">
+                            {course?.title}
+                          </span>
+                          <div className="relative h-10 grid col-span-6  rounded-full bg-gray-300">
+                            <div
+                              className="absolute top-0 left-0 h-full bg-[#3484B4] rounded-full"
+                              style={{
+                                width: `${calculateProgress(
+                                  course?.courseProgress
+                                )}%`,
+                              }}
+                            ></div>
+                            <span className="block text-sm mt-2 absolute top-0 bottom-0 left-[40%] text-white">
+                              {`${calculateProgress(
+                                course?.courseProgress
+                              )}% Completed`}
+                            </span>
+                          </div>
                         </div>
-                      ))}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
 
-              <div className="grid grid-cols-4 justify-between items-center col-span-6 h-[40vh] px-2 py-2 overflow-y-scroll overscroll-contain">
+              <div className="flex  flex-col  col-span-6 h-[40vh] px-2 py-2 overflow-y-scroll overscroll-contain">
                 {validEnrolledCourses.map((course) => (
                   <div
                     key={course?._id}
-                    className="grid grid-cols-4 justify-between items-center col-span-4"
+                    className="grid grid-cols-4  items-center col-span-4"
                   >
                     <div className="grid grid-cols-6 col-span-6">
                       <div className="grid grid-cols-12 col-span-6 shadow-[#3484B4] shadow-sm transition delay-50 hover:-translate-y-2 duration-500 rounded-md px-4 py-4 mb-4 bg-[#3484B4]">
@@ -310,15 +316,21 @@ const LearnerDashboard = () => {
                           <span className="font-semibold text-white col-span-9">
                             {course?.title}
                           </span>
-                          <Link
-                            to=""
-                            onClick={() =>
-                              downloadCertificate(course?.certificate)
-                            }
-                            className="text-sm font-extralight text-white col-span-4 col-start-10 hover:text-gray-200 hover:underline"
-                          >
-                            View Certificate
-                          </Link>
+                          {calculateProgress(course?.courseProgress) === 100 ? (
+                            <Link
+                              to=""
+                              onClick={() =>
+                                downloadCertificate(course?.certificate)
+                              }
+                              className="text-sm font-extralight text-white col-span-4 col-start-10 hover:text-gray-200 hover:underline"
+                            >
+                              View Certificate
+                            </Link>
+                          ) : (
+                            <span className="text-sm font-extralight text-white col-span-4 col-start-10">
+                              Certificate available upon completion
+                            </span>
+                          )}
                         </div>
                       </div>
                     </div>
