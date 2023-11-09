@@ -17,7 +17,6 @@ const validateSchema = yup.object().shape({
 
 const UploadCourse = () => {
   const navigate = useNavigate();
-  const [isNewCourse, setIsNewCourse] = useState(true);
   const [certificateFile, setCertificateFile] = useState(null);
   const [assessmentFile, setAssessmentFile] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);

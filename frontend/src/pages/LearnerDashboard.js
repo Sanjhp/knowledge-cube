@@ -34,53 +34,14 @@ const LearnerDashboard = () => {
     },
   };
 
-  // const lessonSchedule = [
-  //   {
-  //     date: "20/12/2023",
-  //     lessons: [[{ courseName: "Course 1" }], [{ courseName: "Course 1" }]],
-  //   },
-  //   {
-  //     date: "23/12/2023",
-  //     lessons: [[{ courseName: "Course 1" }], [{ courseName: "Course 1" }]],
-  //   },
-  //   {
-  //     date: "23/12/2023",
-  //     lessons: [[{ courseName: "Course 1" }], [{ courseName: "Course 1" }]],
-  //   },
-  //   {
-  //     date: "23/12/2023",
-  //     lessons: [[{ courseName: "Course 1" }], [{ courseName: "Course 1" }]],
-  //   },
-  //   {
-  //     date: "23/12/2023",
-  //     lessons: [[{ courseName: "Course 1" }], [{ courseName: "Course 1" }]],
-  //   },
-  //   {
-  //     date: "23/12/2023",
-  //     lessons: [[{ courseName: "Course 1" }], [{ courseName: "Course 1" }]],
-  //   },
-  //   {
-  //     date: "23/12/2023",
-  //     lessons: [[{ courseName: "Course 1" }], [{ courseName: "Course 1" }]],
-  //   },
-  // ];
-  const [filled, setFilled] = useState(0);
-  const [isRunning, setIsRunning] = useState(true);
   const [isLoading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (filled < 40 && isRunning) {
-      setTimeout(() => setFilled((prev) => (prev += 1)), 50);
-    }
-  }, [filled, isRunning]);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
 
   const validEnrolledCourses = enrolledCourses?.filter(
     (course) => course !== null
   );
-
-  console.log("validEnrolledCourses :>> ", validEnrolledCourses);
-
+  console.log('validEnrolledCourses', validEnrolledCourses)
   const userId = Cookies.get("userId");
 
   const getEnrolledCourses = async () => {
@@ -110,31 +71,6 @@ const LearnerDashboard = () => {
     link.download = "certificate.pdf";
     link.click();
   };
-  useEffect(() => {
-    if (validEnrolledCourses && validEnrolledCourses.length > 0) {
-      const interval = setInterval(() => {
-        setFilled((prev) => {
-          if (prev < 100) {
-            const currentCourse = validEnrolledCourses.find(
-              (course) => course._id === prev / 100
-            );
-            return prev + 1;
-          } else {
-            return 0;
-          }
-        });
-      }, 50);
-
-      return () => clearInterval(interval);
-    }
-  }, [validEnrolledCourses]);
-
-  // const creatorDetails = async (creatorId) => {
-  //   // Make a request to the server endpoint with userId as a query parameter
-  //   const response = await fetch(`/api/getUserDetails?userId=${creatorId}`);
-  //   const data = await response.json();
-  //   return data;
-  // };
 
   const calculateProgress = (courseProgress) => {
     const totalChapters = courseProgress.length;

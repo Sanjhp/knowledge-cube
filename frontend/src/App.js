@@ -20,14 +20,19 @@ import "react-toastify/dist/ReactToastify.css";
 import UpdateCourse from "./pages/UpdateCourse/UpdateCourse";
 import UpdateChapter from "./pages/UpdateCourse/UpdateChapters";
 import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
 
 function App() {
-  const Role = Cookies.get("roleName");
-  console.log("Role :>> ", Role);
-  const isLearner = Role === "Learner";
-  const isCreator = Role === "Creator";
-  console.log("isLearner :>> ", isLearner);
-  console.log("isCreator :>> ", isCreator);
+  const [role, setRole] = useState(null);
+  // console.log('role', role)
+
+  useEffect(() => {
+    const roleName = Cookies.get("roleName");
+    if (roleName) {
+      setRole(roleName);
+    }
+  }, []);
+
 
   return (
     <BrowserRouter>
@@ -36,39 +41,39 @@ function App() {
         <Route
           exact
           path="/upload-course"
-          element={isCreator ? <Course /> : <Navigate to="/" />}
+          element={role === "Creator" ? <Course /> : <Navigate to="/" />}
         />
 
         <Route
           exact
           path="/update-course/:courseId"
-          element={isCreator ? <UpdateCourse /> : <Navigate to="/" />}
+          element={role === "Creator" ? <UpdateCourse /> : <Navigate to="/" />}
         />
         <Route
           exact
           path="/update-chapter/:courseId"
-          element={isCreator ? <UpdateChapter /> : <Navigate to="/" />}
+          element={role === "Creator" ? <UpdateChapter /> : <Navigate to="/" />}
         />
         <Route
           exact
           path="/chapter-upload/:courseId"
-          element={isCreator ? <Chapter /> : <Navigate to="/" />}
+          element={role === "Creator" ? <Chapter /> : <Navigate to="/" />}
         />
         <Route
           exact
           path="/all-courses"
-          element={isLearner ? <AllCourses /> : <Navigate to="/" />}
+          element={role === "Learner" ? <AllCourses /> : <Navigate to="/" />}
         />
         <Route exact path="/course-collection" element={<CourseCollection />} />
         <Route
           exact
           path="/learner-dashboard"
-          element={isLearner ? <LearnerDashboard /> : <Navigate to="/" />}
+          element={role === "Learner" ? <LearnerDashboard /> : <Navigate to="/" />}
         />
         <Route
           exact
           path="/creator-dashboard"
-          element={isCreator ? <CreaterDashboard /> : <Navigate to="/" />}
+          element={role === "Creator" ? <CreaterDashboard /> : <Navigate to="/" />}
         />
         <Route exact path="/login" element={<Signin />} />
         <Route exact path="/register" element={<Signup />} />
@@ -76,7 +81,7 @@ function App() {
           exact
           path="/profile-update"
           element={
-            isCreator || isLearner ? <Updateprofile /> : <Navigate to="/" />
+            role === "Creator" || role === "Learner" ? <Updateprofile /> : <Navigate to="/" />
           }
         />
         <Route exact path="/forget-password" element={<ForgetPassword />} />
@@ -84,20 +89,20 @@ function App() {
         <Route
           exact
           path="/edit-course"
-          element={isCreator ? <EditCourse /> : <Navigate to="/" />}
+          element={role === "Creator" ? <EditCourse /> : <Navigate to="/" />}
         />
         <Route
           exact
           path="/community-chat"
           element={
-            isCreator || isLearner ? <PrivateMessaging /> : <Navigate to="/" />
+            role === "Creator" || role === "Learner" ? <PrivateMessaging /> : <Navigate to="/" />
           }
         />
         <Route
           exact
           path="/learner-course-details-page/:courseId"
           element={
-            isCreator || isLearner ? (
+            role === "Creator" || role === "Learner" ? (
               <LearnerCourseDetailsPage />
             ) : (
               <Navigate to="/" />

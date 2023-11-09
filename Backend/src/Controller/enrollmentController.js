@@ -157,7 +157,6 @@ export const getEnrolledCoursesByUserId = async (req, res) => {
         courseProgress: chapterProgress,
       };
     });
-    console.log("Response to Frontend:", enrolledCoursesWithProgress);
 
     res
       .status(StatusCodes.OK)
@@ -171,30 +170,6 @@ export const getEnrolledCoursesByUserId = async (req, res) => {
   }
 };
 
-// export const getEnrolledCoursesByUserId = async (req, res) => {
-//   try {
-//     const { userId } = req.params;
-
-//     const enrollments = await Enrollment.find({ userId })
-//     .populate({
-//       path: 'courseId',
-//       populate: {
-//         path: 'chapters',
-//       },
-//     })
-//     .populate('courseProgress.courseId');
-//     const enrolledCourses = enrollments.map(
-//       (enrollment) => enrollment.courseId
-//     );
-//     res.status(StatusCodes.OK).json({ success: true, enrolledCourses });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-//       success: false,
-//       message: "Failed to fetch enrolled courses",
-//     });
-//   }
-// };
 
 export const updateEnrollment = async (req, res) => {
   const { enrollmentId, courseId, chapterIndex } = req.body;
