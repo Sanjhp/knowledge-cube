@@ -46,7 +46,7 @@ const UpdateCourse = () => {
     category: "",
     language: "",
     price: "",
-    coverImage: null,
+    // coverImage: null,
     assessmentPdf: null,
     certificate: null,
   });
@@ -60,20 +60,27 @@ const UpdateCourse = () => {
   };
 
   const handleImageUpload = (e) => {
-    const image = e.target.files[0];
 
-    if (image && image.type.startsWith("image/")) {
-      setSelectedImage(image); // Set the selected image in the state
-    } else {
-      console.error("Invalid Image Format");
-    }
+    const image = e.target.files[0];
+    console.log('image', image)
+    setSelectedImage(image);
+    const imageUrl = selectedImage ? URL.createObjectURL(selectedImage) : null;
+    setFormState({ ...formState, coverImage: imageUrl });
   };
 
   useEffect(() => {
-    if (selectedImage) {
-      setFormState({ ...formState, coverImage: selectedImage });
-    }
+    // Ensure that selectedImage is not null before creating the imageUrl
+    const imageUrl = selectedImage ? URL.createObjectURL(selectedImage) : null;
+    
+    // Update formState with the imageUrl
+    setFormState({ ...formState, coverImage: imageUrl });
   }, [selectedImage]);
+
+  // useEffect(() => {
+  //   if (selectedImage) {
+  //     setFormState({ ...formState, coverImage: selectedImage });
+  //   }
+  // }, [selectedImage]);
 
   const [category, setCateogy] = useState([]);
   // const [coverImage, setCoverImage] = useState(null);
@@ -129,7 +136,7 @@ const UpdateCourse = () => {
       formData.append("description", data.description);
       formData.append("price", data.price);
       formData.append("language", data.language);
-      formData.append("coverImage", selectedImage);
+      formData.append("coverImage",selectedImage );
       formData.append("skillLevel", data.skillLevel);
       formData.append("categoryId", selectedCategoryId);
       formData.append("assessmentPdf", assessmentFile);
@@ -240,13 +247,21 @@ const UpdateCourse = () => {
                   className="px-4 py-4 border-2 border-gray-200 rounded-xl bg-gray-200 text-gray-400"
                   placeholder="type here"
                   name="coverImage"
-                  onChange={(e) => handleImageUpload(e)}
-                  // onChange={(e) => {
-                  //   setFormState({
-                  //     ...formState,
-                  //     coverImage: e.target.files[0],
-                  //   });
-                  // }}
+                  onChange={(e) => {
+                    // console.log("hello");
+                    // setSelectedImage(e.target.files[0])
+                    // console.log("e",e.target.files[0]);
+                    handleImageUpload(e)
+                  }}
+                // onChange={(e) => {
+                //   console.log("hello");
+                //   handleImageUpload(e)}}
+                // onChange={(e) => {
+                //   setFormState({
+                //     ...formState,
+                //     coverImage: e.target.files[0],
+                //   });
+                // }}
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
