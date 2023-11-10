@@ -94,6 +94,7 @@ function LoginPage() {
       } else if (roleName === "Creator") {
         navigate("/creator-dashboard");
       }
+      window.location.reload()
     } catch (error) {
       setLoading(false);
       if (error?.response?.data?.message) {

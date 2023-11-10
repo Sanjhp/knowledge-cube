@@ -56,7 +56,7 @@ const LearnerCourseDetailsPage = () => {
   const [enrollments, setEnrollments] = useState([]);
   const { courseId } = useParams();
   const [showVideo, setShowVideo] = useState(null);
-  console.log('showVideo', showVideo)
+  console.log("showVideo", showVideo);
   const Id = Cookies.get("userId");
   const [watchedVideos, setWatchedVideos] = useState([]);
 
@@ -162,7 +162,7 @@ const LearnerCourseDetailsPage = () => {
   };
 
   const handleVideoEnd = async (showVideo) => {
-    console.log('showVideo', showVideo)
+    console.log("showVideo", showVideo);
     const chapterId = courseDetails?.chapters[showVideo];
     console.log("chapterId", chapterId);
     try {
@@ -311,6 +311,7 @@ const LearnerCourseDetailsPage = () => {
                         </div>
                         {isEnrolled && (
                           <img
+                            alt="img"
                             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAABcUlEQVR4nO2Yu0oDQRSGPyysbSRFYqkg6ENoJ7G19TV8ABs7bX0C0eAFEm3ESnwAG8FHEIxo0ggpjgzMhFE3sLuMm+PmfHBgGeby/5yZ3dkDhmEYhpGeFtABBoAoiQFwDiwXMdFXIFwmhNPWzGOk4wd08w6oiCbQ89pO8wwI20mTicCS1/ZODkIKtSJ59ZmROmXkFlinBkYEGAHHwGLJOdQYCfEG7AHzJedSYeQqen4CtkrON3Ujjg3gMWpLdX6kaiOOOWAXeEl4fmQaRgILwAHwmeD8yDSNBFaAs6jfM7CTeI3KjHR/GNlOvMYY21rU9LBvZrx+10rOG2MfxJm9oozqcGm8AVb5W8T+EJUhM5eRvu/oCnVay0GveTqf+M49ZWZawLXX5jRm8pCwpFl13MdGNBWrpWB8xEbufOMF/4dLr9lpH9OOHB4CDfTSAI4ivU77N/YVbBMpGE5zJm2fqqECkTIhhl7jr0wYhmEYBiX5AmT1wprACIzgAAAAAElFTkSuQmCC"
                             className="hover:scale-110 w-4 cursor-pointer"
                             onClick={() => setShowVideo(index)}
@@ -321,7 +322,7 @@ const LearnerCourseDetailsPage = () => {
                           <VideoModal
                             videoUrl={`http://localhost:5000/${courseDetails?.chapters[showVideo]?.videoUrl}`}
                             onClose={() => setShowVideo(null)}
-                            onVideoEnd={() => handleVideoEnd(showVideo)} 
+                            onVideoEnd={() => handleVideoEnd(showVideo)}
                             // onVideoEnd={() =>
                             //   handleVideoEnd(courseDetails?.chapters[showVideo])
                             // }
@@ -396,6 +397,7 @@ const LearnerCourseDetailsPage = () => {
                   <div className="grid grid-cols-10 col-span-10 gap-2 py-4 px-4 border-[1px] border-gray-100 justify-center items-center my-2">
                     <div className="flex col-span-1">
                       <img
+                        alt="user"
                         src={dummyuser}
                         className="w-[50px] h-[50px] object-cover rounded-[25px] ml-[12px]"
                       />
@@ -425,6 +427,7 @@ const LearnerCourseDetailsPage = () => {
           <div className="flex flex-col col-span-4 px-4 py-4 bg-white border-2 border-gray-100 shadow-2xl shadow-gray-400 rounded-md transition ease-in delay-0 hover:-translate-y-2 duration:1000">
             <div className="flex flex-col">
               <img
+                alt="coverImage"
                 src={`http://localhost:5000/${courseDetails?.coverImage}`}
                 className="w-fill rounded-md z-10"
               />
@@ -450,6 +453,7 @@ const LearnerCourseDetailsPage = () => {
                   <img
                     src="http://skilify.theuxuidesigner.com/images/svg/language.svg"
                     className="mr-2"
+                    alt=""
                   />
                   <span className="font-extralight my-2">
                     {courseDetails?.language}
@@ -459,6 +463,7 @@ const LearnerCourseDetailsPage = () => {
                   <img
                     src="http://skilify.theuxuidesigner.com/images/svg/monitor-icon.svg"
                     className="mr-2"
+                    alt=""
                   />
                   <span className="font-extralight my-2">
                     Use of desktop, tablet and mobile
@@ -468,6 +473,7 @@ const LearnerCourseDetailsPage = () => {
                   <img
                     src="http://skilify.theuxuidesigner.com/images/svg/timer.svg"
                     className="mr-2"
+                    alt=""
                   />
                   <span className="font-extralight my-2">Full time access</span>
                 </div>
@@ -475,6 +481,7 @@ const LearnerCourseDetailsPage = () => {
                   <img
                     src="http://skilify.theuxuidesigner.com/images/svg/certificate.svg"
                     className="mr-2"
+                    alt=""
                   />
                   <span className="font-extralight my-2">
                     Certificate of completion

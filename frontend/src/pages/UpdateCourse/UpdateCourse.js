@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useParams } from "react-router-dom";
+import blankImg from "../../assets/dummy-image-square.jpg";
 
 const validateSchema = yup.object().shape({
   title: yup.string().required("Title is required"),
@@ -19,8 +20,12 @@ const validateSchema = yup.object().shape({
 const UpdateCourse = () => {
   const { courseId } = useParams();
   const navigate = useNavigate();
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [image, setImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState();
+  const [selectedImageData, setSelectedImageData] = useState();
+  console.log("selectedImageData :>> ", selectedImageData);
   console.log("selectedImage :>> ", selectedImage);
+
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState(null);
@@ -52,22 +57,17 @@ const UpdateCourse = () => {
   });
   console.log("formState :>> ", formState);
 
+  // const handleImageUpload = (e) => {
+  //   const image = e.target.files[0];
+  //   setSelectedImage(image);
+  // };
 
-  const handleImageUpload = (e) => {
-    const image = e.target.files[0];
-    console.log('image', image)
-    setSelectedImage(image);
-    console.log('selectedImage', selectedImage)
-  };
-
-  useEffect(() => {
-  
-    const imageUrl = selectedImage ? URL.createObjectURL(selectedImage) : null;
-    console.log('imageUrl', imageUrl)
-    setFormState({ ...formState, coverImage: imageUrl });
-    
-  }, [selectedImage]);
-
+  // useEffect(() => {
+  //   if (selectedImage) {
+  //     const imageUrl = URL.createObjectURL(selectedImage);
+  //     setFormState({ ...formState, coverImage: imageUrl });
+  //   }
+  // }, [selectedImage]);
 
   const [category, setCateogy] = useState([]);
   const [certificateFile, setCertificateFile] = useState(null);
@@ -87,10 +87,10 @@ const UpdateCourse = () => {
         category: course?.category || "",
         language: course?.language || "",
         price: course?.price || "",
-        coverImage: course?.coverImage || null,
         assessmentPdf: course?.assessmentPdf || null,
         certificate: course?.certificate || null,
       });
+      setSelectedImage(course?.coverImage);
     } catch (err) {
       console.log("err", err);
     }
@@ -122,15 +122,16 @@ const UpdateCourse = () => {
       formData.append("description", data.description);
       formData.append("price", data.price);
       formData.append("language", data.language);
-      formData.append("coverImage",selectedImage );
+      formData.append("coverImage", selectedImageData);
       formData.append("skillLevel", data.skillLevel);
       formData.append("categoryId", selectedCategoryId);
       formData.append("assessmentPdf", assessmentFile);
       formData.append("certificate", certificateFile);
       formData.append("creatorId", id);
+      console.log("formData :>> ", formData);
       const response = await axios.patch(
         `${process.env.REACT_APP_BASE_URL}/course-creator/update/${courseId}`,
-        formState
+        formData
       );
       setLoading(false);
       toast.success(response.data.message);
@@ -220,34 +221,48 @@ const UpdateCourse = () => {
                 <span className="text-gray-500 text-sm">
                   Upload Cover Image
                 </span>
-                <span className="text-gray-500"> Certificate </span>
-                {formState?.coverImage && (
+                <span className="text-gray-500"> ImageName.ext </span>
+                {selectedImage && (
                   <img
-                    src={`http://localhost:5000/${formState?.coverImage}`}
+                    src={`http://localhost:5000/${selectedImage}`}
                     alt=""
                     className="w-40 h-20"
                   />
                 )}
+                {selectedImageData && (
+                  <image
+                    alt="not fount"
+                    src={URL?.createObjectURL(selectedImageData)}
+                  />
+                )}
+                {!selectedImageData && !selectedImage && (
+                  <image src={blankImg} alt="" />
+                )}
+
                 <input
                   type="file"
                   className="px-4 py-4 border-2 border-gray-200 rounded-xl bg-gray-200 text-gray-400"
                   placeholder="type here"
                   name="coverImage"
-                  onChange={(e) => {
-                    // console.log("hello");
-                    // setSelectedImage(e.target.files[0])
-                    // console.log("e",e.target.files[0]);
-                    handleImageUpload(e)
+                  onClick={(e) => {
+                    console.log("hui");
+                    e.target.value = null;
                   }}
-                // onChange={(e) => {
-                //   console.log("hello");
-                //   handleImageUpload(e)}}
-                // onChange={(e) => {
-                //   setFormState({
-                //     ...formState,
-                //     coverImage: e.target.files[0],
-                //   });
-                // }}
+                  onChange={(event) => {
+                    console.log("hello");
+                    setSelectedImageData(event.target.files[0]);
+                    setSelectedImage(null);
+                    console.log("event", event.target.files[0]);
+                  }}
+                  // onChange={(e) => {
+                  //   console.log("hello");
+                  //   handleImageUpload(e)}}
+                  // onChange={(e) => {
+                  //   setFormState({
+                  //     ...formState,
+                  //     coverImage: e.target.files[0],
+                  //   });
+                  // }}
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
