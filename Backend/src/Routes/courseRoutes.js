@@ -25,14 +25,13 @@ router.get("/courses", GetAllCourses);
 //get single course route
 router.get("/courses/:courseId", GetCourseById);
 //update course by id
-router.patch("/update/:courseId",uploadMiddleware, UpdateCourseById);
+router.patch("/update/:courseId", uploadMiddleware, UpdateCourseById);
 //delete chapter
 router.delete("/delete-course/:courseId", deleteCourseById);
 //get single chapter by id
 router.get("/chapters/:chapterId", GetChapterById);
-
 //update chapter by id
-router.patch("/update-chapter/:chapterId",uploadMiddleware, UpdateChapterById);
+router.patch("/update-chapter/:chapterId", uploadMiddleware, UpdateChapterById);
 
 //delete chapter
 router.delete("/delete-chapter/:chapterId", deleteChapterById);

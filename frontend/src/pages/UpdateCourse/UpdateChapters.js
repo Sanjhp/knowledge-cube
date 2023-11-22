@@ -88,7 +88,7 @@ const UploadChapterByCourse = () => {
       {chapters?.map((chapter, index) => (
         <div
           className="grid grid-rows-1 gap-2 px-4 py-2 items-center"
-          key={chapter._id}
+          key={chapter?._id}
         >
           <div className="grid grid-cols-8 gap-8 rounded-lg shadow-md justify-center items-center px-6 py-6">
             <div className="grid col-span-1">Chapter - {index + 1}</div>
@@ -99,7 +99,7 @@ const UploadChapterByCourse = () => {
                 type="text"
                 className="bg-gray-200 px-2 py-2 rounded-xl"
                 placeholder="Type here"
-                value={chapter.title}
+                value={chapter?.title}
                 onChange={(e) => handleTitleChange(e, index)}
               />
             </div>

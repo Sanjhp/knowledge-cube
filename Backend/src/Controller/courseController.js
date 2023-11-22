@@ -7,8 +7,8 @@ import Rating from "../Model/ratingModel.js";
 import Enrollment from "../Model/enrollmentModel.js";
 import CourseFilter from "../Model/courseFilterModel.js";
 import { StatusCodes } from "http-status-codes";
-import ffmpeg from 'fluent-ffmpeg';
-import ffprobePath from 'ffprobe-static';
+import ffmpeg from "fluent-ffmpeg";
+import ffprobePath from "ffprobe-static";
 
 ffmpeg.setFfprobePath(ffprobePath.path);
 
@@ -16,7 +16,7 @@ const getVideoDuration = (videoUrl) => {
   return new Promise((resolve, reject) => {
     ffmpeg.ffprobe(videoUrl, (err, metadata) => {
       if (err) {
-        reject(new Error('Failed to get video duration.'));
+        reject(new Error("Failed to get video duration."));
       } else {
         const durationInSeconds = metadata.format.duration;
         resolve(durationInSeconds);
@@ -24,7 +24,6 @@ const getVideoDuration = (videoUrl) => {
     });
   });
 };
-
 
 // API endpoint for uploading a course
 export const UploadCourse = async (req, res) => {
@@ -157,23 +156,23 @@ export const deleteCourseById = async (req, res) => {
   try {
     const { courseId } = req.params;
     const deletedCourse = await Course.findByIdAndDelete(courseId);
-    
+
     if (!deletedCourse) {
       return res.status(StatusCodes.NOT_FOUND).json({
         success: false,
-        message: 'Course not found.',
+        message: "Course not found.",
       });
     }
 
     return res.status(StatusCodes.OK).json({
       success: true,
-      message: 'Course deleted successfully!',
+      message: "Course deleted successfully!",
     });
   } catch (error) {
     console.error(error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
-      message: 'Failed to delete the course',
+      message: "Failed to delete the course",
       error: error.message,
     });
   }
@@ -183,23 +182,23 @@ export const deleteChapterById = async (req, res) => {
   try {
     const { chapterId } = req.params;
     const deletedChapter = await Chapter.findByIdAndDelete(chapterId);
-    
+
     if (!deletedChapter) {
       return res.status(StatusCodes.NOT_FOUND).json({
         success: false,
-        message: 'Chapter not found.',
+        message: "Chapter not found.",
       });
     }
 
     return res.status(StatusCodes.OK).json({
       success: true,
-      message: 'Chapter deleted successfully!',
+      message: "Chapter deleted successfully!",
     });
   } catch (error) {
     console.error(error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
-      message: 'Failed to delete the chapter',
+      message: "Failed to delete the chapter",
       error: error.message,
     });
   }
@@ -304,7 +303,6 @@ export const GetCourseById = async (req, res) => {
       })
       .exec();
 
-
     if (!course) {
       return res.status(StatusCodes.NOT_FOUND).json({
         success: false,
@@ -345,7 +343,15 @@ export const UpdateCourseById = async (req, res) => {
     Object.keys(req.body).forEach((update) => {
       course[update] = req.body[update];
     });
-
+    if (req.files && req.files["coverImage"]) {
+      course.coverImage = req.files["coverImage"][0].path;
+    }
+    if (req.files && req.files["certificate"]) {
+      course.certificate = req.files["certificate"][0].path;
+    }
+    if (req.files && req.files["assessmentPdf"]) {
+      course.assessmentPdf = req.files["assessmentPdf"][0].path;
+    }
     // Save the updated course
     await course.save();
 
@@ -466,6 +472,9 @@ export const UpdateChapterById = async (req, res) => {
     Object.keys(req.body).forEach((update) => {
       chapter[update] = req.body[update];
     });
+    if (req.files && req.files["videoUrl"]) {
+      course.videoUrl = req.files["videoUrl"][0].path;
+    }
 
     // Save the updated chapter
     await chapter.save();
