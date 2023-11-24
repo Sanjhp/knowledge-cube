@@ -111,6 +111,8 @@ export const UploadCourse = async (req, res) => {
     });
   }
 };
+
+
 // uploading a chapter for a specific course
 
 export const UploadChapterById = async (req, res) => {
@@ -127,6 +129,7 @@ export const UploadChapterById = async (req, res) => {
       videoUrl,
       vedioDuration: durationInSeconds, // Save the duration to the Chapter model
     });
+    
 
     // Find the course by ID and add the chapter to its chapters array
     const course = await Course.findByIdAndUpdate(
@@ -146,6 +149,47 @@ export const UploadChapterById = async (req, res) => {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
       message: "Failed to add the chapter",
+      error: error.message,
+    });
+  }
+};
+
+//update chapters
+export const UpdateChapterById = async (req, res) => {
+  try {
+    const chapterId = req.params.chapterId;
+
+    // Fetch the chapter by ID
+    const chapter = await Chapter.findById(chapterId);
+
+    if (!chapter) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        message: "Chapter not found.",
+      });
+    }
+
+    // Apply updates from req.body to the chapter object
+    Object.keys(req.body).forEach((update) => {
+      chapter[update] = req.body[update];
+    });
+    if (req.files && req.files["video"]) {
+      chapter.videoUrl = req.files["video"][0].path;
+    }
+
+    // Save the updated chapter
+    await chapter.save();
+
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: "Chapter updated successfully!",
+      chapter: chapter,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: "Failed to update the chapter.",
       error: error.message,
     });
   }
@@ -453,46 +497,7 @@ export const GetAllChaptersByCourseId = async (req, res) => {
   }
 };
 
-//update chapters
-export const UpdateChapterById = async (req, res) => {
-  try {
-    const chapterId = req.params.chapterId;
 
-    // Fetch the chapter by ID
-    const chapter = await Chapter.findById(chapterId);
-
-    if (!chapter) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        success: false,
-        message: "Chapter not found.",
-      });
-    }
-
-    // Apply updates from req.body to the chapter object
-    Object.keys(req.body).forEach((update) => {
-      chapter[update] = req.body[update];
-    });
-    if (req.files && req.files["videoUrl"]) {
-      course.videoUrl = req.files["videoUrl"][0].path;
-    }
-
-    // Save the updated chapter
-    await chapter.save();
-
-    return res.status(StatusCodes.OK).json({
-      success: true,
-      message: "Chapter updated successfully!",
-      chapter: chapter,
-    });
-  } catch (error) {
-    console.error(error);
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      message: "Failed to update the chapter.",
-      error: error.message,
-    });
-  }
-};
 
 // API endpoint for getting a single chapter by ID
 export const GetChapterById = async (req, res) => {
