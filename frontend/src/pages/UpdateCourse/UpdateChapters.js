@@ -16,23 +16,11 @@ const UploadChapterByCourse = () => {
   const { courseId } = useParams();
 
   const [chapters, setChapters] = useState([{ title: "", video: null }]);
-  const handleChapterFileChange = (event, index) => {
-    const updatedChapters = [...chapters];
-    updatedChapters[index].video = event.target.files[0];
-    setChapters(updatedChapters);
-  };
+  console.log("chapters :>> ", chapters);
   const handleTitleChange = (event, index) => {
     const updatedChapters = [...chapters];
     updatedChapters[index].title = event.target.value;
     setChapters(updatedChapters);
-  };
-
-  const handleAddChapter = () => {
-    const chapterNumber = chapters.length + 1;
-    setChapters([
-      ...chapters,
-      { title: "", video: null, number: chapterNumber },
-    ]);
   };
 
   const GetChapters = async () => {
@@ -50,14 +38,28 @@ const UploadChapterByCourse = () => {
     GetChapters();
   }, []);
 
+  const handleSelectedVideo = (event, index) => {
+    const updatedChapters = [...chapters];
+    if (updatedChapters[index]) {
+      updatedChapters[index].video = event.target.files[0];
+      setChapters(updatedChapters);
+    }
+  };
   const handleUpdateChapter = async (chapter) => {
     try {
-      const response = await axios.patch(
-        `http://localhost:5000/api/course-creator/update-chapter/${chapter._id}`,
-        chapter
-      );
-      toast.success(response?.data?.message);
-      GetChapters()
+      if (chapter && chapter.video) {
+        const formData = new FormData();
+        formData.append("title", chapter.title);
+        formData.append("video", chapter.vedio);
+        const response = await axios.patch(
+          `http://localhost:5000/api/course-creator/update-chapter/${chapter._id}`,
+          formData
+        );
+        toast.success(response?.data?.message);
+        GetChapters();
+      } else {
+        console.error("Chapter or video not found.");
+      }
     } catch (error) {
       console.error("Error updating chapter:", error);
     }
@@ -69,7 +71,7 @@ const UploadChapterByCourse = () => {
         `http://localhost:5000/api/course-creator/delete-chapter/${chapter?._id}`
       );
       toast.success(response?.data?.message);
-      GetChapters()
+      GetChapters();
       console.log(response.data);
     } catch (error) {
       console.error("Error deleting chapter:", error);
@@ -92,7 +94,6 @@ const UploadChapterByCourse = () => {
         >
           <div className="grid grid-cols-8 gap-8 rounded-lg shadow-md justify-center items-center px-6 py-6">
             <div className="grid col-span-1">Chapter - {index + 1}</div>
-
             <div className="grid col-span-2 ">
               <span className="text-gray-500">Title</span>
               <input
@@ -104,17 +105,28 @@ const UploadChapterByCourse = () => {
               />
             </div>
             <div className="grid col-span-2">
-              <video width="350" height="600" controls>
-                <source
-                  src={`http://localhost:5000/${chapter?.videoUrl}`}
-                  type="video/mp4"
-                />
-                Your browser does not support the video tag.
-              </video>
+              {chapter?.videoUrl && (
+                <video width="350" height="600" controls>
+                  <source
+                    src={`http://localhost:5000/${chapter?.videoUrl}`}
+                    type="video/mp4"
+                  />
+                  Your browser does not support the video tag.
+                </video>
+              )}
+              {/* {selectedVedio && (
+                <video width="350" height="600" controls>
+                  <source
+                    src={URL?.createObjectURL(selectedVedio)}
+                    type="video/mp4"
+                  />
+                  Your browser does not support the video tag.
+                </video>
+              )} */}
               <input
                 type="file"
                 className="bg-gray-200 px-2 py-2 rounded-xl"
-                onChange={(e) => handleChapterFileChange(e, index)}
+                onChange={(e) => handleSelectedVideo(e, index)}
               />
             </div>
             <button

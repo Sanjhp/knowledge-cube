@@ -283,6 +283,9 @@ const UploadCourse = () => {
                     onChange={(e) => setSelectedCategoryId(e.target.value)}
                     className="px-4 py-4 text-gray-400 bg-gray-200 rounded-xl"
                   >
+                    <option selected value="" disabled className="text-gray">
+                      Select a Category
+                    </option>
                     {category.map((cats) => (
                       <option selected value={cats._id} className="text-gray">
                         {cats.name}
